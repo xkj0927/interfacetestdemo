@@ -1,0 +1,91 @@
+2017-08-16 18:13:26,704 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: com.wafer.zxjy:plateform:0.0.1-SNAPSHOT @ D:\zxjy-demo\src\pom.xml.
+2017-08-16 18:13:27,948 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.wafer.zxjy:democms.app:0.0.1-SNAPSHOT @ D:\zxjy-demo\src\democms.app\pom.xml.
+2017-08-16 18:13:28,412 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.wafer.zxjy:democms.wtp:0.0.1-SNAPSHOT @ D:\zxjy-demo\src\democms.wtp\pom.xml.
+2017-08-16 18:13:30,998 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /democms.app/src/main/java
+2017-08-16 18:13:30,998 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /democms.app/src/main/resources
+2017-08-16 18:13:30,998 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /democms.app/src/main/resources
+2017-08-16 18:13:30,999 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /democms.app/src/test/java
+2017-08-16 18:13:33,388 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /democms.wtp/src/main/java
+2017-08-16 18:13:33,388 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /democms.wtp/src/main/resources
+2017-08-16 18:13:33,388 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /democms.wtp/src/main/resources
+2017-08-16 18:13:33,389 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /democms.wtp/src/test/java
+2017-08-16 18:13:33,389 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Resources folder /democms.wtp/src/test/java overlaps with sources folder /democms.wtp/src/test/java
+2017-08-16 18:13:34,751 [Worker-7] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 3 project(s) in 9 sec
+2017-08-16 18:13:37,707 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-16 18:13:37,711 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-16 18:13:37,721 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-16 18:13:37,734 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-16 18:13:37,734 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\zxjy-demo\src\democms.app\src\test\resources
+2017-08-16 18:13:38,426 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-16 18:13:38,426 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-16 18:13:38,427 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-16 18:13:38,479 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-16 18:13:38,492 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-16 18:21:40,458 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-16 18:21:40,463 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-16 18:21:40,473 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-16 18:21:40,475 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-16 18:21:40,475 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\zxjy-demo\src\democms.app\src\test\resources
+2017-08-16 18:21:41,462 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-16 18:21:41,462 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-16 18:21:41,463 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-16 18:21:41,465 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-16 18:21:41,466 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:03:32,586 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:03:32,592 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:03:32,602 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:03:32,607 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:03:32,607 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\zxjy-demo\src\democms.app\src\test\resources
+2017-08-17 09:03:33,670 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:03:33,670 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:03:33,671 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:03:33,672 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:03:33,673 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:08:55,470 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:08:55,476 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:08:55,486 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:08:55,488 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:08:55,488 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\zxjy-demo\src\democms.app\src\test\resources
+2017-08-17 09:08:56,579 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:08:56,580 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:08:56,580 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:08:56,582 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:08:56,582 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:16:58,961 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:16:58,971 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:16:58,999 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:16:59,002 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:16:59,002 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\zxjy-demo\src\democms.app\src\test\resources
+2017-08-17 09:17:00,141 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:17:00,141 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:17:00,141 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:17:00,143 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:17:00,143 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:22:25,056 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:22:25,059 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:22:25,061 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:22:25,062 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:22:25,062 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\zxjy-demo\src\democms.app\src\test\resources
+2017-08-17 09:22:25,076 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:22:25,076 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:22:25,076 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:22:25,078 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:22:25,079 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-08-17 09:27:19,583 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.wafer.zxjy:democms.wtp:0.0.1-SNAPSHOT @ D:\zxjy-demo\src\democms.wtp\pom.xml.
+2017-08-17 09:27:19,592 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.wafer.zxjy:democms.app:jar:classes:0.0.1-SNAPSHOT is missing, no dependency information available
+2017-08-17 09:27:20,111 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.wafer.zxjy:democms.app:jar:classes:0.0.1-SNAPSHOT is missing, no dependency information available
+2017-08-17 09:27:22,757 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.wafer.zxjy:democms.app:jar:classes:0.0.1-SNAPSHOT is missing, no dependency information available
+2017-08-17 09:27:22,802 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:27:22,802 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:27:22,802 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:27:22,803 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:27:22,803 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:27:23,633 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.wafer.zxjy:democms.wtp:0.0.1-SNAPSHOT @ D:\zxjy-demo\src\democms.wtp\pom.xml.
+2017-08-17 09:27:23,637 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.wafer.zxjy:democms.app:jar:classes:0.0.1-SNAPSHOT is missing, no dependency information available
+2017-08-17 09:27:23,919 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.wafer.zxjy:democms.app:jar:classes:0.0.1-SNAPSHOT is missing, no dependency information available
+2017-08-17 09:27:25,420 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.wafer.zxjy:democms.app:jar:classes:0.0.1-SNAPSHOT is missing, no dependency information available
+2017-08-17 09:27:25,569 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:27:25,570 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:27:25,570 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-08-17 09:27:25,572 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-08-17 09:27:25,572 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
