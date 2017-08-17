@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import { Router, Route } from 'dva/router';
+import HomeLayout from './components/layouts/HomeLayout';
 
 // const cached = {};
 // function registerModel(app, model) {
@@ -42,7 +43,18 @@ function RouterConfig({ history, app}) {
                 getComponent(nextstate, cb){
                     requireRoute(cb,'LoginPage');
                 },
-            }
+            },
+            childRoutes:[{
+                component:HomeLayout,
+                childRoutes:[
+                    {
+                        path: 'home',
+                        getComponent(nextState, cb){
+                            requireRoute(cb, 'HomePage');
+                    },
+                    },
+                ]
+            }]
         }
     ];
 

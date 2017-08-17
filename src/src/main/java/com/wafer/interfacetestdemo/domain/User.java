@@ -37,7 +37,10 @@ public class User {
   private String email;
 
   @Column(name = "status")
-  private int status;
+  private int status;  
+  
+  @Column(name = "user_authority")
+  private int userAuthority;
 
   @Column(name = "latest_login_time")
   private Date latestLoginTime;
@@ -47,6 +50,7 @@ public class User {
 
   @Column(name = "update_time")
   private Date updateTime;
+
 
   public long getUserId() {
     return userId;
@@ -111,22 +115,31 @@ public class User {
   public void setUpdateTime(Date updateTime) {
     this.updateTime = updateTime;
   }
+  
+  public int getUserAuthority() {
+	return userAuthority;
+  }
+
+  public void setUserAuthority(int userAuthority) {
+	this.userAuthority = userAuthority;
+  }
 
   public User(){
     super();
   }
 
-  public User(long userId, String userName, String password, String email, int status, Date latestLoginTime,
-		Date createTime, Date updateTime) {
+  public User(long userId, String userName, String password, String email, int status, int userAuthority,
+		Date latestLoginTime, Date createTime, Date updateTime) {
 	super();
 	this.userId = userId;
 	this.userName = userName;
 	this.password = password;
 	this.email = email;
 	this.status = status;
+	this.userAuthority = userAuthority;
 	this.latestLoginTime = latestLoginTime;
 	this.createTime = createTime;
 	this.updateTime = updateTime;
-  }
+	}
   
 }

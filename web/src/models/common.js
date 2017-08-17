@@ -1,7 +1,9 @@
 /**
  * Created by Administrator on 2017/8/16 0016.
  */
+import {message} from 'antd';
 import * as commonService from '../services/common';
+import {routerRedux} from 'dva/router';
 export default {
     namespace:'common',
     state:{
@@ -20,10 +22,11 @@ export default {
       *login({payload: values}, {put, call, select}){
           debugger;
           const {data, result, message: msgkey} = yield call(commonService.login, values);
-          const {common} = yield select(state => state);
+          const {common, messages} = yield select(state => state);
+          debugger;
           if(result){
-              const {token, user}  = data;
-              sessionStorage.setItem("access_token", token);
+              const user  = data;
+              // sessionStorage.setItem("access_token", token);
               for(let property in common){
                   if(user.hasOwnProperty(property)){
                         common[property] = user[property];
@@ -44,9 +47,9 @@ export default {
               yield put({type: 'set', common});
               yield localStorage.setItem("common", JSON.stringify(common));//登录后把common信息存储到localstorage中
               yield put(routerRedux.push('/home'));
-              message.success(messages["login.success"]);
+              // message.success(messages["Login Success"]);
           } else {
-              message.error(messages[`msgKey.${msgKey}`]);
+              message.error(messages[`msgKey.${msgkey}`]);
           }
 
       }
