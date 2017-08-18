@@ -19,12 +19,31 @@ public class UserService {
     return userRepository.findByUserName(account);
   }
   
+  public List<User> getUserList(){
+    return userRepository.findAll();
+  }
+  
+  public void userSave(User user){
+    userRepository.save(user);
+  }
+  
+  public User getUserbyUserId(long userId){
+    return userRepository.findOne(userId);
+  }
+  
   public void updateUserbyUserId(User user){
-	    userRepository.save(user);
+    userRepository.save(user);
+  }
+
+  public void updateUserStatusByUserId(long userId) {
+    userRepository.updateUserStatusByUserId(userId);
   }
 
   public List<UserVo> getUserVoList() {
-	return  userRepository.getUserVoList();
+    return  userRepository.getUserVoList();
   }
 
+  public User getUserbyEmail(String email) {
+    return userRepository.getUserbyEmail(email);
+  }
 }
