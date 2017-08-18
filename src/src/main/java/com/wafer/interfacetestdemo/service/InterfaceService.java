@@ -19,8 +19,8 @@ public class InterfaceService {
    * @param interf
    * @return
    */
-  public Interface saveInterface(Interface interf){
-    return interfaceRepository.save(interf);
+  public Interface saveInterface(Interface face){
+    return interfaceRepository.save(face);
   }
   
   /**
