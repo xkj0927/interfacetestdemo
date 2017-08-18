@@ -27,5 +27,6 @@ public interface Constant {
   
   String APPLICATION_JSON = "json";
   
+  String PROJECTS = "projects";
+  
 }
-
