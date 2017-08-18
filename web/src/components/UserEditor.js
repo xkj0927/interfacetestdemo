@@ -15,7 +15,7 @@ const formLayout = {
 
 export default injectIntl(({form, intl, type, dispatch, userInfo={}}) => {
   const {getFieldDecorator, validateFields} = form;
-  const {userName, email, schoolId} = userInfo;
+  const {userName, email} = userInfo;
 
   let pwItem;
   if(type === "add"){
@@ -96,7 +96,7 @@ export default injectIntl(({form, intl, type, dispatch, userInfo={}}) => {
         </FormItem>
         <br/>
         <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 21}}>
-          <Button type="primary" htmlType="submit"><FormattedMessage id="course.submit"/></Button>
+          <Button type="primary" htmlType="submit"><FormattedMessage id="user.submit"/></Button>
         </FormItem>
       </Form>
     </div>

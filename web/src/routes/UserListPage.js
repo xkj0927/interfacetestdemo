@@ -21,10 +21,6 @@ const UserListPage = ({ dispatch, userList, userInfo, intl, loading, visible, mo
       dataIndex: 'email'
     },
     {
-      title: intl.formatMessage({id: "user.school"}),
-      dataIndex: 'schoolName'
-    },
-    {
       title: intl.formatMessage({id: "user.lastAccess"}),
       dataIndex: 'latestLoginTime',
       render: (text, record) => (moment(record.latestLoginTime).format("YYYY-MM-DD HH:mm:ss"))

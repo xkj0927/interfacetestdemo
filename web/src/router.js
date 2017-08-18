@@ -5,22 +5,6 @@ import React from 'react';
 import { Router, Route } from 'dva/router';
 import HomeLayout from './components/layouts/HomeLayout';
 
-const cached = {};
-function registerModel(app, model) {
-  if (!cached[model.namespace]) {
-    app.model(model);
-    cached[model.namespace] = 1;
-  }
-}
-
-function requireModel(app, ...models){
-  require.ensure([], (require) => {
-    for(let i in models){
-      registerModel(app, require("./models/" + models[i]));
-    }
-  });
-}
-
 function requireRoute(cb, ...routes){
     require.ensure([], (require) => {
         for(let i in routes){
@@ -33,9 +17,6 @@ function RouterConfig({ history, app}) {
     const routes=[
         {
             path:"/",
-            onEnter: () => {
-                requireModel(app, 'common', 'i18n');
-            },
             getComponent(nextState, cb) {
                 requireRoute(cb, 'App');
             },

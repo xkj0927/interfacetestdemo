@@ -22,6 +22,9 @@ const app = dva({
 app.use(createLoading({effects: true}));
 
 // 3. Model
+app.model(require('./models/common'));
+app.model(require('./models/i18n'));
+app.model(require('./models/users'));
 
 // 4. Router
 app.router(require('./router'));
