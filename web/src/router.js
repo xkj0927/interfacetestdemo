@@ -44,17 +44,30 @@ function RouterConfig({ history, app}) {
                     requireRoute(cb,'LoginPage');
                 },
             },
-            childRoutes:[{
+            childRoutes:[
+              {
                 component:HomeLayout,
                 childRoutes:[
                     {
                         path: 'home',
                         getComponent(nextState, cb){
                             requireRoute(cb, 'HomePage');
+                        },
                     },
-                    },
+                  {
+                    path: 'user',
+                    childRoutes: [
+                      {
+                        path: 'list',
+                        getComponent(nextState, cb) {
+                          requireRoute(cb, 'UserListPage');
+                        }
+                      }
+                    ]
+                  }
                 ]
-            }]
+              }
+            ]
         }
     ];
 

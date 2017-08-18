@@ -15,6 +15,9 @@ const Left = ({userAuthority}) => {
   let subMenu = [];
     subMenu.push((
         <SubMenu key="user" title={<span><Icon type="user"/><FormattedMessage id="home.userManager"/></span>}>
+          <MenuItem key="user-list">
+            <Link to="/user/list"><FormattedMessage id="home.userList"/></Link>
+          </MenuItem>
         </SubMenu>
     ));
     subMenu.push((
