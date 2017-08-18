@@ -47,6 +47,11 @@ const zhCN = {
   "user.success.editUser": "编辑用户成功",
   "user.success.delUser": "删除用户成功",
 
+  "msgKey.100001": "用户名或密码不能为空",
+  "msgKey.100002": "用户不存在",
+  "msgKey.100003": "密码不正确",
+  "msgKey.100004": "重复的邮箱地址",
+
   "loading": "加载中",
 
 };

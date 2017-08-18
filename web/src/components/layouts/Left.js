@@ -13,28 +13,19 @@ const MenuItem = Menu.Item;
 const Left = ({userAuthority}) => {
 
   let subMenu = [];
+  if (userAuthority === USER_AUTHORITY_ADMIN) {
     subMenu.push((
-        <SubMenu key="user" title={<span><Icon type="user"/><FormattedMessage id="home.userManager"/></span>}>
-          <MenuItem key="user-list">
-            <Link to="/user/list"><FormattedMessage id="home.userList"/></Link>
-          </MenuItem>
-        </SubMenu>
+      <SubMenu key="user" title={<span><Icon type="user"/><FormattedMessage id="home.userManager"/></span>}>
+        <MenuItem key="user-list">
+          <Link to="/user/list"><FormattedMessage id="home.userList"/></Link>
+        </MenuItem>
+      </SubMenu>
     ));
-    subMenu.push((
-        <SubMenu key="project" title={<span><Icon type="team"/><FormattedMessage id="home.projectManager"/></span>}>
-        </SubMenu>
-    ));
-  // if (userAuthority === USER_AUTHORITY_NORMAL) {
-  //   subMenu.push((
-  //     <SubMenu key="user" title={<span><Icon type="user"/></span>}>
-  //     </SubMenu>
-  //   ));
-  // } else if (userAuthority === USER_AUTHORITY_ADMIN) {
-  //   subMenu.push((
-  //     <SubMenu key="user" title={<span><Icon type="user"/>user Manage</span>}>
-  //     </SubMenu>
-  //   ));
-  // }
+  }
+  subMenu.push((
+      <SubMenu key="project" title={<span><Icon type="team"/><FormattedMessage id="home.projectManager"/></span>}>
+      </SubMenu>
+  ));
 
   return (
     <Menu mode="inline" theme="dark" style={{width: '240px'}}>

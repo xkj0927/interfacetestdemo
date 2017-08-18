@@ -13,6 +13,7 @@ export default{
   },
   reducers: {
     update(state, {payload: {locale, messages}}){
+      debugger
       return Object.assign({}, state, {locale, messages});
     }
   },

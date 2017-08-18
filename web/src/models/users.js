@@ -34,7 +34,6 @@ export default {
     *reload(action, { call, put }) {
       const result = yield call(userService.getUsers);
       const newUsers = {users: result.data, showDialog: false, type: "", modalKey: Math.random(), userInfo: {}};
-      debugger
       yield put({
         type: 'update',
         payload: newUsers

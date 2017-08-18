@@ -9,6 +9,7 @@ export default {
     state:{
         userId: 0,
         userName: 0,
+        userAuthority: 1,
         email: '',
         status: '',
         contextPath: ''
@@ -21,7 +22,7 @@ export default {
    effects: {
       *login({payload: values}, {put, call, select}){
           const {data, result, message: msgkey} = yield call(commonService.login, values);
-          const {common, messages} = yield select(state => state);
+          const {common, i18n: {messages}} = yield select(state => state);
           if(result){
               const {user, token}  = data;
               sessionStorage.setItem("access_token", token);
@@ -45,9 +46,9 @@ export default {
               yield put({type: 'set', common});
               yield localStorage.setItem("common", JSON.stringify(common));//登录后把common信息存储到localstorage中
               yield put(routerRedux.push('/home'));
-              // message.success(messages["Login Success"]);
+              message.success(messages["login.success"]);
           } else {
-              // message.error(messages[`msgKey.${msgkey}`]);
+              message.error(messages[`msgKey.${msgkey}`]);
           }
 
       },
