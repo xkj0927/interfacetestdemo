@@ -47,6 +47,10 @@ const zhCN = {
   "user.success.editUser": "编辑用户成功",
   "user.success.delUser": "删除用户成功",
 
+  "project.projectId": "项目编号",
+  "project.projectName": "项目名称",
+  "project.createTime": "创建时间",
+
   "msgKey.100001": "用户名或密码不能为空",
   "msgKey.100002": "用户不存在",
   "msgKey.100003": "密码不正确",

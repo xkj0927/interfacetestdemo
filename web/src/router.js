@@ -35,13 +35,24 @@ function RouterConfig({ history, app}) {
                             requireRoute(cb, 'HomePage');
                         },
                     },
+                    {
+                      path: 'user',
+                      childRoutes: [
+                        {
+                          path: 'list',
+                          getComponent(nextState, cb) {
+                            requireRoute(cb, 'UserListPage');
+                          }
+                        }
+                     ]
+                    },
                   {
-                    path: 'user',
+                    path: 'project',
                     childRoutes: [
                       {
                         path: 'list',
                         getComponent(nextState, cb) {
-                          requireRoute(cb, 'UserListPage');
+                          requireRoute(cb, 'ProjectListPage');
                         }
                       }
                     ]

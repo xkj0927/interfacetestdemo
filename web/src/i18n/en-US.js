@@ -47,6 +47,10 @@ const enUS = {
   "user.success.editUser": "Edit user success",
   "user.success.delUser": "Delete user success",
 
+  "project.projectId": "Project ID",
+  "project.projectName": "Project Name",
+  "project.createTime": "Create Time",
+
   "msgKey.100001": "UserId or password can not be null.",
   "msgKey.100002": "User didn't exist.",
   "msgKey.100003": "Password is wrong.",

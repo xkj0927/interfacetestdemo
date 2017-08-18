@@ -25,6 +25,7 @@ app.use(createLoading({effects: true}));
 app.model(require('./models/common'));
 app.model(require('./models/i18n'));
 app.model(require('./models/users'));
+app.model(require('./models/projects'));
 
 // 4. Router
 app.router(require('./router'));
