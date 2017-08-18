@@ -20,7 +20,7 @@ import com.wafer.interfacetestdemo.security.auth.AuthService;
 import com.wafer.interfacetestdemo.service.UserService;
 import com.wafer.interfacetestdemo.vo.AccountVo;
 import com.wafer.interfacetestdemo.vo.LoginUserVo;
-import com.wafer.interfacetestdemo.vo.ResponseEntity;
+import com.wafer.interfacetestdemo.vo.ResponseResult;
 import com.wafer.interfacetestdemo.vo.UserVo;
 
 @RestController
@@ -42,7 +42,7 @@ public class UserController {
    * @return Token，用户数据交互的凭证
    */
   @RequestMapping(value = Constant.LOGIN, method = RequestMethod.POST)
-  public ResponseEntity login(@RequestBody AccountVo vc) {
+  public ResponseResult login(@RequestBody AccountVo vc) {
 
     logger.debug("login request param is {}.", vc);
     String account = vc.getAccount();
@@ -59,7 +59,7 @@ public class UserController {
     loginUser.setToken(token);
     loginUser.setUser(user);    
     
-    return ResponseEntity.success(loginUser);
+    return ResponseResult.success(loginUser);
   }  
   
   /***
@@ -67,12 +67,12 @@ public class UserController {
    * @return 登出成功 or 失败
    */
   @RequestMapping(value = Constant.LOGOUT, method = RequestMethod.POST)
-  public ResponseEntity logout(@RequestBody AccountVo vc) {
+  public ResponseResult logout(@RequestBody AccountVo vc) {
 
     // 登出，设置token不可用
     boolean logout  = authService.logout(vc.getAccount());
     
-    return ResponseEntity.success(String.valueOf(logout));
+    return ResponseResult.success(String.valueOf(logout));
   }
 
   /**
@@ -81,9 +81,9 @@ public class UserController {
    */
   @RequestMapping(value = Constant.USERS, method = RequestMethod.GET)
   @Transactional(readOnly = true)
-  public ResponseEntity userList(){
+  public ResponseResult userList(){
     List<UserVo> userList = userService.getUserVoList();
-    return ResponseEntity.success(userList);
+    return ResponseResult.success(userList);
   }
   
   /**
@@ -92,11 +92,11 @@ public class UserController {
    * @return 封装的user信息
    */
   @RequestMapping(value = Constant.USER, method = RequestMethod.POST)
-  public ResponseEntity userCreate(@RequestBody User user){
+  public ResponseResult userCreate(@RequestBody User user){
     
     User userForCompare = userService.getUserbyEmail(user.getEmail());
     if(null != userForCompare){
-      return ResponseEntity.failure(Constant.EMAIL_DUPLICATE);
+      return ResponseResult.failure(Constant.EMAIL_DUPLICATE);
     }
     user.setCreateTime(new Date()); 
     user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
@@ -104,7 +104,7 @@ public class UserController {
     user.setUserAuthority(1);
     userService.userSave(user);    
     List<UserVo> userList = userService.getUserVoList();
-    return ResponseEntity.success(userList);
+    return ResponseResult.success(userList);
   }
   
   /**
@@ -113,12 +113,12 @@ public class UserController {
    * @return 封装的user信息
    */
   @RequestMapping(value = Constant.USER_DELETE, method = RequestMethod.DELETE)
-  public ResponseEntity userDelete(@PathVariable long userId){
+  public ResponseResult userDelete(@PathVariable long userId){
     
     userService.updateUserStatusByUserId(userId);
     
     List<UserVo> userList = userService.getUserVoList();
-    return ResponseEntity.success(userList);
+    return ResponseResult.success(userList);
   }
   
   /**
@@ -127,11 +127,11 @@ public class UserController {
    * @return 封装的user信息
    */
   @RequestMapping(value = Constant.USER, method = RequestMethod.PUT)
-  public ResponseEntity userModify(@RequestBody User user){
+  public ResponseResult userModify(@RequestBody User user){
     
     User userForCompare = userService.getUserbyEmail(user.getEmail());
     if(null != userForCompare){
-      return ResponseEntity.failure(Constant.EMAIL_DUPLICATE);
+      return ResponseResult.failure(Constant.EMAIL_DUPLICATE);
     }
     
     User userInfo = userService.getUserbyUserId(user.getUserId());
@@ -148,7 +148,7 @@ public class UserController {
     userService.userSave(userInfo);
     
     List<UserVo> userList = userService.getUserVoList();
-    return ResponseEntity.success(userList);
+    return ResponseResult.success(userList);
   }
 }
 
