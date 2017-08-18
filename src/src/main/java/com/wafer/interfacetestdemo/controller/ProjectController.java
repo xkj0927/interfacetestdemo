@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Project;
 import com.wafer.interfacetestdemo.service.ProjectService;
-import com.wafer.interfacetestdemo.vo.ResponseEntity;
+import com.wafer.interfacetestdemo.vo.ResponseResult;
 
 @RestController
 @RequestMapping(Constant.DEMO_PATH)
@@ -26,10 +26,10 @@ public class ProjectController {
    */
   @RequestMapping(value = Constant.PROJECTS, method = RequestMethod.GET)
   @Transactional(readOnly = true)
-  public ResponseEntity projectList(){
+  public ResponseResult projectList(){
     
     List<Project> projectList = projectService.getProjectList();
-    return ResponseEntity.success(projectList);
+    return ResponseResult.success(projectList);
   }
   
 }
