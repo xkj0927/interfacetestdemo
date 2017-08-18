@@ -6,16 +6,18 @@ import {Icon, Form, Input, Button, message} from 'antd';
 import style from './login-page.less';
 import {routerRedux} from 'dva/router';
 import {connect} from 'dva';
+import {FormattedMessage, injectIntl} from 'react-intl';
 
 const FormItem = Form.Item;
 
-const LoginPage = ({form, dispatch}) => {
+const LoginPage = ({form, dispatch, intl}) => {
     const {getFieldDecorator, validateFields} = form;
     return (
         <div className={style.loginbg}>
             <div className={style.wrapper}>
                 <div className={style.body}>
-                    <header className={style.header}> Login
+                    <header className={style.header}>
+                      <FormattedMessage id="login.userLogin" />
                     </header>
                     <section className={style.form}>
                         <Form onSubmit={(e)=>{
@@ -24,12 +26,15 @@ const LoginPage = ({form, dispatch}) => {
                                 dispatch({type:'common/login', payload:values});
                             });
                         }}>
-                        <FormItem label="account" labelCol={{span: 6}} wrapperCol={{span: 14}}>
+                        <FormItem
+                          label={intl.formatMessage({id: "login.account"})}
+                          labelCol={{span: 6}}
+                          wrapperCol={{span: 14}}>
                             {getFieldDecorator('account', {
                                 rules: [
                                     {
                                         required: true,
-                                        message: "emptyAccount",
+                                        message: intl.formatMessage({id: "login.warn.emptyAccount"}),
                                         type: 'string',
                                     },
                                 ],
@@ -37,12 +42,15 @@ const LoginPage = ({form, dispatch}) => {
                                 <Input type="text" placeholder="account" addonBefore={<Icon type="user"/>}/>,
                             )}
                         </FormItem>
-                        <FormItem label="password" labelCol={{span: 6}} wrapperCol={{span: 14}}>
+                        <FormItem
+                          label={intl.formatMessage({id: "login.password"})}
+                          labelCol={{span: 6}}
+                          wrapperCol={{span: 14}}>
                             {getFieldDecorator('password', {
                                 rules: [
                                     {
                                         required: true,
-                                        message: "emptyPassword",
+                                        message: intl.formatMessage({id: "login.warn.emptyPassword"}),
                                         type: 'string',
                                     },
                                 ],
@@ -50,7 +58,9 @@ const LoginPage = ({form, dispatch}) => {
                                 <Input type="password" placeholder="password" addonBefore={<Icon type="lock"/>}/>,
                             )}
                         </FormItem>
-                        <Button  className={style.btn} type="primary" htmlType="submit">Sign In</Button>
+                        <Button  className={style.btn} type="primary" htmlType="submit">
+                          <FormattedMessage id="login.signIn" />
+                        </Button>
                     </Form>
                     </section>
                 </div>
@@ -59,6 +69,6 @@ const LoginPage = ({form, dispatch}) => {
     );
 
 };
-// const mapStateToProps = state => ({i18n: state.i18n});
+const mapStateToProps = state => ({i18n: state.i18n});
 
-export default connect(state => state)(Form.create()(LoginPage));
+export default connect(mapStateToProps)(Form.create()(injectIntl(LoginPage)));

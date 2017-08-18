@@ -3,12 +3,23 @@
  */
 import React from 'react';
 import {connect} from 'dva';
+import {FormattedMessage, FormattedDate} from 'react-intl';
 
 const HomePage = ({common}) => {
   const userName = (<b>{common.userName}</b>);
   return (
     <div>
-        <b>{userName}</b>
+      <FormattedMessage
+        id="home.welcome"
+        values={
+          {
+            userName: userName
+          }
+        }
+      />
+      <FormattedDate
+        value={Date.now()}
+      />
     </div>
   )
 } ;

@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Link} from 'dva/router';
+import {FormattedMessage} from 'react-intl';
 import {USER_AUTHORITY_NORMAL, USER_AUTHORITY_ADMIN} from '../../utils/constants';
 import {Menu, Icon} from 'antd';
 
@@ -13,11 +14,11 @@ const Left = ({userAuthority}) => {
 
   let subMenu = [];
     subMenu.push((
-        <SubMenu key="user" title={<span><Icon type="user"/>User Manage</span>}>
+        <SubMenu key="user" title={<span><Icon type="user"/><FormattedMessage id="home.userManager"/></span>}>
         </SubMenu>
     ));
     subMenu.push((
-        <SubMenu key="project" title={<span><Icon type="team"/>Project Manage</span>}>
+        <SubMenu key="project" title={<span><Icon type="team"/><FormattedMessage id="home.projectManager"/></span>}>
         </SubMenu>
     ));
   // if (userAuthority === USER_AUTHORITY_NORMAL) {
