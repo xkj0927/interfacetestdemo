@@ -17,7 +17,7 @@ const Left = ({userAuthority}) => {
         </SubMenu>
     ));
     subMenu.push((
-        <SubMenu key="project" title={<span><Icon type="team"/>Team Manage</span>}>
+        <SubMenu key="project" title={<span><Icon type="team"/>Project Manage</span>}>
         </SubMenu>
     ));
   // if (userAuthority === USER_AUTHORITY_NORMAL) {

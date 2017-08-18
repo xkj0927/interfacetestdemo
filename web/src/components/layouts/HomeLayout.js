@@ -27,7 +27,6 @@ const HomeLayout = ({dispatch, children, userAuthority, userName}) => {
 };
 
 const mapStateToProps = (state) => {
-    debugger;
   const {userAuthority, userName} = state.common;
   return {userAuthority: parseInt(userAuthority), userName}
 };

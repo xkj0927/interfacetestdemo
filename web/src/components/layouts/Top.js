@@ -11,17 +11,23 @@ const Top = ({dispatch, userName}) => {
   let content = (
     <Menu mode="inline" className={style.menu} onClick={
       ({item, key, keyPath}) => {
-        dispatch({type: 'common/logout'});
+        switch(key) {
+          case "3":
+            dispatch({type: 'common/logout'});
+            break;
+          default:
+            break;
+        }
       }
     }>
-      <Menu.Item key="1" className={style.menuItem}>userName: <b>{userName}</b></Menu.Item>
-      <Menu.Item key="3" className={style.menuItem}>logOut</Menu.Item>
+      <Menu.Item key="1" className={style.menuItem}>UserName: <b>{userName}</b></Menu.Item>
+      <Menu.Item key="3" className={style.menuItem}>LogOut</Menu.Item>
     </Menu>
   );
 
   return (
     <header className={style.header}>
-      <Link to="/">title</Link>
+      <Link to="/">Interface Test Demo</Link>
       <Popover content={content} trigger="click" >
         <Button type="primary" icon="setting" className={style.btn}>{userName}</Button>
       </Popover>

@@ -5,7 +5,6 @@ import React from 'react';
 import {connect} from 'dva';
 
 const HomePage = ({common}) => {
-    debugger;
   const userName = (<b>{common.userName}</b>);
   return (
     <div>

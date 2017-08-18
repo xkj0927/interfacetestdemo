@@ -8,7 +8,7 @@ import {routerRedux} from 'dva/router';
 import {connect} from 'dva';
 
 const FormItem = Form.Item;
-debugger;
+
 const LoginPage = ({form, dispatch}) => {
     const {getFieldDecorator, validateFields} = form;
     return (
@@ -21,7 +21,6 @@ const LoginPage = ({form, dispatch}) => {
                         <Form onSubmit={(e)=>{
                             e.preventDefault();
                             validateFields((err, values)=>{
-                                debugger;
                                 dispatch({type:'common/login', payload:values});
                             });
                         }}>
@@ -51,7 +50,7 @@ const LoginPage = ({form, dispatch}) => {
                                 <Input type="password" placeholder="password" addonBefore={<Icon type="lock"/>}/>,
                             )}
                         </FormItem>
-                        <button  className={style.btn} type="primary" htmlType="submit">Sign In</button>
+                        <Button  className={style.btn} type="primary" htmlType="submit">Sign In</Button>
                     </Form>
                     </section>
                 </div>

@@ -14,3 +14,10 @@ export function login(values){
         body: JSON.stringify(values),
     });
 }
+
+export function logout(account) {
+  return request('api/v1/logout', {
+    method: 'POST',
+    body: JSON.stringify({account}),
+  });
+}

@@ -29,7 +29,6 @@ function requireRoute(cb, ...routes){
 }
 
 function RouterConfig({ history, app}) {
-   debugger;
     const routes=[
         {
             path:"/",
