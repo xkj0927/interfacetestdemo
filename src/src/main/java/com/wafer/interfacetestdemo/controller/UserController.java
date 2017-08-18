@@ -23,6 +23,7 @@ import com.wafer.interfacetestdemo.vo.UserVo;
 @RequestMapping("/api/v1/")
 @Transactional
 public class UserController {
+  
 
   @Autowired
   UserService userService;  
