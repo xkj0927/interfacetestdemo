@@ -9,6 +9,7 @@ export default {
     state:{
         userId: 0,
         userName: 0,
+        userAuthority: 1,
         email: '',
         status: '',
         contextPath: ''
@@ -20,13 +21,11 @@ export default {
     },
    effects: {
       *login({payload: values}, {put, call, select}){
-          debugger;
           const {data, result, message: msgkey} = yield call(commonService.login, values);
-          const {common, messages} = yield select(state => state);
-          debugger;
+          const {common, i18n: {messages}} = yield select(state => state);
           if(result){
-              const user  = data;
-              // sessionStorage.setItem("access_token", token);
+              const {user, token}  = data;
+              sessionStorage.setItem("access_token", token);
               for(let property in common){
                   if(user.hasOwnProperty(property)){
                         common[property] = user[property];
@@ -47,11 +46,25 @@ export default {
               yield put({type: 'set', common});
               yield localStorage.setItem("common", JSON.stringify(common));//登录后把common信息存储到localstorage中
               yield put(routerRedux.push('/home'));
-              // message.success(messages["Login Success"]);
+              message.success(messages["login.success"]);
           } else {
               message.error(messages[`msgKey.${msgkey}`]);
           }
 
+      },
+     *logout(_, {call, put, select}){
+       const {userId} = yield select(state => state.common);
+       yield call(commonService.logout, userId);
+
+       yield localStorage.removeItem("common");
+       yield put(routerRedux.push('/'));
+     }
+   },
+  subscriptions: {
+    reset({dispatch}){//页面刷新后，将localstorage中的common重新赋值给state
+      if(localStorage.getItem("common")){
+        dispatch({type: "set", common: JSON.parse(localStorage.getItem("common"))});
       }
-   }
+    },
+  }
 }

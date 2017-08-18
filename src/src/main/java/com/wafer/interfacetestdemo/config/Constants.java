@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.wafer.interfacetestdemo.config;
 
 public interface Constants {
@@ -30,3 +31,26 @@ public interface Constants {
    */
   int NOT_RUNNING = 1;
 }
+=======
+package com.wafer.interfacetestdemo.config;
+
+public interface Constants {
+
+  /**
+   * user controller 
+   */
+  String USER_CONTROLLER = "/user/api/v1/";
+  /**
+   * module controller
+   */
+  String MODULE_CONTROLLER = "/module/api/v1/";
+  /**
+   * interface controller
+   */
+  String INTERFACE_CONTROLLER = "/interface/api/v1/";
+  /**
+   * interface test case controller
+   */
+  String INTERFACE_CASE_CONTROLLER = "/interfacecase/api/v1/";
+}
+>>>>>>> 8347e1b90af0613a1706e788c5f9502aded70e58

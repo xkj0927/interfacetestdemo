@@ -7,7 +7,7 @@ import style from './home-layout.less';
 import Top from './Top';
 import Left from './Left';
 
-const HomeLayout = ({dispatch, children, userAuthority, userName}) => {
+const HomeLayout = ({dispatch, children, locale, userAuthority, userName}) => {
   return (
     <div>
       <Top
@@ -16,7 +16,7 @@ const HomeLayout = ({dispatch, children, userAuthority, userName}) => {
       />
       <main className={style.main}>
         <div className={style.menu}>
-          <Left dispatch={dispatch} userAuthority={userAuthority}/>
+          <Left locale={locale} dispatch={dispatch} userAuthority={userAuthority}/>
         </div>
         <div className={style.content}>
           {children}
@@ -27,9 +27,9 @@ const HomeLayout = ({dispatch, children, userAuthority, userName}) => {
 };
 
 const mapStateToProps = (state) => {
-    debugger;
+  const {locale} = state.i18n;
   const {userAuthority, userName} = state.common;
-  return {userAuthority: parseInt(userAuthority), userName}
+  return {locale,userAuthority: parseInt(userAuthority), userName}
 };
 
 export default connect(mapStateToProps)(HomeLayout)
