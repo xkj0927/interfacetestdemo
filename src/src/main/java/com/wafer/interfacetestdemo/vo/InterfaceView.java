@@ -1,27 +1,11 @@
-package com.wafer.interfacetestdemo.domain;
-
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
+package com.wafer.interfacetestdemo.vo;
 
 import com.wafer.interfacetestdemo.config.Constants;
+import com.wafer.interfacetestdemo.domain.Interface;
 import com.wafer.interfacetestdemo.utils.DateUtils;
-import com.wafer.interfacetestdemo.vo.InterfaceView;
 
-@Entity
-@Table(name = "ps_interface")
-public class Interface {
-
-  @Id
-  @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = "native")
-  @Column(name = "interface_id", unique = true, nullable = false)
+public class InterfaceView {
+  
   private long interfaceId;
   private long moduleId;
   private String interfaceName;
@@ -29,104 +13,85 @@ public class Interface {
   private String interfaceType;
   private String requestParam;
   private String responseResult;
-  private int isRun;
-  private Date createTime;
-  private Date updateTime;
-
+  private boolean isRun;
+  private String createTime;
+  private String updateTime;
   public long getInterfaceId() {
     return interfaceId;
   }
-
   public void setInterfaceId(long interfaceId) {
     this.interfaceId = interfaceId;
   }
-
   public long getModuleId() {
     return moduleId;
   }
-
   public void setModuleId(long moduleId) {
     this.moduleId = moduleId;
   }
-
   public String getInterfaceName() {
     return interfaceName;
   }
-
   public void setInterfaceName(String interfaceName) {
     this.interfaceName = interfaceName;
   }
-
   public String getInterfaceUrl() {
     return interfaceUrl;
   }
-
   public void setInterfaceUrl(String interfaceUrl) {
     this.interfaceUrl = interfaceUrl;
   }
-
   public String getInterfaceType() {
     return interfaceType;
   }
-
   public void setInterfaceType(String interfaceType) {
     this.interfaceType = interfaceType;
   }
-
   public String getRequestParam() {
     return requestParam;
   }
-
   public void setRequestParam(String requestParam) {
     this.requestParam = requestParam;
   }
-
   public String getResponseResult() {
     return responseResult;
   }
-
   public void setResponseResult(String responseResult) {
     this.responseResult = responseResult;
   }
-
-  public int getIsRun() {
+  public boolean isRun() {
     return isRun;
   }
-
-  public void setIsRun(int isRun) {
+  public void setRun(boolean isRun) {
     this.isRun = isRun;
   }
-
-  public Date getCreateTime() {
+  public String getCreateTime() {
     return createTime;
   }
-
-  public void setCreateTime(Date createTime) {
+  public void setCreateTime(String createTime) {
     this.createTime = createTime;
   }
-
-  public Date getUpdateTime() {
+  public String getUpdateTime() {
     return updateTime;
   }
-
-  public void setUpdateTime(Date updateTime) {
+  public void setUpdateTime(String updateTime) {
     this.updateTime = updateTime;
   }
   
-  public static Interface transformInterfaceToView(InterfaceView faceView){
-    if(null == faceView){
+  public static InterfaceView transformInterfaceToView(Interface face){
+    if(null == face){
       return null;
     }
-    Interface face = new Interface();
-    face.setInterfaceId(faceView.getInterfaceId());
-    face.setInterfaceName(faceView.getInterfaceName());
-    face.setInterfaceType(faceView.getInterfaceType());
-    face.setInterfaceUrl(faceView.getInterfaceUrl());
-    face.setModuleId(faceView.getModuleId());
-    face.setRequestParam(faceView.getRequestParam());
-    face.setResponseResult(faceView.getResponseResult());
-    face.setIsRun(faceView.isRun() ? Constants.RUNNING : Constants.NOT_RUNNING);
-    return face;
+    InterfaceView faceView = new InterfaceView();
+    faceView.setInterfaceId(face.getInterfaceId());
+    faceView.setInterfaceName(face.getInterfaceName());
+    faceView.setInterfaceType(face.getInterfaceType());
+    faceView.setInterfaceUrl(face.getInterfaceUrl());
+    faceView.setModuleId(face.getModuleId());
+    faceView.setRequestParam(face.getRequestParam());
+    faceView.setResponseResult(face.getResponseResult());
+    faceView.setRun(Constants.RUNNING == face.getIsRun());
+    faceView.setUpdateTime(DateUtils.formatDateTime(face.getUpdateTime()));
+    faceView.setCreateTime(DateUtils.formatDateTime(face.getCreateTime()));
+    return faceView;
   }
-
 }
