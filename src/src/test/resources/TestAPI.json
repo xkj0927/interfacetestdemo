@@ -1,0 +1,10 @@
+[
+    {
+        "caseName": "test",
+        "url": "/api/v1/user",
+        "type": "PUT",
+        "paramters": "{\"userId\":1,\"userName\":\"www\"}",
+        "expectResult": "",
+        "expectStatus": "200"
+    }
+]
