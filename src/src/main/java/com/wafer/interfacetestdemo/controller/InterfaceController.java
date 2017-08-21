@@ -91,5 +91,15 @@ public class InterfaceController {
     return ResponseResult.success(faceViews);
   }
   
+  /**
+   * 通过interfaceId查询一个【接口】的详情
+   * @param interfaceId
+   * @return
+   */
+  @RequestMapping(value = "interface/{interfaceId}", method = RequestMethod.GET)
+  public ResponseResult getInterfaceById(@PathVariable long interfaceId){
+    Interface face= interfaceService.findInterfaceById(interfaceId);
+    return ResponseResult.success(InterfaceView.transformInterfaceToView(face));
+  }
   
 }

@@ -10,7 +10,7 @@ import com.wafer.interfacetestdemo.config.Constants;
 
 @RestController
 @Transactional
-@RequestMapping(Constants.INTERFACE_CASE_CONTROLLER)
+@RequestMapping(Constants.CONTROLLER_PATH)
 public class InterfaceTestCaseController {
 
   @RequestMapping(value = "interfacecase", method = RequestMethod.GET)
