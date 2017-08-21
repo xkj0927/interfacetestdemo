@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.wafer.interfacetestdemo.config.Constants;
-import com.wafer.interfacetestdemo.utils.DateUtils;
 import com.wafer.interfacetestdemo.vo.InterfaceView;
 
 @Entity
