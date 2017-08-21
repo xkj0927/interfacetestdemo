@@ -15,7 +15,6 @@
 	</parent>
 
 	<properties>
-<<<<<<< HEAD
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 	</properties>
@@ -33,102 +32,16 @@
 		</dependency>
 
 		<dependency>
-=======
-	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	    <java.version>1.8</java.version>
-  	</properties>
-  	
-  <dependencies>
-  
-  <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-data-jpa</artifactId>
-     </dependency>
-  
-  	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-web</artifactId>
-	</dependency>
-	
-	<dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-devtools</artifactId>
-         <optional>true</optional>
-     </dependency>
-     
-     <dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-security</artifactId>
-	</dependency>
-	
-	<dependency>
-	    <groupId>mysql</groupId>
-	    <artifactId>mysql-connector-java</artifactId>
-	</dependency>
-	
-	<dependency>
-		<groupId>io.jsonwebtoken</groupId>
-		<artifactId>jjwt</artifactId>
-		<version>0.7.0</version>
-	</dependency>
-	
-	<dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-test</artifactId>
-         <scope>test</scope>
-     </dependency>
-       <dependency>
-		    <groupId>net.sf.json-lib</groupId>
-		    <artifactId>json-lib</artifactId>
-		    <version>2.4</version>
-			<classifier>jdk15</classifier> 
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-        <!-- 添加testNG依赖 -->  
-       <dependency>  
-           <groupId>org.testng</groupId>  
-           <artifactId>testng</artifactId>  
-           <version>6.9.10</version>  
-           <scope>test</scope>  
-       </dependency> 
-       <!-- 依赖reportNg 关联testNg -->
-       <dependency>
-           <groupId>org.uncommons</groupId>
-           <artifactId>reportng</artifactId>
-           <version>1.1.4</version>
-           <scope>test</scope>
-           <exclusions>
-               <exclusion>
-                   <groupId>org.testng</groupId>
-                   <artifactId>testng</artifactId>
-               </exclusion>
-           </exclusions>
-       </dependency>
-       <!-- 依赖Guice -->
-       <dependency>
-           <groupId>com.google.inject</groupId>
-           <artifactId>guice</artifactId>
-           <version>4.0</version>
-           <scope>test</scope>
-       </dependency>
-       <!-- 依赖velocity -->
-	<dependency>
-	    <groupId>velocity</groupId>
-	    <artifactId>velocity-dep</artifactId>
-	    <version>1.4</version>
-	</dependency>
-       <!-- 依赖poi读取Excel数据 -->
-       <dependency>
-	    <groupId>org.apache.poi</groupId>
-	    <artifactId>poi</artifactId>
-	    <version>3.14</version>
-	</dependency> 
-	
-  </dependencies>
-  <build>
-    <finalName>interfacetestdemo</finalName>
-	<plugins>
-		<plugin>
->>>>>>> fd18040f2209bd235bbe9a214e5a666ab5268d03
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
@@ -155,7 +68,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+		</dependency>
 		<!-- 添加testNG依赖 -->
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -195,14 +113,15 @@
 			<artifactId>poi</artifactId>
 			<version>3.14</version>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.15</version>
+			<version>3.14</version>
 		</dependency>
 
 	</dependencies>
+
 	<build>
 		<finalName>interfacetestdemo</finalName>
 		<plugins>
