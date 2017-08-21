@@ -53,8 +53,104 @@
 		<version>0.7.0</version>
 	</dependency>
 	
+	<dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-test</artifactId>
+         <scope>test</scope>
+     </dependency>
+       
+        <!-- 添加testNG依赖 -->  
+       <dependency>  
+           <groupId>org.testng</groupId>  
+           <artifactId>testng</artifactId>  
+           <version>6.9.10</version>  
+           <scope>test</scope>  
+       </dependency> 
+       <!-- 依赖reportNg 关联testNg -->
+       <dependency>
+           <groupId>org.uncommons</groupId>
+           <artifactId>reportng</artifactId>
+           <version>1.1.4</version>
+           <scope>test</scope>
+           <exclusions>
+               <exclusion>
+                   <groupId>org.testng</groupId>
+                   <artifactId>testng</artifactId>
+               </exclusion>
+           </exclusions>
+       </dependency>
+       <!-- 依赖Guice -->
+       <dependency>
+           <groupId>com.google.inject</groupId>
+           <artifactId>guice</artifactId>
+           <version>4.0</version>
+           <scope>test</scope>
+       </dependency>
+       <!-- 依赖velocity -->
+	<dependency>
+	    <groupId>velocity</groupId>
+	    <artifactId>velocity-dep</artifactId>
+	    <version>1.4</version>
+	</dependency>
+       <!-- 依赖poi读取Excel数据 -->
+       <dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi</artifactId>
+	    <version>3.14</version>
+	</dependency> 
+	
   </dependencies>
   <build>
-    <finalName>src</finalName>
+    <finalName>interfacetestdemo</finalName>
+	<plugins>
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+		</plugin>
+		<!-- 运行项目中src/test/Java文件夹下的testcase -->
+	     <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<configuration>
+					<!-- 不对xls进行转码 -->
+			    	<properties>
+		                <property>
+		                    <name>usedefaultlisteners</name>
+		                    <value>false</value>
+		                </property>
+		                <property>
+		                    <name>listener</name>
+		                    <value>org.uncommons.reportng.HTMLReporter, org.uncommons.reportng.JUnitXMLReporter</value>
+		                </property>
+		            </properties>
+					<suiteXmlFiles>
+					    <suiteXmlFile>testng.xml</suiteXmlFile>
+					</suiteXmlFiles>
+					<!-- 系统参数默认不初始化数据  mvn test -DinitData=true -->
+				   <systemPropertyVariables>
+		                  <init>false</init>
+		                  <filePath>classpath:TestDataInit.sql</filePath>
+	               </systemPropertyVariables>
+	  		</configuration>
+		</plugin>
+	</plugins>
+	<testResources>
+         <testResource>
+             <directory>src/test/java</directory>
+             <includes>
+                 <include>**/*.xls</include>
+                 <include>**/*.json</include>
+             </includes>
+             <filtering>false</filtering>
+         </testResource>
+         <testResource>
+             <directory>src/test/resources</directory>
+             <includes>
+                 <include>**/*.xls</include>
+                 <include>**/*.json</include>
+             </includes>
+             <filtering>false</filtering>
+         </testResource>
+     </testResources>
   </build>
 </project>
