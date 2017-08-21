@@ -24,7 +24,7 @@ public class InterfaceService {
   }
   
   /**
-   * 删除一个接口
+   * 删除一个【接口】
    * @param interfaceId
    */
   public void deleteInterface(long interfaceId){
@@ -32,7 +32,7 @@ public class InterfaceService {
   }
   
   /**
-   * 获取所有的接口
+   * 获取所有的【接口】
    * @return
    */
   public List<Interface> findAllInterface(){
@@ -40,7 +40,7 @@ public class InterfaceService {
   }
   
   /**
-   * 获取指定的接口
+   * 获取指定的【接口】
    * @param interfaceId
    * @return
    */
@@ -49,7 +49,7 @@ public class InterfaceService {
   }
   
   /**
-   * 获取一个module下的所有接口
+   * 获取一个module下的所有【接口】
    * @param moduleId
    * @return
    */
@@ -58,7 +58,7 @@ public class InterfaceService {
   }
   
   /**
-   * 获取多个module下的所有接口
+   * 获取多个module下的所有【接口】
    * @param moduleId
    * @return
    */
@@ -67,7 +67,7 @@ public class InterfaceService {
   }
   
   /**
-   * 通过接口名称模糊匹配 一个module下
+   * 通过【接口】名称模糊匹配 一个module下
    * @param interfaceName
    * @return
    */
@@ -76,7 +76,7 @@ public class InterfaceService {
   }
   
   /**
-   * 通过接口类型查询所有接口 一个module下
+   * 通过【接口】类型查询所有【接口】 一个module下
    * @param interfaceName
    * @return
    */

@@ -32,7 +32,7 @@ public class InterfaceController {
   InterfaceService interfaceService;
   
   /**
-   * 新增一个接口
+   * 新增一个【接口】
    * @param moduleId
    * @return
    */
@@ -45,7 +45,7 @@ public class InterfaceController {
   }
   
   /**
-   * 删除一个接口
+   * 删除一个【接口】
    * @param moduleId
    * @return
    */
@@ -59,7 +59,7 @@ public class InterfaceController {
   }
   
   /**
-   * 修改一个接口
+   * 修改一个【接口】
    * @param moduleId
    * @return
    */
@@ -79,7 +79,7 @@ public class InterfaceController {
   }
   
   /**
-   * 查询一个module下的所有接口
+   * 查询一个module下的所有【接口】
    * @param moduleId
    * @return
    */
