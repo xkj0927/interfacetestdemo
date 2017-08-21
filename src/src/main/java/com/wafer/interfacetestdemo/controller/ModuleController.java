@@ -62,7 +62,8 @@ public class ModuleController {
    * 
    * @param moduleId
    */
-  @RequestMapping(value = "module/project/{projectId}/moname/{moduleName}", method = RequestMethod.GET)
+  @RequestMapping(value = "module/project/{projectId}/moname/{moduleName}",
+      method = RequestMethod.GET)
   public ResponseResult getModuleByProjectAndName(@PathVariable @Min(0) long projectId,
       @PathVariable @NotNull String moduleName) {
     List<Module> modules = moduleService.findModuleByProjectIdAndName(projectId, moduleName);
@@ -70,9 +71,10 @@ public class ModuleController {
     modules.forEach(mo -> moduleViews.add(ModuleView.transformViewToModule(mo)));
     return ResponseResult.success(moduleViews);
   }
-  
+
   /**
-   * 在一个项目下  找到 需要run或者不需要run的的module
+   * 在一个项目下 找到 需要run或者不需要run的的module
+   * 
    * @param projectId
    * @param isRun
    * @return
@@ -143,5 +145,5 @@ public class ModuleController {
     module = moduleService.saveModule(module);
     return ResponseResult.success(ModuleView.transformViewToModule(module));
   }
-  
+
 }
