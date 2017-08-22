@@ -38,6 +38,7 @@ const ProjectListPage = ({dispatch, projects, intl, userRole, userAuthority, loa
 };
 
 const mapStateToProps = (state, ownProps) => {
+  debugger;
   const {userRole = constants.USER_ROLE_STUDENT} = ownProps.location.query;
   const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
   const projects = state.projects;

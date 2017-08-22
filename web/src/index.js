@@ -26,6 +26,8 @@ app.model(require('./models/common'));
 app.model(require('./models/i18n'));
 app.model(require('./models/users'));
 app.model(require('./models/projects'));
+app.model(require('./models/modules'));
+app.model(require('./models/interfaces'));
 
 // 4. Router
 app.router(require('./router'));
