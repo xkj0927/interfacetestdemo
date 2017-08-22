@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'dva';
-import {Table, Button, Popconfirm, Spin, Icon, Form, Modal} from 'antd';
+import {Table, Button, Popconfirm, Spin, Icon, Form, Modal, Popover} from 'antd';
 import moment from 'moment'
 import {routerRedux} from 'dva/router';
 import {FormattedMessage, injectIntl} from 'react-intl';
-import * as constants from '../utils/constants';
+import style from './project-list-page.less';
 
-const ProjectListPage = ({dispatch, projects, intl, userRole, userAuthority, loading, projectInfo, handleType, modalKey, visible}) => {
+const ProjectListPage = ({dispatch, projects, intl, loading, projectInfo, handleType, modalKey, visible}) => {
   const columns = [
     {
       title: intl.formatMessage({id: "project.projectId"}),
@@ -22,24 +22,60 @@ const ProjectListPage = ({dispatch, projects, intl, userRole, userAuthority, loa
       render: (text, record) => (moment(record.startTime).format("YYYY-MM-DD HH:mm:ss"))
     }
   ];
-
+  const content = (
+    <div>
+      <Button className={style.marginRight5}><Icon type="edit" /></Button>
+      <Button className={style.marginLeft5}><Icon type="delete" /></Button>
+    </div>
+  );
 
   return (
     <div>
       <Spin spinning={loading} tip={intl.formatMessage({id: 'loading'})}>
-        <Table
-          columns={columns}
-          dataSource={projects}
-          rowKey={row => row.projectId}
-        />
+        <div className={style.projectContainer}>
+          <div className={style.project}>
+            <Popover content={content}>
+              <div className={style.info}>
+                <div className={style.title}>DLP Demo</div>
+              </div>
+            </Popover>
+            <div className={style.status}>
+              <span className={style.creator}>@ssss</span>
+            </div>
+          </div>
+
+          <div className={style.project}>
+            <Popover content={content}>
+              <div className={style.info}>
+                <div className={style.title}>DLP Demo</div>
+              </div>
+            </Popover>
+            <div className={style.status}>
+              <span className={style.creator}>@ssss</span>
+            </div>
+          </div>
+
+          <div className={style.project}>
+            <Popover content={content}>
+              <div className={style.info}>
+                <div className={style.title}>DLP Demo</div>
+              </div>
+            </Popover>
+            <div className={style.status}>
+              <span className={style.creator}>@ssss</span>
+            </div>
+          </div>
+
+          <div className={style.boxToAdd}>
+          </div>
+
+        </div>
       </Spin>
     </div>
   );
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const {userRole = constants.USER_ROLE_STUDENT} = ownProps.location.query;
-  const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
   const projects = state.projects;
   return {
     projects: projects.projects,
@@ -48,8 +84,6 @@ const mapStateToProps = (state, ownProps) => {
     modalKey: projects.modalKey,
     handleType: projects.type,
     i18n: state.i18n,
-    userRole: parseInt(userRole),
-    userAuthority: parseInt(userAuthority),
     loading: state.loading.effects['projects/reload']
   };
 };
