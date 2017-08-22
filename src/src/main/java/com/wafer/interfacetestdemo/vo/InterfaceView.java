@@ -1,5 +1,7 @@
 package com.wafer.interfacetestdemo.vo;
 
+import java.util.List;
+
 import com.wafer.interfacetestdemo.config.Constants;
 import com.wafer.interfacetestdemo.domain.Interface;
 import com.wafer.interfacetestdemo.utils.DateUtils;
@@ -16,6 +18,8 @@ public class InterfaceView {
   private boolean isRun;
   private String createTime;
   private String updateTime;
+  
+  private List<TestCaseView> testCases;
 
   public long getInterfaceId() {
     return interfaceId;
@@ -113,5 +117,13 @@ public class InterfaceView {
     faceView.setUpdateTime(DateUtils.formatDateTime(face.getUpdateTime()));
     faceView.setCreateTime(DateUtils.formatDateTime(face.getCreateTime()));
     return faceView;
+  }
+
+  public List<TestCaseView> getTestCases() {
+    return testCases;
+  }
+
+  public void setTestCases(List<TestCaseView> testCases) {
+    this.testCases = testCases;
   }
 }

@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wafer.interfacetestdemo.config.Constants;
+import com.wafer.interfacetestdemo.domain.Interface;
+import com.wafer.interfacetestdemo.domain.InterfaceTestCase;
 import com.wafer.interfacetestdemo.domain.Module;
+import com.wafer.interfacetestdemo.service.InterfaceService;
+import com.wafer.interfacetestdemo.service.InterfaceTestCaseService;
 import com.wafer.interfacetestdemo.service.ModuleService;
+import com.wafer.interfacetestdemo.vo.InterfaceView;
 import com.wafer.interfacetestdemo.vo.ModuleView;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
+import com.wafer.interfacetestdemo.vo.TestCaseView;
 
 @RestController
 @Transactional
@@ -32,6 +39,12 @@ public class ModuleController {
 
   @Autowired
   ModuleService moduleService;
+  
+  @Autowired
+  InterfaceService interfaceService;
+  
+  @Autowired
+  InterfaceTestCaseService testCaseService;
 
   /**
    * 查询所有的module
@@ -144,6 +157,38 @@ public class ModuleController {
     module.setIsRun(mv.isRun() ? Constants.RUNNING : Constants.NOT_RUNNING);
     module = moduleService.saveModule(module);
     return ResponseResult.success(ModuleView.transformViewToModule(module));
+  }
+  
+  @GetMapping("modules/interfaces/{projectId}")
+  public ResponseResult getModulesAndInterfaces(@PathVariable long projectId){
+    // 1.查询一个项目下所有的module
+    List<Module> modules = moduleService.findModuleByProjectId(projectId);
+    List<ModuleView> mvs = new ArrayList<>();
+    modules.forEach((module -> {
+      
+      ModuleView mv = ModuleView.transformViewToModule(module);
+      // 2.查询module下的所有interface
+      List<Interface> interfaces = interfaceService.findInterfaceByModule(module.getModuleId());
+      List<InterfaceView> interfaceViews = new ArrayList<>();
+      
+      interfaces.forEach(face -> {
+        InterfaceView faceView = InterfaceView.transformInterfaceToView(face);
+        List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(face.getInterfaceId());
+        
+        List<TestCaseView> testCaseViews = new ArrayList<>(); 
+        testCases.forEach(testCase -> {
+          testCaseViews.add(TestCaseView.transformViewToTestCase(testCase));
+        });
+        
+        faceView.setTestCases(testCaseViews);
+        interfaceViews.add(faceView);
+        
+      });
+      
+      mv.setInterfaceViews(interfaceViews);
+      mvs.add(mv);
+    }));
+    return ResponseResult.success(mvs);
   }
 
 }
