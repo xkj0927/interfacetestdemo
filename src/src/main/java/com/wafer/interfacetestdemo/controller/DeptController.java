@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Dept;
+import com.wafer.interfacetestdemo.domain.DeptUser;
 import com.wafer.interfacetestdemo.service.DeptService;
+import com.wafer.interfacetestdemo.service.DeptUserService;
 import com.wafer.interfacetestdemo.vo.DeptVo;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
 
@@ -23,6 +25,9 @@ import com.wafer.interfacetestdemo.vo.ResponseResult;
 public class DeptController {
   @Autowired
   DeptService deptService;
+  
+  @Autowired
+  DeptUserService deptUserService;
   
   /**
    * 查询dept信息
@@ -59,11 +64,15 @@ public class DeptController {
    */
   @RequestMapping(value = Constant.DEPT_DELETE, method = RequestMethod.DELETE)
   public ResponseResult deptDelete(@PathVariable long deptId){
-      
-    deptService.deleteDeptByDeptId(deptId);
-    
-    List<DeptVo> deptList = deptService.getDeptVoList();   
-    return ResponseResult.success(deptList);
+    List<DeptUser> deptUserList = deptUserService.getDeptUserByDeptId(deptId);  
+    if(null != deptUserList && deptUserList.size() > 0){
+      return ResponseResult.failure(Constant.USER_EXIST);
+    }else{
+      deptService.deleteDeptByDeptId(deptId);
+      List<DeptVo> deptList = deptService.getDeptVoList();   
+      return ResponseResult.success(deptList);
+    }
+   
   }
   
   /**

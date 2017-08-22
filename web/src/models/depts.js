@@ -56,16 +56,20 @@ export default {
       message.info(messages["dept.success.editDept"]);
     },
     *delete({payload: deptId}, {select, put, call}){
-      yield call(deptService.removeDept, deptId);
-      yield put({type: "reload"});
+      const {result, message: msgKey} = yield call(deptService.removeDept, deptId);
       const messages  = yield select(state => state.i18n.messages);
-      message.info(messages["dept.success.deleteDept"]);
+      if(result){
+        yield put({type: "reload"});
+        message.info(messages["dept.success.deleteDept"]);
+      }else {
+        message.error(messages[`msgKey.${msgKey}`]);
+      }
     }
   },
   subscriptions: {
     setup({history, dispatch}){
       return history.listen(({ pathname, query }) => {
-        if (pathname === '/dept/list') {
+        if (pathname === '/dept/list' || pathname === '/user/list') {
           dispatch({ type: 'reload'});
         }
       });

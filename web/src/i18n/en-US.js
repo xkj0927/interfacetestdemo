@@ -12,11 +12,10 @@ const enUS = {
 
   "home.title": "Welcome to the InterfaceTest system",
   "home.userManager": "User Manager",
+  "home.deptList": "Dept List",
   "home.userList": "User List",
   "home.projectManager": "Project Manager",
   "home.projectList": "Project List",
-  "home.deptManager": "Dept Manager",
-  "home.deptList": "Dept List",
   "home.language": "Language",
   "home.welcome": "Welcome {userName}，today is ",
   "home.username": "Username",
@@ -34,6 +33,7 @@ const enUS = {
   "user.userPw": "Password",
   "user.emailAddr": "Email address",
   "user.lastAccess": "Last access",
+  "user.dept": "Department",
   "user.operation": "Edit",
   "user.typeAdd": "Create user",
   "user.typeMod": "Modify user",
@@ -41,6 +41,7 @@ const enUS = {
   "user.delConfirm": "Are you sure you want to delete this user",
   "user.warn.emptyUserName": "Please input a name",
   "user.warn.emptyPw": "Please input password",
+  "user.warn.emptyDept": "Please select department",
   "user.warn.passwordFormat": "Length range from 6 to 20, underscodes, digits and alphabets only",
   "user.warn.tooManyChar20": "No more than 20 characters",
   "user.warn.emptyEmail": "Please input an email address",
@@ -76,6 +77,7 @@ const enUS = {
   "msgKey.100002": "User didn't exist.",
   "msgKey.100003": "Password is wrong.",
   "msgKey.100004": "Duplicate email address.",
+  "msgKey.200001": "There exitst users in the DepartmentDept.",
 
   "loading": "loading",
 };

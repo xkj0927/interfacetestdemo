@@ -30,8 +30,6 @@ public interface Constant {
   String PROJECT_DELETE = "project/{projectId}";
   
   
-  
-  
   /** 用户角色  admin */
   String USER_ROLE_ADMIN = "ADMIN";
   
@@ -39,6 +37,8 @@ public interface Constant {
   String USER_ROLE_USER = "USER";
   
   String EMAIL_DUPLICATE = "100004";
+  
+  String USER_EXIST = "200001";
   
   String APPLICATION_JSON = "json";
   
