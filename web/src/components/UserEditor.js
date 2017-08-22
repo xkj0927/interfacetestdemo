@@ -13,10 +13,10 @@ const formLayout = {
   }
 };
 
-export default injectIntl(({form, intl, type, dispatch, userInfo={}}) => {
+export default injectIntl(({form, intl, type, dispatch, userInfo={}, deptList = []}) => {
   const {getFieldDecorator, validateFields} = form;
-  const {userName, email} = userInfo;
-
+  const {userName, email, deptId} = userInfo;
+           debugger
   let pwItem;
   if(type === "add"){
     // 如果是新增User才能输入密码
@@ -93,6 +93,23 @@ export default injectIntl(({form, intl, type, dispatch, userInfo={}}) => {
           })(
             <Input type="text"/>
           )}
+        </FormItem>
+        <FormItem label={intl.formatMessage({id: "user.dept"}) + ":"} {...formLayout}>
+          {getFieldDecorator("deptId", {
+            rules: [
+              {
+                required: true,
+                message: intl.formatMessage({id: "user.warn.emptyDept"})
+              }
+            ],
+            initialValue: String(deptId||"")
+          })( <Select>
+            {deptList.map((dept) => {
+              return (
+                <Select.Option key={dept.deptId} value={String(dept.deptId)}>{dept.deptName}</Select.Option>
+              );
+            })}
+          </Select>)}
         </FormItem>
         <br/>
         <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 21}}>

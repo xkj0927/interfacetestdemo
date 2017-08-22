@@ -16,6 +16,9 @@ const Left = ({userAuthority}) => {
   if (userAuthority === USER_AUTHORITY_ADMIN) {
     subMenu.push((
       <SubMenu key="user" title={<span><Icon type="user"/><FormattedMessage id="home.userManager"/></span>}>
+        <MenuItem key="dept-list">
+          <Link to="/dept/list"><FormattedMessage id="home.deptList"/></Link>
+        </MenuItem>
         <MenuItem key="user-list">
           <Link to="/user/list"><FormattedMessage id="home.userList"/></Link>
         </MenuItem>

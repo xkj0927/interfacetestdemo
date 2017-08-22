@@ -3,13 +3,7 @@ package com.wafer.interfacetestdemo.config;
 
 public interface Constant {
 
-  /** 用户角色  admin */
-  String USER_ROLE_ADMIN = "ADMIN";
-  
-  /** 用户角色  user */
-  String USER_ROLE_USER = "USER";
-
-  String DEMO_PATH = "/api/v1/";
+  String CONTROLLER_PATH = "/api/v1/";
   
   String LOGIN = "login";
   
@@ -23,10 +17,29 @@ public interface Constant {
   
   String USER_DELETE = "user/{userId}";
   
-  String EMAIL_DUPLICATE = "100004";
+  String DEPTS = "depts";
   
-  String APPLICATION_JSON = "json";
+  String DEPT = "dept";
+  
+  String DEPT_DELETE = "dept/{deptId}";
   
   String PROJECTS = "projects";
+  
+  String PROJECT = "project";
+  
+  String PROJECT_DELETE = "project/{projectId}";
+  
+  
+  /** 用户角色  admin */
+  String USER_ROLE_ADMIN = "ADMIN";
+  
+  /** 用户角色  user */
+  String USER_ROLE_USER = "USER";
+  
+  String EMAIL_DUPLICATE = "100004";
+  
+  String USER_EXIST = "200001";
+  
+  String APPLICATION_JSON = "json";
   
 }

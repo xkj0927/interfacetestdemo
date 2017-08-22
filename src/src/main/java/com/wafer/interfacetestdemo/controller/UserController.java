@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wafer.interfacetestdemo.config.Constant;
+import com.wafer.interfacetestdemo.domain.DeptUser;
 import com.wafer.interfacetestdemo.domain.User;
 import com.wafer.interfacetestdemo.security.auth.AuthService;
+import com.wafer.interfacetestdemo.service.DeptUserService;
 import com.wafer.interfacetestdemo.service.UserService;
 import com.wafer.interfacetestdemo.vo.AccountVo;
 import com.wafer.interfacetestdemo.vo.LoginUserVo;
@@ -24,12 +26,15 @@ import com.wafer.interfacetestdemo.vo.ResponseResult;
 import com.wafer.interfacetestdemo.vo.UserVo;
 
 @RestController
-@RequestMapping(Constant.DEMO_PATH)
+@RequestMapping(Constant.CONTROLLER_PATH)
 @Transactional
 public class UserController {
 
   @Autowired
   UserService userService;
+  
+  @Autowired
+  DeptUserService deptUserService;
   
   @Autowired
   AuthService<User> authService;
@@ -92,17 +97,27 @@ public class UserController {
    * @return 封装的user信息
    */
   @RequestMapping(value = Constant.USER, method = RequestMethod.POST)
-  public ResponseResult userCreate(@RequestBody User user){
+  public ResponseResult userCreate(@RequestBody UserVo userInfo){
     
-    User userForCompare = userService.getUserbyEmail(user.getEmail());
+    User userForCompare = userService.getUserbyEmail(userInfo.getEmail());
     if(null != userForCompare){
       return ResponseResult.failure(Constant.EMAIL_DUPLICATE);
     }
+    User user = new User();
+    user.setEmail(userInfo.getEmail());
+    user.setUserName(userInfo.getUserName());
     user.setCreateTime(new Date()); 
-    user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+    user.setPassword(new BCryptPasswordEncoder().encode(userInfo.getPassword()));
     //暂定设置所有的角色为user
     user.setUserAuthority(1);
-    userService.userSave(user);    
+    userService.userSave(user); 
+    
+    DeptUser deptUser = new DeptUser();
+    deptUser.setDeptId(userInfo.getDeptId());
+    deptUser.setUserId(user.getUserId());
+    deptUser.setCreateTime(new Date());
+    deptUserService.deptUserSave(deptUser);
+    
     List<UserVo> userList = userService.getUserVoList();
     return ResponseResult.success(userList);
   }
@@ -127,25 +142,35 @@ public class UserController {
    * @return 封装的user信息
    */
   @RequestMapping(value = Constant.USER, method = RequestMethod.PUT)
-  public ResponseResult userModify(@RequestBody User user){
+  public ResponseResult userModify(@RequestBody UserVo user){
     
-    User userForCompare = userService.getUserbyEmail(user.getEmail());
+    User userForCompare = userService.getOtherUserbyEmail(user.getEmail(), user.getUserId());
     if(null != userForCompare){
       return ResponseResult.failure(Constant.EMAIL_DUPLICATE);
     }
     
     User userInfo = userService.getUserbyUserId(user.getUserId());
-
+    
     if(null != user.getEmail()){
       userInfo.setEmail(user.getEmail());
     }
     if(null != user.getUserName()){
       userInfo.setUserName(user.getUserName());
     }    
-    
     userInfo.setUpdateTime(new Date());
-    
     userService.userSave(userInfo);
+    
+    DeptUser deptUser = deptUserService.getDeptUserByUserId(user.getUserId());
+    if(null == deptUser){
+      deptUser = new DeptUser();
+      deptUser.setDeptId(user.getDeptId());
+      deptUser.setUserId(user.getUserId());
+      deptUser.setCreateTime(new Date());
+      deptUserService.deptUserSave(deptUser);
+    }else if(deptUser.getDeptId() != user.getDeptId()){
+      deptUser.setDeptId(user.getDeptId());
+      deptUserService.deptUserSave(deptUser);
+    }
     
     List<UserVo> userList = userService.getUserVoList();
     return ResponseResult.success(userList);

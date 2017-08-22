@@ -46,4 +46,8 @@ public class UserService {
   public User getUserbyEmail(String email) {
     return userRepository.getUserbyEmail(email);
   }
+
+  public User getOtherUserbyEmail(String email, long userId) {
+    return userRepository.getOtherUserbyEmail(email, userId);
+  }
 }
