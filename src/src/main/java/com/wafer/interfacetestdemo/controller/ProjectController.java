@@ -14,15 +14,15 @@ import com.wafer.interfacetestdemo.service.ProjectService;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
 
 @RestController
-@RequestMapping(Constant.DEMO_PATH)
+@RequestMapping(Constant.CONTROLLER_PATH)
 @Transactional
 public class ProjectController {
   @Autowired
   ProjectService projectService;
   
   /**
-   * 查询course信息
-   * @return 封装的course list信息
+   * 查询project信息
+   * @return 封装的project list信息
    */
   @RequestMapping(value = Constant.PROJECTS, method = RequestMethod.GET)
   @Transactional(readOnly = true)

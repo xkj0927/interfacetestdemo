@@ -24,7 +24,7 @@ import com.wafer.interfacetestdemo.vo.ResponseResult;
 import com.wafer.interfacetestdemo.vo.UserVo;
 
 @RestController
-@RequestMapping(Constant.DEMO_PATH)
+@RequestMapping(Constant.CONTROLLER_PATH)
 @Transactional
 public class UserController {
 

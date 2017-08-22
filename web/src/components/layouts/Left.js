@@ -21,6 +21,13 @@ const Left = ({userAuthority}) => {
         </MenuItem>
       </SubMenu>
     ));
+    subMenu.push((
+      <SubMenu key="dept" title={<span><Icon type="book"/><FormattedMessage id="home.deptManager"/></span>}>
+        <MenuItem key="dept-list">
+          <Link to="/dept/list"><FormattedMessage id="home.deptList"/></Link>
+        </MenuItem>
+      </SubMenu>
+    ));
   }
   subMenu.push((
       <SubMenu key="project" title={<span><Icon type="team"/><FormattedMessage id="home.projectManager"/></span>}>
