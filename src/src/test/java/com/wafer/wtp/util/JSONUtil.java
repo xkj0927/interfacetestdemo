@@ -11,11 +11,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.wafer.wtp.annotation.Field;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 读取JSON数据工具类
@@ -43,31 +42,27 @@ public class JSONUtil extends FileReader {
         paramNames.add(parameter.getAnnotation(Field.class).value());
       }
     }
-    try {
-      File file = new File(resource.getPath());
-      String JsonContext = readJSONFile(file);
+    File file = new File(resource.getPath());
+    String jsonContext = readJSONFile(file);
 
-      JSONArray jsonArray = new JSONArray(JsonContext);
-      for (int i = 0; i < jsonArray.length(); i++) {
-        JSONObject jsonObject = jsonArray.getJSONObject(i);
-        if (jsonObject.has("isSkip") && "y".equalsIgnoreCase(jsonObject.getString("isSkip"))) {
-          continue;
-        } else {
-          String[] objects = new String[paramNames.size()];
-          for (int j = 0; j < paramNames.size(); j++) {
-            String paramName = paramNames.get(j);
-            if (jsonObject.has(paramName)) {
-              objects[j] = jsonObject.getString(paramName);
-            } else {
-              objects[j] = "";
-            }
+    JSONArray jsonArray = JSONArray.fromObject(jsonContext);
+    for (int i = 0; i < jsonArray.size(); i++) {
+      JSONObject jsonObject = jsonArray.getJSONObject(i);
+      if (jsonObject.has("isSkip") && "y".equalsIgnoreCase(jsonObject.getString("isSkip"))) {
+        continue;
+      } else {
+        String[] objects = new String[paramNames.size()];
+        for (int j = 0; j < paramNames.size(); j++) {
+          String paramName = paramNames.get(j);
+          if (jsonObject.has(paramName)) {
+            objects[j] = jsonObject.getString(paramName);
+          } else {
+            objects[j] = "";
           }
-          results.add(convertParam(objects, paramTypes));
         }
-
+        results.add(convertParam(objects, paramTypes));
       }
-    } catch (JSONException e) {
-      e.printStackTrace();
+
     }
     return results;
   }

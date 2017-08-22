@@ -18,77 +18,77 @@ public class Project {
   @Column(name = "project_name")
   private String projectName;
   
-  @Column(name = "start_time")
-  private Date startTime;
+  @Column(name = "create_user_id")
+  private long createUserId;
   
-  @Column(name = "end_time")
-  private Date endTime;
+  @Column(name = "dept_id")
+  private long deptId;
   
   @Column(name = "create_time")
   private Date createTime;
   
   @Column(name = "update_time")
   private Date updateTime;
-  
+
   public long getProjectId() {
-	return projectId;
+    return projectId;
   }
 
   public void setProjectId(long projectId) {
-	this.projectId = projectId;
+    this.projectId = projectId;
   }
 
   public String getProjectName() {
-	return projectName;
+    return projectName;
   }
 
   public void setProjectName(String projectName) {
-	this.projectName = projectName;
+    this.projectName = projectName;
   }
 
-  public Date getStartTime() {
-    return startTime;
+  public long getCreateUserId() {
+    return createUserId;
   }
-  
-  public void setStartTime(Date startTime) {
-    this.startTime  =  startTime;
+
+  public void setCreateUserId(long createUserId) {
+    this.createUserId = createUserId;
   }
-  
-  public Date getEndTime() {
-    return endTime;
+
+  public long getDeptId() {
+    return deptId;
   }
-  
-  public void setEndTime(Date endTime) {
-    this.endTime  =  endTime;
+
+  public void setDeptId(long deptId) {
+    this.deptId = deptId;
   }
 
   public Date getCreateTime() {
     return createTime;
   }
-  
+
   public void setCreateTime(Date createTime) {
-    this.createTime  =  createTime;
+    this.createTime = createTime;
   }
-  
+
   public Date getUpdateTime() {
     return updateTime;
   }
-  
+
   public void setUpdateTime(Date updateTime) {
-    this.updateTime  =  updateTime;
+    this.updateTime = updateTime;
   }
 
-  public Project(){
+  public Project() {
     super();
   }
 
-  public Project(long projectId, String projectName, Date startTime, Date endTime, Date createTime, Date updateTime) {
-	super();
-	this.projectId = projectId;
-	this.projectName = projectName;
-	this.startTime = startTime;
-	this.endTime = endTime;
-	this.createTime = createTime;
-	this.updateTime = updateTime;
-  }  
+  public Project(long projectId, String projectName, long createUserId, long deptId,
+      Date createTime, Date updateTime) {
+    this.projectId = projectId;
+    this.projectName = projectName;
+    this.createUserId = createUserId;
+    this.deptId = deptId;
+    this.createTime = createTime;
+    this.updateTime = updateTime;
+  }
 }

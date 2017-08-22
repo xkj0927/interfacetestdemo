@@ -1,5 +1,7 @@
 package com.wafer.interfacetestdemo.vo;
 
+import java.util.List;
+
 import com.wafer.interfacetestdemo.config.Constants;
 import com.wafer.interfacetestdemo.domain.Module;
 import com.wafer.interfacetestdemo.utils.DateUtils;
@@ -17,6 +19,8 @@ public class ModuleView {
   private String createTime;
 
   private String updateTime;
+  
+  private List<InterfaceView> interfaceViews;
 
   public long getModuleId() {
     return moduleId;
@@ -84,5 +88,13 @@ public class ModuleView {
     mv.setCreateTime(DateUtils.formatDateTime(mo.getCreateTime()));
     mv.setUpdateTime(DateUtils.formatDateTime(mo.getUpdateTime()));
     return mv;
+  }
+
+  public List<InterfaceView> getInterfaceViews() {
+    return interfaceViews;
+  }
+
+  public void setInterfaceViews(List<InterfaceView> interfaceViews) {
+    this.interfaceViews = interfaceViews;
   }
 }

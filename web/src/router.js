@@ -57,6 +57,17 @@ function RouterConfig({ history, app}) {
                       }
                     ]
                   },
+                  {
+                    path: 'dept',
+                    childRoutes: [
+                      {
+                        path: 'list',
+                        getComponent(nextState, cb) {
+                          requireRoute(cb, 'DeptListPage');
+                        },
+                      }
+                    ]
+                  },
                     {
                         path: 'module',
                         childRoutes: [
