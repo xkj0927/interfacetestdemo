@@ -5,12 +5,11 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { routerRedux } from 'dva/router';
 import * as constants from '../utils/constants';
 
-const Panel = Collapse.Panel;
 console.log("AAAAAAAAAA");
 debugger;
-const InterfaceListPage = ({dispatch, moduleIds, intl, userRole, userAuthority, loading}) => {
+const InterfaceInfoPage = ({dispatch, interfaceInfo, intl, userRole, userAuthority, loading}) => {
     debugger;
-    dispatch({type: "interface/list", payload: moduleIds});
+    // dispatch({type: "interface/info", payload: moduleIds});
 
     return (<div>TTTTTTTT</div>);
 
@@ -21,8 +20,8 @@ const mapStateToProps = (state, ownProps) => {
     const {userRole = constants.USER_ROLE_STUDENT} = ownProps.location.query;
     const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
     const loading = state.loading.effects['interfaces/reload'];
-    const moduleIds = state.moduleIds;
-    return ({...state, moduleIds: moduleIds, userRole: parseInt(userRole), userAuthority: parseInt(userAuthority), loading});
+    const interfaceinfo = state.interfaceInfo;
+    return ({...state, interfaceInfo: interfaceInfo, userRole: parseInt(userRole), userAuthority: parseInt(userAuthority), loading});
 };
 
-export default connect(mapStateToProps)(injectIntl(InterfaceListPage));
+export default connect(mapStateToProps)(injectIntl(InterfaceInfoPage));

@@ -7,6 +7,8 @@ export default {
     modules:[],
     moduleIds:[],
     interfaceIds:[],
+    openedInterfaceId:[],
+    closedInterfaceId:[],
     currentInterfaceId:"0",
     flag: false,
   },
@@ -95,11 +97,15 @@ export default {
       const moduleIds =  mods.moduleIds;
       const interfaceIds =  mods.interfaceIds;
       let currentInterfaceId = mods.currentInterfaceId;
+      let openedInterfaceId = mods.openedInterfaceId;
+      let closedInterfaceId = mods.closedInterfaceId;
       let interfaceId;
       let hasinterfaceId = false;
       if(null != interfaceIds && interfaceIds.length>0){
         let tempArray1 = [];//临时数组1
         let tempArray2 = [];//临时数组2
+        let tempCurrentArray1 =[];
+        let tempCurrentArray2 =[];
 
         for(var i=0;i<interfaceIds.length;i++){
           tempArray1[interfaceIds[i]] = true;
@@ -113,12 +119,25 @@ export default {
         if(null != tempArray2 && tempArray2.length>0){
           interfaceId = tempArray2[0];
           interfaceIds.push(interfaceId);
+          openedInterfaceId.push(interfaceId);
         }else{
+          for(var i=0;i<iIds.length;i++){
+            tempCurrentArray1[iIds[i]] = true;
+          }
+
+          for(var i=0;i<openedInterfaceId.length;i++){
+            if(!tempCurrentArray1[openedInterfaceId[i]]){
+              tempCurrentArray2.push(openedInterfaceId[i]);
+            }
+          }
           hasinterfaceId = true;
+          interfaceId = tempCurrentArray2[0];
+          openedInterfaceId = iIds;
         }
       }else{
         interfaceId = iIds[0];
         interfaceIds.push(interfaceId);
+        openedInterfaceId.push(interfaceId);
       }
       currentInterfaceId = interfaceId;
       if(!hasinterfaceId){

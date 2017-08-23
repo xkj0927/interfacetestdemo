@@ -83,9 +83,9 @@ function RouterConfig({ history, app}) {
                         path: 'interface',
                         childRoutes: [
                             {
-                                path: 'list',
+                                path: 'info',
                                 getComponent(nextState, cb) {
-                                    requireRoute(cb, 'InterfaceListPage');
+                                    requireRoute(cb, 'InterfaceInfoPage');
                                 }
                             }
                         ]
