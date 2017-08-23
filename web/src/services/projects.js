@@ -6,7 +6,7 @@ import * as constants from '../utils/constants';
 
 const JSON = window.JSON;
 
-export function listProject({userId, userRole}) {
+export function listProject({userAuthority, userId}) {
   return request(`api/v1/projects`, {
     method: 'GET'
   });

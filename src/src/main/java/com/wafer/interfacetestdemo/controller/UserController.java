@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wafer.interfacetestdemo.config.Constant;
+import com.wafer.interfacetestdemo.domain.Dept;
 import com.wafer.interfacetestdemo.domain.DeptUser;
 import com.wafer.interfacetestdemo.domain.User;
 import com.wafer.interfacetestdemo.security.auth.AuthService;
+import com.wafer.interfacetestdemo.service.DeptService;
 import com.wafer.interfacetestdemo.service.DeptUserService;
 import com.wafer.interfacetestdemo.service.UserService;
 import com.wafer.interfacetestdemo.vo.AccountVo;
@@ -35,6 +37,9 @@ public class UserController {
   
   @Autowired
   DeptUserService deptUserService;
+  
+  @Autowired
+  DeptService deptService;
   
   @Autowired
   AuthService<User> authService;
@@ -60,9 +65,12 @@ public class UserController {
     user.setLatestLoginTime(new Date());
     userService.updateUserbyUserId(user);
     
+    Dept dept = deptService.getDeptByUserId(user.getUserId());
+    
     LoginUserVo loginUser = new LoginUserVo();
     loginUser.setToken(token);
-    loginUser.setUser(user);    
+    loginUser.setUser(user);
+    loginUser.setDept(dept);
     
     return ResponseResult.success(loginUser);
   }  
