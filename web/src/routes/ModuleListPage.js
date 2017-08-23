@@ -7,7 +7,7 @@ import * as constants from '../utils/constants';
 import style from './ModulePage.less';
 
 const Panel = Collapse.Panel;
-const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, loading, flag}) => {
+const ModuleListPage = ({dispatch, modules = [], showEditModule, intl, userRole, userAuthority, loading, flag}) => {
     debugger;
     let modulePanel = [];
     // let interfaceList = modules.interfaces;
@@ -27,6 +27,12 @@ const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, 
 
         modulePanel.push(<Panel header={module.moduleName} key={module.moduleId}>{interfaceArr}</Panel>);
     });
+
+    const handleCancel = ()=>{
+      debugger
+      dispatch({type: "modules/showEditModule", payload: ""});
+    };
+    debugger
     return (
         <div>
             <div className={style.ModuleCollapseLeft}>
@@ -38,6 +44,15 @@ const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, 
                 }>
                     {modulePanel}
                 </Collapse>
+                <Button className="add-module-btn" onClick = {(event) =>{
+                  handleCancel();
+                }}>Add Module</Button>
+                <Modal title="Title"
+                       visible={showEditModule}
+                       onOk={handleCancel}
+                       onCancel={handleCancel}>
+                  <p>{"Module"}</p>
+                </Modal>
             </div>
         </div>
     );
@@ -49,7 +64,8 @@ const mapStateToProps = (state, ownProps) => {
     const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
     const loading = state.loading.effects['modules/reload'];
     const {modules, flag} = state.modules;
-    return {flag, modules: modules, userRole: parseInt(userRole), userAuthority: parseInt(userAuthority), loading};
+    const showEditModule = state.modules.showEditModule;
+    return {flag, modules: modules, showEditModule, userRole: parseInt(userRole), userAuthority: parseInt(userAuthority), loading};
 };
 
 export default connect(mapStateToProps)(injectIntl(ModuleListPage));

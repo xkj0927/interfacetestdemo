@@ -8,6 +8,7 @@ export default {
     moduleIds:[],
     interfaceIds:[],
     flag: false,
+    showEditModule: false,
   },
   reducers: {
     update(state, {modules}) {
@@ -23,6 +24,12 @@ export default {
       let newState = state;
       // newState.moduleIds = moduleIds;
       return newState;
+    },
+
+    show(state, {}){
+      debugger
+      state.showEditModule = ! state.showEditModule;
+      return state;
     },
   },
   effects: {
@@ -126,6 +133,10 @@ export default {
         });
       }
     },
+    *showEditModule({payload}, {put}){
+      debugger
+      yield put({ type: 'show' , payload: payload});
+     },
   },
   subscriptions: {
     setup({ dispatch, history }) {
