@@ -132,6 +132,8 @@ public class UserController {
     
     userService.updateUserStatusByUserId(userId);
     
+    deptUserService.removeDeptUserByUserId(userId);
+    
     List<UserVo> userList = userService.getUserVoList();
     return ResponseResult.success(userList);
   }

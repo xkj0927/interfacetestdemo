@@ -10,5 +10,7 @@ public interface DeptUserRepository extends BaseRepository<DeptUser, Long> {
   DeptUser getDeptUserByUserId(long userId);
   
   List<DeptUser> getDeptUserByDeptId(long userId);
+
+  void removeDeptUserByUserId(long userId);
   
 }

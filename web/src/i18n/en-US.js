@@ -77,7 +77,8 @@ const enUS = {
   "msgKey.100002": "User didn't exist.",
   "msgKey.100003": "Password is wrong.",
   "msgKey.100004": "Duplicate email address.",
-  "msgKey.200001": "There exitst users in the DepartmentDept.",
+  "msgKey.200001": "This department exitst users.",
+  "msgKey.200002": "This department exitst projects.",
 
   "loading": "loading",
 };

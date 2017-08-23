@@ -26,5 +26,7 @@ public class DeptUserService {
     return deptUserReposistory.getDeptUserByDeptId(deptId);
   }
 
-  
+  public void removeDeptUserByUserId(long userId) {
+    deptUserReposistory.removeDeptUserByUserId(userId);
+  }
 }

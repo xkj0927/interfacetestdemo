@@ -40,6 +40,8 @@ public interface Constant {
   
   String USER_EXIST = "200001";
   
+  String PROJECT_EXIST = "200002";
+  
   String APPLICATION_JSON = "json";
   
 }
