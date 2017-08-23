@@ -19,9 +19,9 @@ export function listinterfaces(moduleId) {
   });
 }
 
-export function listtestcases(testcaseId) {
+export function listtestcases(interfaceId) {
   debugger;
-  return request(`api/v1/interface/module/${testcaseId}`, {
+  return request(`api/v1/interfacecase/interface/${interfaceId}`, {
     method: 'GET'
   });
 }

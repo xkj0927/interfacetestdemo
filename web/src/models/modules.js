@@ -7,32 +7,33 @@ export default {
     modules:[],
     moduleIds:[],
     interfaceIds:[],
+    currentInterfaceId:"0",
     flag: false,
   },
   reducers: {
     update(state, {modules}) {
       debugger;
-      let newState = state;
       state.modules = modules;
+      state.moduleIds = [];
+      state.interfaceIds = [];
+      let newState = state;
       return newState;
     },
-    change(state, { modules, moduleId}) {
-      state.moduleIds.push(moduleId);
+    change(state, { modules, moduleIds, interfaceIds, currentInterfaceId}) {
+      state.moduleIds=moduleIds;
       state.modules = modules;
+      state.interfaceIds = interfaceIds;
       state.flag = !state.flag;
+      state.currentInterfaceId = currentInterfaceId;
       let newState = state;
-      // newState.moduleIds = moduleIds;
       return newState;
     },
   },
   effects: {
     *reload({userRole}, { select, call, put}) {
       const {userAuthority, userId} = yield select(state => state.common);
-      const {data: modules = []} = yield call(moduleService.listmodules, {userAuthority, userId, userRole});
-
-      for(let i=0; i<modules.length; i++){
-        modules[i].interfaces = [];
-      }
+      const result = yield call(moduleService.listmodules, {userAuthority, userId, userRole});
+      const modules = result.data;
       yield put({
         type: 'update',
         modules: modules
@@ -40,12 +41,14 @@ export default {
     },
     *interfacelist({payload: mIds}, {select, call, put}){
       debugger;
-      const moduleIds = yield select(state => state.modules.moduleIds);
+      const mods = yield select(state => state.modules);
       const modules = yield select(state => state.modules.modules);
+      const moduleIds =  mods.moduleIds;
+      const interfaceIds = mods.interfaceIds;
+      let currentInterfaceId = mods.currentInterfaceId;
       let moduleId;
       let hasmoduleId = false;
       if(null != moduleIds && moduleIds.length>0){
-        // moduleId = moduleIds[moduleIds.length-1];
         let tempArray1 = [];//临时数组1
         let tempArray2 = [];//临时数组2
 
@@ -60,11 +63,13 @@ export default {
         }
         if(null != tempArray2 && tempArray2.length>0){
           moduleId = tempArray2[0];
+          moduleIds.push(moduleId);
         }else{
           hasmoduleId = true;
         }
       }else{
         moduleId = mIds[0];
+        moduleIds.push(moduleId);
       }
       if(!hasmoduleId){
         const {data: interfaces} = yield call(moduleService.listinterfaces, moduleId);
@@ -74,22 +79,25 @@ export default {
                modules[i].interfaces = interfaces;
              }
         }
-        // const modIds = moduleIds.push(moduleId);
         yield put({
           type: 'change',
           modules: modules,
-          moduleId: moduleId,
+          moduleIds: moduleIds,
+          interfaceIds: interfaceIds,
+          currentInterfaceId: currentInterfaceId,
         });
       }
     },
     *testcaselist({payload: iIds}, {select, call, put}){
       debugger;
-      const interfaceIds = yield select(state => state.modules.interfaceIds);
+      const mods = yield select(state => state.modules);
       const modules = yield select(state => state.modules.modules);
+      const moduleIds =  mods.moduleIds;
+      const interfaceIds =  mods.interfaceIds;
+      let currentInterfaceId = mods.currentInterfaceId;
       let interfaceId;
-      let hasmoduleId = false;
+      let hasinterfaceId = false;
       if(null != interfaceIds && interfaceIds.length>0){
-        // moduleId = moduleIds[moduleIds.length-1];
         let tempArray1 = [];//临时数组1
         let tempArray2 = [];//临时数组2
 
@@ -104,25 +112,35 @@ export default {
         }
         if(null != tempArray2 && tempArray2.length>0){
           interfaceId = tempArray2[0];
+          interfaceIds.push(interfaceId);
         }else{
-          hasmoduleId = true;
+          hasinterfaceId = true;
         }
       }else{
         interfaceId = iIds[0];
+        interfaceIds.push(interfaceId);
       }
-      if(!hasmoduleId){
-        const {data: interfaces} = yield call(moduleService.listtestcases, interfaceId);
+      currentInterfaceId = interfaceId;
+      if(!hasinterfaceId){
+        const {data: testcases} = yield call(moduleService.listtestcases, interfaceId);
 
         for(let i=0;i<modules.length;i++){
-          if(modules[i].moduleId == interfaceId){
-            modules[i].interfaces = interfaces;
+          let tempModule = modules[i];
+          if(null != tempModule.interfaces && tempModule.interfaces.length>0){
+            for(let j=0;j<tempModule.interfaces.length;j++){
+              let tempInterface = tempModule.interfaces[j];
+                 if(null != tempInterface && tempInterface.interfaceId == interfaceId){
+                   tempModule.interfaces[j].testcases = testcases;
+                 }
+            }
           }
         }
-        // const modIds = moduleIds.push(moduleId);
         yield put({
           type: 'change',
           modules: modules,
-          moduleId: interfaceId,
+          moduleIds: moduleIds,
+          interfaceIds: interfaceIds,
+          currentInterfaceId: currentInterfaceId,
         });
       }
     },
