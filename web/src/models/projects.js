@@ -18,8 +18,8 @@ export default {
   },
   effects: {
     *reload(action, { select, call, put }) {
-      const {userAuthority, userId} = yield select(state => state.common);
-      const result = yield call(projectService.listProject, {userAuthority, userId});
+      const {userAuthority, deptId} = yield select(state => state.common);
+      const result = yield call(projectService.listProject, {userAuthority, deptId});
       const newProjects = {projects: result.data, showDialog: false, type: "", modalKey: Math.random(), projectInfo: {}};
       yield put({
         type: 'update',
