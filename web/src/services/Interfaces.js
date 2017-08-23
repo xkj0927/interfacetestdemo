@@ -5,8 +5,7 @@ import request from '../utils/request';
 
 const JSON = window.JSON;
 
-export function listinterfaces({moduleId}) {
-  debugger;
+export function listinterfaces(moduleId) {
   return request(`api/v1/interface/module/${moduleId}`, {
     method: 'GET'
   });
