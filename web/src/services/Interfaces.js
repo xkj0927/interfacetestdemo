@@ -11,3 +11,9 @@ export function interfaceinfo(interfaceId) {
     method: 'GET'
   });
 }
+
+export function listinterfaces(moduleId) {
+  return request(`api/v1/interface/module/${moduleId}`, {
+    method: 'GET'
+  });
+}

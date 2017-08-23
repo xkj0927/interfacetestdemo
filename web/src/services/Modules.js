@@ -6,7 +6,6 @@ import request from '../utils/request';
 const JSON = window.JSON;
 
 export function listmodules() {
-  debugger;
   return request(`api/v1/modules`, {
     method: 'GET'
   });
