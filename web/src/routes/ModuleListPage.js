@@ -99,7 +99,6 @@ const mapStateToProps = (state, ownProps) => {
     const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
     const loading = state.loading.effects['modules/reload'];
     const {modules, flag} = state.modules;
-    const showEditModule = state.modules.showEditModule;
     const {modules, flag, currentInterfaceId} = state.modules;
     return {currentInterfaceId, flag, modules: modules, userRole: parseInt(userRole), userAuthority: parseInt(userAuthority), loading};
 };
