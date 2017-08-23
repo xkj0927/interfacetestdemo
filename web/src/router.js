@@ -67,7 +67,29 @@ function RouterConfig({ history, app}) {
                         },
                       }
                     ]
-                  }
+                  },
+                    {
+                        path: 'module',
+                        childRoutes: [
+                            {
+                                path: 'list',
+                                getComponent(nextState, cb) {
+                                    requireRoute(cb, 'ModuleListPage');
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        path: 'interface',
+                        childRoutes: [
+                            {
+                                path: 'list',
+                                getComponent(nextState, cb) {
+                                    requireRoute(cb, 'InterfaceListPage');
+                                }
+                            }
+                        ]
+                    }
                 ]
               }
             ]
