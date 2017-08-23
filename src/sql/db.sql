@@ -29,7 +29,7 @@ CREATE TABLE `ps_dept_user` (
   `create_time` DATETIME DEFAULT NULL COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`dept_user_id`),
-  KEY `fk_du_pid` (`dept_id`),
+  KEY `fk_du_did` (`dept_id`),
   KEY `fk_du_uid` (`user_id`),
   CONSTRAINT `fk_du_pid` FOREIGN KEY (`dept_id`) REFERENCES `ps_dept` (`dept_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_du_uid` FOREIGN KEY (`user_id`) REFERENCES `ps_user` (`user_id`) ON DELETE CASCADE
@@ -38,26 +38,15 @@ CREATE TABLE `ps_dept_user` (
 CREATE TABLE `ps_project` (
   `project_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `project_name` VARCHAR(255) NOT NULL COMMENT '项目名',
-  `start_time` DATETIME NOT NULL COMMENT '项目开始时间',
-  `end_time` DATETIME NOT NULL COMMENT '项目结束时间',
+  `create_user_id` INT(11) NOT NULL COMMENT '创建人id',
+  `dept_id` INT(11) NOT NULL COMMENT '部门id',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`project_id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE `ps_project_user` (
-  `project_user_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `project_id` INT(11) NOT NULL COMMENT '项目id',
-  `user_id` INT(11) NOT NULL COMMENT '用户id',
-  `user_role` INT(2) NOT NULL COMMENT '用户角色',
-  `create_time` DATETIME DEFAULT NULL COMMENT '创建时间',
-  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`project_user_id`),
-  KEY `fk_pu_pid` (`project_id`),
-  KEY `fk_pu_uid` (`user_id`),
-  CONSTRAINT `fk_pu_pid` FOREIGN KEY (`project_id`) REFERENCES `ps_project` (`project_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_pu_uid` FOREIGN KEY (`user_id`) REFERENCES `ps_user` (`user_id`) ON DELETE CASCADE
+  PRIMARY KEY (`project_id`),
+  KEY `fk_pd_did` (`dept_id`),
+  KEY `fk_pu_uid` (`create_user_id`),
+  CONSTRAINT `fk_pd_did` FOREIGN KEY (`dept_id`) REFERENCES `ps_dept` (`dept_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_pu_uid` FOREIGN KEY (`create_user_id`) REFERENCES `ps_user` (`user_id`) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ps_module`;
