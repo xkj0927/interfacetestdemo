@@ -21,4 +21,5 @@ public class ProjectService {
   public List<Project> getProjectByDeptId(long deptId) {
     return projectRepository.getProjectByDeptId(deptId);
   }
+
 }

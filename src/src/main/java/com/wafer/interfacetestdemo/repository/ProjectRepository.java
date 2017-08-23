@@ -8,6 +8,4 @@ import com.wafer.interfacetestdemo.repository.base.BaseRepository;
 public interface ProjectRepository extends BaseRepository<Project, Long> {
 
   List<Project> getProjectByDeptId(long deptId);
-  
-
 }

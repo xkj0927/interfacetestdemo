@@ -25,6 +25,8 @@ public interface Constant {
   
   String PROJECTS = "projects";
   
+  String PROJECTS_DEPT = "projects/{deptId}";
+  
   String PROJECT = "project";
   
   String PROJECT_DELETE = "project/{projectId}";
