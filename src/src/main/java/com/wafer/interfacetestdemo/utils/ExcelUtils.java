@@ -25,6 +25,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wafer.interfacetestdemo.vo.TestCaseView;
+
 public class ExcelUtils {
 
   static final Logger logger = LoggerFactory.getLogger(ExcelUtils.class);
@@ -75,10 +77,11 @@ public class ExcelUtils {
 
   /**
    * 导出TestCase 到Excel
+   * @param testCaseViews 
    * 
    * @return
    */
-  public static String createExcel() {
+  public static String createExcel(List<TestCaseView> testCaseViews) {
 
     Workbook work = new HSSFWorkbook();
     Sheet sheet = work.createSheet(DEFAULT_EXPORT_SHEET_NAME);
@@ -227,7 +230,7 @@ public class ExcelUtils {
     }
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
     String dateTime = dateFormat.format(new Date());
-    String path = "/" + dateTime + "/" + UUID.randomUUID().toString().replaceAll("-", "") + "/";
+    String path = "/download/" + dateTime + "/" + UUID.randomUUID().toString().replaceAll("-", "") + "/";
     File file = new File(path);
     if (!file.exists()) {
       file.mkdirs();
