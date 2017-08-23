@@ -59,15 +59,11 @@ public class DataSourceController {
       List<List<Map<String, String>>> data = ExcelUtils.parseExcel(fis, fileName);
       logger.debug("import data is : {}.", data.toString());
       for (int i = 0; i < data.size(); i++) {
-
         List<Map<String, String>> rows = data.get(i);
-
         for (int j = 0; j < rows.size(); j++) {
           Map<String, String> row = rows.get(j);
-
           dealRowData(row);
         }
-
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -84,13 +80,13 @@ public class DataSourceController {
     List<TestCaseView> testCaseViews = new ArrayList<>();
     testCases.forEach(testCase -> testCaseViews.add(TestCaseView.transformViewToTestCase(testCase)));
     // 2.将数据生成excel文件保存在服务器上
-    String filePath = ExcelUtils.createExcel();
+    String filePath = ExcelUtils.createExcel(testCaseViews);
     // 3.将服务器文件下载到本地
     if(null != filePath){
       IOUtils.downloadFile(response, filePath);
     }
     // 4.定时任务删除文件以及
-    return null;
+    return ResponseResult.success();
   }
 
   
