@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,7 +51,7 @@ public class InterfaceTestCaseController {
    * @return
    */
   @RequestMapping(value = "interfacecase/{testCaseId}", method = RequestMethod.DELETE)
-  public ResponseResult deleteInterfaceCase(long testCaseId) {
+  public ResponseResult deleteInterfaceCase(@PathVariable long testCaseId) {
     if (0 == testCaseId) {
       return ResponseResult.failure();
     }
@@ -66,7 +67,21 @@ public class InterfaceTestCaseController {
    */
   @RequestMapping(value = "interfacecase", method = RequestMethod.PUT)
   public ResponseResult updatelInterfaceCase(@RequestBody TestCaseView testCaseView) {
-    InterfaceTestCase testCase = InterfaceTestCase.transformTestCaseToView(testCaseView);
+    InterfaceTestCase testCase =
+        testCaseService.findInterfaceTestCaseById(testCaseView.getInterfaceTestCaseId());
+    if (null == testCase) {
+      return ResponseResult.failure();
+    }
+    if (null != testCaseView.getExpectResult()) {
+      testCase.setExpectResult(testCaseView.getExpectResult());
+    }
+    if (0 != testCaseView.getExpectStatus()) {
+      testCase.setExpectStatus(testCaseView.getExpectStatus());
+    }
+    if (null != testCaseView.getParamCase()) {
+      testCase.setParamCase(testCaseView.getParamCase());
+    }
+    testCase.setIsRun(testCaseView.isRun() ? Constants.RUNNING : Constants.NOT_RUNNING);
     testCase = testCaseService.saveInterfaceCase(testCase);
     return ResponseResult.success(TestCaseView.transformViewToTestCase(testCase));
   }
@@ -78,7 +93,7 @@ public class InterfaceTestCaseController {
    * @return
    */
   @RequestMapping(value = "interfacecase/{interfacecaseId}", method = RequestMethod.GET)
-  public ResponseResult getInterfaceCaseById(long interfacecaseId) {
+  public ResponseResult getInterfaceCaseById(@PathVariable long interfacecaseId) {
     InterfaceTestCase testCase = testCaseService.findInterfaceTestCaseById(interfacecaseId);
     return ResponseResult.success(TestCaseView.transformViewToTestCase(testCase));
   }
@@ -90,7 +105,7 @@ public class InterfaceTestCaseController {
    * @return
    */
   @RequestMapping(value = "interfacecase/interface/{faceId}", method = RequestMethod.GET)
-  public ResponseResult getInterfaceCaseByFace(long faceId) {
+  public ResponseResult getInterfaceCaseByFace(@PathVariable long faceId) {
     List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(faceId);
     List<TestCaseView> testCaseViews = new ArrayList<>();
     testCases.forEach((testCase -> {
@@ -108,7 +123,7 @@ public class InterfaceTestCaseController {
    */
   @RequestMapping(value = "interfacecase/interface/{faceId}/running/{isRun}",
       method = RequestMethod.GET)
-  public ResponseResult getInterfaceCaseByFaceAndRun(long faceId, boolean isRun) {
+  public ResponseResult getInterfaceCaseByFaceAndRun(@PathVariable long faceId, @PathVariable boolean isRun) {
     List<InterfaceTestCase> testCases =
         testCaseService.findInterfaceTestCaseByFaceAndIsRun(faceId, isRun);
     List<TestCaseView> testCaseViews = new ArrayList<>();
