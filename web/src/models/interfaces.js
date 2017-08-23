@@ -39,7 +39,6 @@ export default {
   },
   effects: {
     *reload({userRole, moduleId}, { select, call, put }) {
-      debugger;
       const {userAuthority, userId} = yield select(state => state.common);
       const result = yield call(interfaceService.listinterfaces(moduleId), {userAuthority, userId, userRole});
       const newInterfaces = {interfaces: result.data, showDialog: false, type: "", modalKey: Math.random(), interfaceInfo: {}};
