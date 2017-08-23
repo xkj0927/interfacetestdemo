@@ -48,7 +48,8 @@ public class DeptController {
    */
   @RequestMapping(value = Constant.DEPT, method = RequestMethod.POST)
   public ResponseResult deptCreate(@RequestBody Dept dept){
-
+    
+    dept.setDeptType(0);
     dept.setCreateTime(new Date());
     
     deptService.deptSave(dept);

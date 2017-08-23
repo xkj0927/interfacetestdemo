@@ -10,6 +10,6 @@ import com.wafer.interfacetestdemo.vo.DeptVo;
 
 public interface DeptRepository extends BaseRepository<Dept, Long> {
   
-  @Query(value = "Select new com.wafer.interfacetestdemo.vo.DeptVo (d.deptId, d.deptName, d.deptCode, d.createTime) from Dept d")
+  @Query(value = "Select new com.wafer.interfacetestdemo.vo.DeptVo (d.deptId, d.deptName, d.deptCode, d.createTime) from Dept d where d.deptType = 0")
   List<DeptVo> getDeptVoList();
 }

@@ -20,6 +20,9 @@ public class Dept {
   
   @Column(name = "dept_code")
   private String deptCode;
+  
+  @Column(name = "dept_type")
+  private int deptType;
  
   @Column(name = "create_time")
   private Date createTime;
@@ -49,6 +52,14 @@ public class Dept {
 
   public void setDeptCode(String deptCode) {
     this.deptCode = deptCode;
+  }
+  
+  public int getDeptType() {
+    return deptType;
+  }
+
+  public void setDeptType(int deptType) {
+    this.deptType = deptType;
   }
 
   public Date getCreateTime() {
