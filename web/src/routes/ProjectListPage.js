@@ -4,22 +4,35 @@ import {Table, Button, Popconfirm, Spin, Icon, Form, Modal, Popover} from 'antd'
 import {routerRedux} from 'dva/router';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import style from './project-list-page.less';
+import ProjectEditor from "../components/ProjectEditor";
 
-const ProjectComponent = ({dispatch, projectInfo}) => {
+const ProjectComponent = injectIntl(({dispatch, intl, projectInfo}) => {
   const content = (
     <div>
-      <Button className={style.marginRight5}><Icon type="edit" /></Button>
-      <Button className={style.marginLeft5}><Icon type="delete" /></Button>
+      <Button className={style.marginRight5} onClick={
+        () => {
+          dispatch({type: "projects/show", payload: "mod", projectInfo: projectInfo});
+        }
+      }><Icon type="edit" /></Button>
+
+      <Popconfirm placement="rightTop" title={intl.formatMessage({id: "project.delConfirm"})}
+                  onConfirm={
+                    () => {
+                      dispatch({type: "projects/delete", payload: projectInfo.projectId});
+                    }
+                  }>
+        <Button className={style.marginLeft5}><Icon type="delete" /></Button>
+      </Popconfirm>
     </div>
   );
   return (
-    <div className={style.project}>
+    <div className={style.project} onClick={
+      () => {
+        dispatch(routerRedux.push({pathname: '/module/list', query: {projectId: projectInfo.projectId}}));
+      }
+    }>
       <Popover content={content}>
-        <div className={style.info} onClick={
-          () => {
-            dispatch(routerRedux.push({pathname: '/module/list', query: {projectId: projectInfo.projectId}}));
-          }
-        }>
+        <div className={style.info}>
           <div className={style.title}>{projectInfo.projectName}</div>
         </div>
       </Popover>
@@ -28,28 +41,56 @@ const ProjectComponent = ({dispatch, projectInfo}) => {
       </div>
     </div>
   );
-};
+});
 
-const ProjectListPage = ({dispatch, projects, intl, loading, handleType, modalKey, visible, deptName}) => {
+const ProjectListPage = ({dispatch, projects, projectInfo, intl, loading, handleType, modalKey, visible, deptName}) => {
   let projectComponents = projects.map(function(project){
       return (
         <ProjectComponent
             key = {project.projectId}
             dispatch={dispatch}
-            projectInfo={project}
-            handleType={handleType}
-            modalKey={modalKey}/>
+            projectInfo={project}/>
           );
       });
-   return (
+
+  const closeHandle = () => {
+    dispatch({type: "projects/show", payload: ""});
+  };
+
+  let modalTitleId = {id: "project.typeAdd"};
+  if(handleType === "mod"){
+    modalTitleId = {id: "project.typeMod"};
+  }
+
+  let ProjectForm = Form.create()(
+    (props) => {
+      return <ProjectEditor
+        form={props.form}
+        dispatch={dispatch}
+        type={handleType}
+        projectInfo={projectInfo}/>
+    }
+  );
+  return (
     <div>
       <Spin spinning={loading} tip={intl.formatMessage({id: 'loading'})}>
         <h3><span className={style.deptName}>{deptName}</span></h3>
         <div className={style.projectContainer}>
           {projectComponents}
-          <div className={style.boxToAdd}></div>
+          <div className={style.boxToAdd} onClick={
+            () => {
+              dispatch({type: "projects/show", payload: "add", projectInfo: {}});
+            }
+          }></div>
         </div>
       </Spin>
+      <Modal title={intl.formatMessage(modalTitleId)}
+             visible={visible}
+             footer={null}
+             key={modalKey}
+             onCancel={closeHandle}>
+        <ProjectForm />
+      </Modal>
     </div>
   );
 };

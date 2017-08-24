@@ -18,3 +18,23 @@ export function listProject({userAuthority, deptId}) {
   }
 }
 
+export function addProject(projectInfo) {
+  return request('api/v1/project', {
+    method: 'POST',
+    body: JSON.stringify(projectInfo)
+  });
+}
+
+export function editProject(projectInfo) {
+  return request('api/v1/project', {
+    method: 'PUT',
+    body: JSON.stringify(projectInfo)
+  });
+}
+
+export function deleteProject({userId, projectId}) {
+  return request(`api/v1/project/${userId}/${projectId}`, {
+    method: 'DELETE'
+  });
+}
+

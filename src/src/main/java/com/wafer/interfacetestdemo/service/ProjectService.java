@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.wafer.interfacetestdemo.domain.Project;
 import com.wafer.interfacetestdemo.repository.ProjectRepository;
+import com.wafer.interfacetestdemo.vo.ProjectVo;
 
 @Service
 public class ProjectService {
@@ -14,12 +15,24 @@ public class ProjectService {
   @Autowired
   private ProjectRepository projectRepository;
 
-  public List<Project> getProjectList(){
-    return projectRepository.findAll();
+  public List<ProjectVo> getProjectList(){
+    return projectRepository.getProjectList();
   }
 
-  public List<Project> getProjectByDeptId(long deptId) {
+  public List<ProjectVo> getProjectByDeptId(long deptId) {
     return projectRepository.getProjectByDeptId(deptId);
+  }
+
+  public void projectSave(Project project) {
+    projectRepository.save(project);
+  }
+
+  public void deleteProjectByProjectId(long projectId) {
+    projectRepository.delete(projectId);
+  }
+
+  public Project getProjectByProjectId(long projectId) {
+    return projectRepository.findOne(projectId);
   }
 
 }
