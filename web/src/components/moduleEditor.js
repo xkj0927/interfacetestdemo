@@ -52,79 +52,86 @@ export default injectIntl(({dispatch, interfaceInfo, form, intl}) => {
     ];
     return (
         <div>
-            <Form>
-                <FormItem  label={"interfaceName:"} {...formLayout}>
-                    {getFieldDecorator("interfaceName", {
-                        rules: [
-                            {
-                                required: true,
-                                message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                            },
-                            {
-                                pattern: /^.{1,20}$/,
-                                message: intl.formatMessage({id: "user.warn.tooManyChar20"})
-                            }
-                        ],
-                        initialValue: "aaa"
-                    })(
-                        <Input type="text"/>
-                    )}
+            <div>
+                <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 21}}>
+                    <Button type="primary" htmlType="submit"><FormattedMessage id="user.submit"/></Button>
                 </FormItem>
-                <FormItem  label={"interfaceUrl:"} {...formLayout}>
-                    {getFieldDecorator("interfaceType", {
-                        rules: [
-                            {
-                                required: true,
-                                message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                            },
-                            {
-                                pattern: /^.{1,20}$/,
-                                message: intl.formatMessage({id: "user.warn.tooManyChar20"})
-                            }
-                        ],
-                        initialValue: "aaa"
-                    })(
-                        <Input type="text"/>
-                    )}
-                </FormItem>
-                <FormItem  label={"interfaceUrl:"} {...formLayout}>
-                    {getFieldDecorator("interfaceType", {
-                        rules: [
-                            {
-                                required: true,
-                                message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                            },
-                            {
-                                pattern: /^.{1,20}$/,
-                                message: intl.formatMessage({id: "user.warn.tooManyChar20"})
-                            }
-                        ],
-                        initialValue: "aaa"
-                    })(
-                        <Input type="text"/>
-                    )}
-                </FormItem>
-                <FormItem  label={"interfaceUrl:"} {...formLayout}>
-                    {getFieldDecorator("interfaceType", {
-                        rules: [
-                            {
-                                required: true,
-                                message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                            },
-                            {
-                                pattern: /^.{1,20}$/,
-                                message: intl.formatMessage({id: "user.warn.tooManyChar20"})
-                            }
-                        ],
-                        initialValue: "aaa"
-                    })(
-                        <Input type="text"/>
-                    )}
-                </FormItem>
-                <div>
-                    <Table columns={columns} dataSource={interfaceInfo}/>
-                </div>
-            </Form>
+            </div>
+            <div>
+                <Form>
+                    <FormItem  label={"interfaceName:"} {...formLayout}>
+                        {getFieldDecorator("interfaceName", {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
+                                },
+                                {
+                                    pattern: /^.{1,20}$/,
+                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                }
+                            ],
+                            initialValue: "aaa"
+                        })(
+                            <Input type="text"/>
+                        )}
+                    </FormItem>
+                    <FormItem  label={"interfaceUrl:"} {...formLayout}>
+                        {getFieldDecorator("interfaceType", {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
+                                },
+                                {
+                                    pattern: /^.{1,20}$/,
+                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                }
+                            ],
+                            initialValue: "aaa"
+                        })(
+                            <Input type="text"/>
+                        )}
+                    </FormItem>
+                    <FormItem  label={"interfaceUrl:"} {...formLayout}>
+                        {getFieldDecorator("interfaceType", {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
+                                },
+                                {
+                                    pattern: /^.{1,20}$/,
+                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                }
+                            ],
+                            initialValue: "aaa"
+                        })(
+                            <Input type="text"/>
+                        )}
+                    </FormItem>
+                    <FormItem  label={"interfaceUrl:"} {...formLayout}>
+                        {getFieldDecorator("interfaceType", {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
+                                },
+                                {
+                                    pattern: /^.{1,20}$/,
+                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                }
+                            ],
+                            initialValue: "aaa"
+                        })(
+                            <Input type="text"/>
+                        )}
+                    </FormItem>
+                    <div>
+                        <Table columns={columns} dataSource={interfaceInfo}/>
+                    </div>
+                </Form>
+            </div>
         </div>
     );
 });

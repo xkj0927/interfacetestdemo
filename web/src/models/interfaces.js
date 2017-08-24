@@ -8,40 +8,38 @@ export default {
     showDialog: false,
     type: "",
     interfaces: [],
-    interfaceInfo: null
+    interfaceInfo: null,
+    operatorType:"",
+    moduleKey: 0
   },
   reducers: {
-    update(state, { payload: newModules }) {
-      return newModules;
+    update(state, { payload: interfaceInfo, operateType: operatorType, moduleKey: moduleKey}) {
+      state.interfaceInfo = interfaceInfo;
+      state.operatorType = operatorType;
+      state.moduleKey = moduleKey;
+      let newState = state;
+      return newState;
     },
   },
   effects: {
-    *reload({userRole, moduleId}, { select, call, put }) {
-      const {userAuthority, userId} = yield select(state => state.common);
-      const result = yield call(interfaceService.listinterfaces(moduleId), {userAuthority, userId, userRole});
-      const newInterfaces = {interfaces: result.data, showDialog: false, type: "", modalKey: Math.random(), interfaceInfo: {}};
+    *info({key, operatorType}, {call, put}){
+      debugger;
+      const result = yield call(interfaceService.interfaceinfo, key);
+      const interfaceInfo = result.data;
       yield put({
         type: 'update',
-        payload: newInterfaces
+        payload: interfaceInfo,
+        operateType: operatorType,
+        moduleKey:0
       });
     },
-  *info({payload: interfaceId}, {call, put}){
-  const result = yield call(interfaceService.interfaceinfo, interfaceId);
-  const interfaceInfo = result.data;
-  yield put({
-  type: 'update',
-  payload: interfaceInfo
-  });
-  },
-  },
-  subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({pathname, query}) => {
-        if(pathname === '/interface/list'){
-          const {userRole} = query;
-          dispatch({ type: 'reload' , userRole, moduleId});
-        }
+    *show({key, operatorType, interfaceInfo}, {put}){
+      yield put({
+        type: 'update',
+        payload: interfaceInfo,
+        operateType: operatorType,
+        moduleKey: key
       });
     },
-  }
+  },
 };

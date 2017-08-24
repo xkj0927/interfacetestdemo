@@ -9,41 +9,6 @@ import InterfaceEditor from '../components/InterfaceEditor'
 
 const TreeNode = Tree.TreeNode;
 const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
-    let tabledata = [{"paramName": "name","paramType": "String"},{"paramName": "age","paramType": "int"},{"paramName": "gender","paramType": "String"}];
-    console.log(modules);
-    const columns = [
-    {
-    title: "ParamName",
-    dataIndex: 'paramName'
-    },
-    {
-    title: "ParamType",
-    dataIndex: 'paramType'
-    },
-    {
-    title: "operation",
-    render: (text, record) => {
-    return (
-    <Button.Group type="ghost">
-    <Button title={intl.formatMessage({id: "user.editUser"})}  size="small" onClick={
-        () => {
-            dispatch({type: "users/show", payload: "mod", userInfo: record});
-        }
-    }><Icon type="edit" /></Button>
-    <Popconfirm title={intl.formatMessage({id: "user.delConfirm"})}
-    onConfirm={
-        () => {
-            dispatch({type: "users/delete", payload: record.userId});
-        }
-    }>
-    <Button title={intl.formatMessage({id: "user.delUser"})} size="small"><Icon type="delete" /></Button>
-    </Popconfirm>
-    </Button.Group>
-    );
-    }
-    }
-    ];
-
   // 左边module的树结构
   // 异步加载数据
   const onLoadData = (treeNode) => {
@@ -65,7 +30,28 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
   const getInterfacesByModule = moduleId => interfaces.filter((face) => {
     return (face.moduleId == moduleId);
   });
-
+  const onSelect=(key)=> {
+      debugger;
+      console.log("key",key);
+      if(key[0].length>0 && key[0].indexOf("-")>0){
+          let selectInterfaceKey = key[0].split("-")[1];
+          let selectModuleKey = key[0].split("-")[0];
+          if(selectInterfaceKey == 0){
+              dispatch({type:"interfaces/show", key:selectModuleKey, operatorType: "add", interfaceInfo: {}});
+          }else{
+              dispatch({type:"interfaces/info", key:selectInterfaceKey, operatorType: "info"});
+          }
+      }
+  };
+  let InterfaceInfoView = Form.create()(
+      (props) => {
+          return <InterfaceEditor
+              form={props.form}
+              dispatch={dispatch}
+              operatorType={interfaces.operatorType}
+              interfaceInfo={interfaces.interfaceInfo}/>
+      }
+  );
   // module
   const moduleNode = data => data.map((item) => {
 
@@ -76,12 +62,12 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
 
     return <TreeNode title={item.moduleName} key={item.moduleId} isLeaf={false}>
       {interFaceNodes}
-      <TreeNode isLeaf={true} title={<div className={style.addInterfaceBtn}><Icon type="plus-circle-o" /> Add Interface</div>} />
+      <TreeNode isLeaf={true} key={item.moduleId+"-0"} title={<div className={style.addInterfaceBtn}><Icon type="plus-circle-o" /> Add Interface</div>} />
     </TreeNode>;
   });
 
   const moduleNodes = moduleNode(modules);
-  const moduleTree = <Tree  loadData={onLoadData}>
+  const moduleTree = <Tree  loadData={onLoadData} onSelect={onSelect}>
     {moduleNodes}
   </Tree>;
 
@@ -92,12 +78,7 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
         <Button className={style.addModuleBtn}><Icon type="plus-circle-o"/>Add Module</Button>
       </div>
       <div className={style.ModuleCollapseRight}>
-        <div>
-            <div>
-                <Table columns={columns} dataSource={tabledata}/>
-            </div>
-        </div>
-        <Table dataSource={tabledata} columns={columns}/>
+        <InterfaceInfoView />
       </div>
     </div>
   );
@@ -108,10 +89,12 @@ const mapStateToProps = (state, ownProps) => {
   const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
   const loading = state.loading.effects['modules/reload'];
   const {modules, flag, currentInterfaceId} = state.modules;
+  const interfaces = state.interfaces;
   return {
     currentInterfaceId,
     flag,
     modules: modules,
+    interfaces:interfaces,
     userRole: parseInt(userRole),
     userAuthority: parseInt(userAuthority),
     loading

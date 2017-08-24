@@ -8,10 +8,7 @@ import * as constants from '../utils/constants';
 console.log("AAAAAAAAAA");
 debugger;
 const InterfaceInfoPage = ({dispatch, interfaceInfo, intl, userRole, userAuthority, loading}) => {
-    debugger;
-    // dispatch({type: "interface/info", payload: moduleIds});
 
-    return (<div>TTTTTTTT</div>);
 
 };
 

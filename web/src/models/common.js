@@ -28,16 +28,16 @@ export default {
           if(result){
               const {user, dept, token}  = data;
               sessionStorage.setItem("access_token", token);
-              for(let property in common){
-                  if(user.hasOwnProperty(property)){
-                        common[property] = user[property];
-                  }
-              }
-              for(let property in common){
-                if(dept.hasOwnProperty(property)){
-                  common[property] = dept[property];
-                }
-              }
+              // for(let property in common){
+              //     if(user.hasOwnProperty(property)){
+              //           common[property] = user[property];
+              //     }
+              // }
+              // for(let property in common){
+              //   if(dept.hasOwnProperty(property)){
+              //     common[property] = dept[property];
+              //   }
+              // }
               let contextPath = "";
               let pathName = document.location.pathname;
               if (pathName == "/" || pathName == "/index.html") {
