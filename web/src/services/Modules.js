@@ -31,3 +31,10 @@ export function addModule(module) {
     body: JSON.stringify(module)
   });
 }
+
+export function editModule(module) {
+  return request(`api/v1/module`, {
+    method: 'PUT',
+    body: JSON.stringify(module)
+  });
+}

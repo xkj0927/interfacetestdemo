@@ -13,17 +13,21 @@ const formLayout = {
   }
 };
 
-export default injectIntl(({form, intl, type, dispatch, moduleInfo, projectInfo}) => {
+export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
   const {getFieldDecorator, validateFields} = form;
-  const {moduleName, projectId, isRun} = moduleInfo;
-  // const {projectName} = projectInfo;
+  debugger
+  const {moduleName, run, moduleId} = moduleInfo;
+  const type = moduleId ? "update" : "add";
 
   const submitHandle = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
-      debugger
       if (!err) {
-        dispatch({type: "modules/add", payload: values});
+        if("update" == type){
+          dispatch({type: "modules/edit", payload: {...moduleInfo, ...values}});
+        }else{
+          dispatch({type: "modules/add", payload: {...values, ...{projectId:projectId}}});
+        }
       } else {
         message.warn(JSON.stringify(err));
       }
@@ -47,27 +51,13 @@ export default injectIntl(({form, intl, type, dispatch, moduleInfo, projectInfo}
           )}
         </FormItem>
 
-        <FormItem label={intl.formatMessage({id: "project.projectName"}) + ":"} {...formLayout}>
-          {getFieldDecorator("projectId", {
-            rules: [
-              {
-                required: true,
-                message: intl.formatMessage({id: "project.warn.emptyProject"})
-              }
-            ],
-            initialValue: "1"
-          })( <Select>
-              <Select.Option value={projectId}>{projectId}</Select.Option>
-          </Select>)}
-        </FormItem>
-
         <FormItem
           {...formLayout}
           label={intl.formatMessage({id: "module.running"}) + ":"}
         >
-          {getFieldDecorator('isRun', {
+          {getFieldDecorator('run', {
             valuePropName: 'checked',
-            initialValue : true
+            initialValue : run
           })(
             <Switch/>
           )}

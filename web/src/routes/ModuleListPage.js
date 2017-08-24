@@ -12,7 +12,7 @@ const TreeNode = Tree.TreeNode;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 
-const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVisible = false, modalKey = '', projectInfo, intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
+const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVisible = false, modalKey = '', projectId, currentModule, intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
   console.log(modules);
   // 左边module的树结构
   // 异步加载数据
@@ -59,7 +59,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
   const onRightClickHandle = (event) => {
     const selectId = event.node.props.eventKey;
     if(selectId && selectId.split('-').length == 1){
-      dispatch({type: "modules/show", payload: ""});
+      dispatch({type: "modules/showCurrentModule", payload: selectId});
     }
   };
   const moduleNodes = moduleNode(modules);
@@ -76,8 +76,8 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       return <ModuleEditor
         form={props.form}
         dispatch={dispatch}
-        moduleInfo = {{}}
-        addModuleShow={{}}/>
+        moduleInfo = {currentModule}
+        projectId={projectId}/>
     }
   );
   const addModuleModal = <Modal
@@ -109,7 +109,7 @@ const mapStateToProps = (state, ownProps) => {
   const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
   const loading = state.loading.effects['modules/reload'];
   const interfaces = state.interfaces;
-  const {modules, flag, currentInterfaceId, addModuleModalVisible, modalKey, projectInfo} = state.modules;
+  const {modules, flag, currentInterfaceId, addModuleModalVisible, modalKey, projectId, currentModule} = state.modules;
   return {
     currentInterfaceId,
     flag,
@@ -117,7 +117,8 @@ const mapStateToProps = (state, ownProps) => {
     interfaces:interfaces,
     addModuleModalVisible: addModuleModalVisible,
     modalKey:modalKey,
-    projectInfo : projectInfo,
+    projectId: projectId,
+    currentModule : currentModule,
     userRole: parseInt(userRole),
     userAuthority: parseInt(userAuthority),
     loading

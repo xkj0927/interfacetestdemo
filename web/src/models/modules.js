@@ -11,13 +11,15 @@ export default {
     flag: false,
     addModuleModalVisible: false,
     modalKey:'',
-    projectInfo:'',
+    projectId:'',
+    currentModule: {},
   },
   reducers: {
-    update(state, {modules}) {
+    update(state, {modules,projectId:projectId}) {
       state.modules = modules;
       state.moduleIds = [];
       state.interfaceIds = [];
+      state.projectId = projectId;
       let newState = state;
       return newState;
     },
@@ -47,17 +49,43 @@ export default {
     changeShow(state){
       state.addModuleModalVisible = !state.addModuleModalVisible;
       state.modalKey = Math.random();
+      state.currentModule = {};
       return state;
     },
 
     addModule(state, {payload:newModule}){
-      debugger
       state.modules.push(newModule);
       state.addModuleModalVisible = !state.addModuleModalVisible;
       state.modalKey = Math.random();
+      state.currentModule = {};
       state.flag = !state.flag;
       return state;
-    }
+    },
+
+    editModule(state, {payload:newModule}){
+      state.modules.map(module => {
+        if(module.moduleId == newModule.moduleId){
+          module.moduleName = newModule.moduleName;
+          module.run = newModule.run;
+        }
+      });
+      state.addModuleModalVisible = !state.addModuleModalVisible;
+      state.modalKey = Math.random();
+      state.currentModule = {};
+      state.flag = !state.flag;
+      return state;
+    },
+
+    updateCurrentModule(state, {payload: moduleId}){
+      state.modules.map(module => {
+        if(module.moduleId == moduleId){
+          state.currentModule = module;
+        }
+      });
+      state.addModuleModalVisible = !state.addModuleModalVisible;
+      state.modalKey = Math.random();
+      return state;
+    },
 
   },
   effects: {
@@ -67,7 +95,8 @@ export default {
       const modules = result.data;
       yield put({
         type: 'update',
-        modules: modules
+        modules: modules,
+        projectId: projectId
       });
     },
     *interfacelist({payload: mIds}, {select, call, put}){
@@ -187,6 +216,14 @@ export default {
     *add({payload: values}, {call, put}){
       const result = yield call(moduleService.addModule, values);
       yield put({ type: 'addModule' , payload: result.data});
+    },
+    *edit({payload: values}, {call, put}){
+      const result = yield call(moduleService.editModule, values);
+      yield put({ type: 'editModule' , payload: result.data});
+    },
+
+    *showCurrentModule({payload: moduleId}, {put}){
+      yield put({ type: 'updateCurrentModule' , payload: moduleId});
     },
   },
   subscriptions: {
