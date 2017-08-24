@@ -59,7 +59,7 @@ const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, 
   const moduleNode = data => data.map((item) => {
 
     const interfaceNode = data => data.map((item) => {
-      return <TreeNode title={item.interfaceName} key={item.moduleId +"-"+ item.interfaceId} ></TreeNode>;
+      return <TreeNode title={item.interfaceName} key={item.moduleId +"-"+ item.interfaceId} isLeaf={true}></TreeNode>;
     });
     const interFaceNodes = (item.interfaceViews && item.interfaceViews.length > 0)? interfaceNode(item.interfaceViews) : [];
 
