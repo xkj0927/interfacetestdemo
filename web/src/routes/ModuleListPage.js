@@ -7,10 +7,9 @@ import * as constants from '../utils/constants';
 import style from './ModulePage.less';
 
 const TreeNode = Tree.TreeNode;
-const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
+const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
   let interfaceInfo = [];
   console.log(modules);
-
   const dataSource = [{
     key: '1',
     name: '胡彦斌',
@@ -51,21 +50,18 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
         moduleId = keys[0];
       }
       console.log("moduleId = "+moduleId);
-      dispatch({type: "interfaces/list", payload: moduleId});
+      dispatch({type: "modules/list", payload: moduleId});
       resolve();
     });
   }
-  const getInterfacesByModule = moduleId => interfaces.filter((face) => {
-    return (face.moduleId == moduleId);
-  });
 
   // module
   const moduleNode = data => data.map((item) => {
-    // interface node
+
     const interfaceNode = data => data.map((item) => {
-      return <TreeNode title={item.interfaceName} key={item.moduleId +"-"+ item.interfaceId} ></TreeNode>;
+      return <TreeNode title={item.interfaceName} key={item.moduleId +"-"+ item.interfaceId} isLeaf={true}></TreeNode>;
     });
-    const interFaceNodes = interfaceNode(getInterfacesByModule(item.moduleId));
+    const interFaceNodes = (item.interfaceViews && item.interfaceViews.length > 0)? interfaceNode(item.interfaceViews) : [];
 
     return <TreeNode title={item.moduleName} key={item.moduleId} isLeaf={false}>
       {interFaceNodes}
@@ -99,12 +95,10 @@ const mapStateToProps = (state, ownProps) => {
   const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
   const loading = state.loading.effects['modules/reload'];
   const {modules, flag, currentInterfaceId} = state.modules;
-  const {interfaces} = state.interfaces;
   return {
     currentInterfaceId,
     flag,
     modules: modules,
-    interfaces: interfaces,
     userRole: parseInt(userRole),
     userAuthority: parseInt(userAuthority),
     loading

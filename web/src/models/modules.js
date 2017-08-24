@@ -28,6 +28,21 @@ export default {
       let newState = state;
       return newState;
     },
+
+    updateInterfaces(state, {payload : newInterfaces, moduleId : moduleId}){
+      // 1.循环遍历module ,将新获取到的interface更新
+      let modules = state.modules;
+      debugger
+      modules.map(module =>{
+        if(module.moduleId == moduleId){
+          module.interfaceViews = newInterfaces;
+        }
+      });
+      state.flag = !state.flag;
+      state.modules = modules;
+      return state;
+    },
+
   },
   effects: {
     *reload({userRole}, { select, call, put}) {
@@ -143,6 +158,14 @@ export default {
           currentInterfaceId: currentInterfaceId,
         });
       }
+    },
+    *list({payload: moduleId}, {call, put}){
+      const newInterfaces = yield call(moduleService.listinterfaces, moduleId);
+      yield put({
+        type: 'updateInterfaces',
+        payload: newInterfaces.data,
+        moduleId: moduleId
+      });
     },
   },
   subscriptions: {
