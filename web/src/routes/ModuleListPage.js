@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
-import {Table, Button, Popconfirm, Spin, Icon, Modal, Form, Collapse, Tree, Select, Input, Radio} from 'antd';
+import {Table, Button, Popconfirm, Spin, Icon, Modal, Form, Collapse, Tree, Select, Input, Radio, Popover} from 'antd';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import {routerRedux} from 'dva/router';
 import * as constants from '../utils/constants';
@@ -12,7 +12,7 @@ const TreeNode = Tree.TreeNode;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 
-const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVisible = false, modalKey = '', projectId, currentModule, intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
+const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVisible = false, modalKey = '', projectId, currentModule, activeKey, intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
   console.log(modules);
   // 左边module的树结构
   // 异步加载数据
@@ -50,20 +50,37 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     });
     const interFaceNodes = (item.interfaceViews && item.interfaceViews.length > 0)? interfaceNode(item.interfaceViews) : [];
 
-    return <TreeNode title={item.moduleName} key={item.moduleId} isLeaf={false}>
+    const deleteModuleHandle = () => {
+      dispatch({type: "modules/delete", payload: activeKey});
+    };
+
+    const editDeleteBtn = <div className={style.popBtnSpan}>
+        <Button onClick={onRightClickHandle}><FormattedMessage id="module.edit"/></Button>
+        <Button onClick={deleteModuleHandle}><FormattedMessage id="module.delete"/></Button>
+    </div>;
+    const moduleHandle = <Popover content={editDeleteBtn} trigger="click" placement="rightTop">
+      {item.moduleName}
+    </Popover>;
+    return <TreeNode title={moduleHandle} key={item.moduleId} isLeaf={false}>
       {interFaceNodes}
       <TreeNode isLeaf={true} key={item.moduleId+"-0"} title={<div className={style.addInterfaceBtn}><Icon type="plus-circle-o" /> Add Interface</div>} />
     </TreeNode>;
   });
 
   const onRightClickHandle = (event) => {
-    const selectId = event.node.props.eventKey;
+    const selectId = activeKey;
     if(selectId && selectId.split('-').length == 1){
       dispatch({type: "modules/showCurrentModule", payload: selectId});
     }
   };
+  const onSelectHandle = (treeKey) => {
+    const selectId = treeKey[0];
+    if(selectId && selectId.split('-').length == 1){
+      dispatch({type: "modules/updateActive", payload: selectId});
+    }
+  };
   const moduleNodes = moduleNode(modules);
-  const moduleTree = <Tree  loadData={onLoadData} onRightClick={onRightClickHandle}>
+  const moduleTree = <Tree  loadData={onLoadData} onSelect={onSelectHandle}>
     {moduleNodes}
   </Tree>;
 
@@ -109,7 +126,7 @@ const mapStateToProps = (state, ownProps) => {
   const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
   const loading = state.loading.effects['modules/reload'];
   const interfaces = state.interfaces;
-  const {modules, flag, currentInterfaceId, addModuleModalVisible, modalKey, projectId, currentModule} = state.modules;
+  const {modules, flag, currentInterfaceId, addModuleModalVisible, modalKey, projectId, currentModule, activeKey} = state.modules;
   return {
     currentInterfaceId,
     flag,
@@ -118,6 +135,7 @@ const mapStateToProps = (state, ownProps) => {
     addModuleModalVisible: addModuleModalVisible,
     modalKey:modalKey,
     projectId: projectId,
+    activeKey,
     currentModule : currentModule,
     userRole: parseInt(userRole),
     userAuthority: parseInt(userAuthority),

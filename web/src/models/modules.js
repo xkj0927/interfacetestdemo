@@ -13,6 +13,7 @@ export default {
     modalKey:'',
     projectId:'',
     currentModule: {},
+    activeKey : '',
   },
   reducers: {
     update(state, {modules,projectId:projectId}) {
@@ -76,6 +77,18 @@ export default {
       return state;
     },
 
+    deleteModule(state, {payload:moduleId}){
+      let newModules = [];
+      state.modules.map(module => {
+        if(module.moduleId != moduleId){
+          newModules.push(module);
+        }
+      });
+      state.modules = newModules;
+      state.flag = !state.flag;
+      return state;
+    },
+
     updateCurrentModule(state, {payload: moduleId}){
       state.modules.map(module => {
         if(module.moduleId == moduleId){
@@ -86,6 +99,11 @@ export default {
       state.modalKey = Math.random();
       return state;
     },
+
+    updateActiveKey(state, {payload: moduleId}){
+      state.activeKey = moduleId;
+      return state;
+    }
 
   },
   effects: {
@@ -221,9 +239,17 @@ export default {
       const result = yield call(moduleService.editModule, values);
       yield put({ type: 'editModule' , payload: result.data});
     },
+    *delete({payload: moduleId}, {call, put}){
+      yield call(moduleService.deleteModule, moduleId);
+      yield put({ type: 'deleteModule' , payload: moduleId});
+    },
 
     *showCurrentModule({payload: moduleId}, {put}){
       yield put({ type: 'updateCurrentModule' , payload: moduleId});
+    },
+
+    *updateActive({payload: moduleId}, {put}){
+      yield put({ type: 'updateActiveKey' , payload: moduleId});
     },
   },
   subscriptions: {

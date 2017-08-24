@@ -38,3 +38,9 @@ export function editModule(module) {
     body: JSON.stringify(module)
   });
 }
+
+export function deleteModule(moduleId) {
+  return request(`api/v1/module/${moduleId}`, {
+    method: 'DELETE'
+  });
+}

@@ -2,6 +2,7 @@ import React from "react";
 import {Form, Input, InputNumber, Select, Button, message, Switch} from "antd";
 import {routerRedux} from "dva/router";
 import {FormattedMessage, injectIntl} from 'react-intl';
+import style from './module-editor.less';
 
 const FormItem = Form.Item;
 const formLayout = {
@@ -20,9 +21,10 @@ export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
   const type = moduleId ? "update" : "add";
   let deleteForm = null;
   if("update" == type){
-    deleteForm = <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 21}}>
-      <Button type="primary" htmlType="submit"><FormattedMessage id="module.save"/></Button>
-    </FormItem>;
+    const deleteModuleHandle = (e) => {
+      dispatch({type: "modules/delete", payload: moduleId});
+    };
+    deleteForm = <Button type="button" className={style.deleteModuleBtn} onClick={deleteModuleHandle}><FormattedMessage id="module.delete"/></Button>;
   }
 
   const submitHandle = (e) => {
@@ -70,8 +72,8 @@ export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
         </FormItem>
 
         <br/>
-        {deleteForm}
         <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 21}}>
+          {deleteForm}
           <Button type="primary" htmlType="submit"><FormattedMessage id="module.save"/></Button>
         </FormItem>
       </Form>

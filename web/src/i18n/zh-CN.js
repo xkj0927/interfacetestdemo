@@ -94,6 +94,8 @@ const zhCN = {
   "module.moduleName":"模块名称",
   "module.moduleName.emptyUserName":"请输入模块名称",
   "module.save":"保存",
+  "module.delete":"删除",
+  "module.edit" : "编辑",
   "project.warn.emptyProject":"项目不能为空",
   "module.running":"是否运行"
 
