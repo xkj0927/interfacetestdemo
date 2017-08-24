@@ -7,15 +7,7 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import style from "./InterfaceEditor.less"
 
 const FormItem = Form.Item;
-const formLayout = {
-    labelCol: {
-        span: 7
-    },
-    wrapperCol: {
-        span: 16
-    }
-};
-export default injectIntl(({dispatch, operatorType, interfaceInfo, form, intl}) => {
+export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, form, intl}) => {
     const {getFieldDecorator, validateFields} = form;
     let requestTabledata = [];
     let responseTabledata = [];
@@ -51,6 +43,19 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, form, intl}) 
             }
         }
     ];
+    const handleSubmit=(e)=> {
+        e.preventDefault();
+        validateFields((err, values) => {
+            console.log('收到表单值：',values);
+            values.moduleId = moduleKey;
+            values.requestParam = interfaceInfo.requestParam;
+            values.responseResult = interfaceInfo.responseResult;
+            if(undefined != interfaceInfo.interfaceId){
+                values.interfaceId = interfaceInfo.interfaceId;
+            }
+            dispatch({type:"interfaces/add", values});
+        });
+    };
     if("info" == operatorType){
         requestTabledata = JSON.parse(interfaceInfo.requestParam);
         responseTabledata = JSON.parse(interfaceInfo.responseResult);
@@ -59,7 +64,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, form, intl}) 
            <div>
                <Button className={style.editInterfaceBtn} onClick={
                    () => {
-                       dispatch({type: "interfaces/show", key:interfaceId, operatorType: "edit", interfaceInfo: interfaceInfo});
+                       dispatch({type: "interfaces/show", key: interfaceId, operatorType: "edit", interfaceInfo: interfaceInfo, selectModuleKey:interfaceInfo.moduleId});
                    }
                }><Icon type="edit"/>Edit Interface</Button>
                <div><b>interfaceName:</b>{interfaceName}</div>
@@ -74,23 +79,17 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, form, intl}) 
                </div>
            </div>
         );
-    }else if("add" == operatorType || "edit" == operatorType){
-        if("edit" == operatorType){
-            requestTabledata = JSON.parse(interfaceInfo.requestParam);
-            responseTabledata = JSON.parse(interfaceInfo.responseResult);
-        }
+    }else if("edit" == operatorType){
+        requestTabledata = JSON.parse(interfaceInfo.requestParam);
+        responseTabledata = JSON.parse(interfaceInfo.responseResult);
         const {interfaceName = [],interfaceType = [], interfaceUrl =[], isRun=[]} = interfaceInfo;
         return (
             <div>
                 <FormItem>
-                <Button className={style.editInterfaceBtn} onClick={
-                    () => {
-                        dispatch({type: "interfaces/show", key:interfaceId, operatorType: "edit", interfaceInfo: interfaceInfo});
-                    }
-                }><Icon type="save"/>Save Interface</Button>
+                    <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>Save Interface</Button>
                 </FormItem>
                 <Form>
-                    <FormItem  label={"interfaceName:"} {...formLayout}>
+                    <FormItem  label={"interfaceName:"}>
                         {getFieldDecorator("interfaceName", {
                             rules: [
                                 {
@@ -107,7 +106,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, form, intl}) 
                             <Input type="text"/>
                         )}
                     </FormItem>
-                    <FormItem  label={"interfaceType:"} {...formLayout}>
+                    <FormItem  label={"interfaceType:"}>
                         {getFieldDecorator("interfaceType", {
                             rules: [
                                 {
@@ -124,7 +123,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, form, intl}) 
                             <Input type="text"/>
                         )}
                     </FormItem>
-                    <FormItem  label={"interfaceUrl:"} {...formLayout}>
+                    <FormItem  label={"interfaceUrl:"}>
                         {getFieldDecorator("interfaceUrl", {
                             rules: [
                                 {
@@ -141,14 +140,22 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, form, intl}) 
                             <Input type="text"/>
                         )}
                     </FormItem>
-                    <FormItem  label={"isRun:"} {...formLayout}>
+                    <FormItem  label={"isRun:"}>
                         <Select defaultValue={isRun}>
                             <Option value="0">yes</Option>
                             <Option value="1">no</Option>
                         </Select>
                     </FormItem>
                     <div>
+                        <b>Request Param: </b>
+                        <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>Add Request Param</Button>
+                    </div>
+                    <div>
                         <Table columns={columns} dataSource={requestTabledata} pagination={false}/>
+                    </div>
+                    <div>
+                        <b>Response Param: </b>
+                        <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>Add Response Param</Button>
                     </div>
                     <div>
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
@@ -156,7 +163,76 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, form, intl}) 
                 </Form>
             </div>
         );
-    }else{
+    }else if("add" == operatorType){
+        const {interfaceName = [],interfaceType = [], interfaceUrl =[], isRun=[]} = interfaceInfo;
+        return (
+            <div>
+                <FormItem>
+                    <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>Save Interface</Button>
+                </FormItem>
+                <Form>
+                    <FormItem  label={"interfaceName:"}>
+                        {getFieldDecorator("interfaceName", {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
+                                },
+                                {
+                                    pattern: /^.{1,20}$/,
+                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                }
+                            ],
+                            initialValue: interfaceName
+                        })(
+                            <Input type="text"/>
+                        )}
+                    </FormItem>
+                    <FormItem  label={"interfaceType:"}>
+                        {getFieldDecorator("interfaceType", {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
+                                },
+                                {
+                                    pattern: /^.{1,20}$/,
+                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                }
+                            ],
+                            initialValue: interfaceType
+                        })(
+                            <Input type="text"/>
+                        )}
+                    </FormItem>
+                    <FormItem  label={"interfaceUrl:"}>
+                        {getFieldDecorator("interfaceUrl", {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
+                                },
+                                {
+                                    pattern: /^.{1,20}$/,
+                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                }
+                            ],
+                            initialValue: interfaceUrl
+                        })(
+                            <Input type="text"/>
+                        )}
+                    </FormItem>
+                    <FormItem  label={"isRun:"}>
+                        <Select defaultValue={isRun}>
+                            <Option value="0">yes</Option>
+                            <Option value="1">no</Option>
+                        </Select>
+                    </FormItem>
+                </Form>
+            </div>
+        );
+    }
+    else{
         return (<div></div>);
     }
 });

@@ -17,3 +17,18 @@ export function listinterfaces(moduleId) {
     method: 'GET'
   });
 }
+
+export function addinterfaces(interfacevalues) {
+  return request(`api/v1/interface`, {
+    method: 'POST',
+    body: JSON.stringify(interfacevalues)
+  });
+}
+
+
+export function editinterfaces(interfacevalues) {
+  return request(`api/v1/interface`, {
+    method: 'PUT',
+    body: JSON.stringify(interfacevalues)
+  });
+}

@@ -32,14 +32,30 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       resolve();
     });
   };
-
+  const getInterfacesByModule = moduleId => interfaces.filter((face) => {
+    return (face.moduleId == moduleId);
+  });
+  const onSelect=(key)=> {
+      debugger;
+      console.log("key",key);
+      if(key[0].length>0 && key[0].indexOf("-")>0){
+          let selectInterfaceKey = key[0].split("-")[1];
+          let selectModuleKey = key[0].split("-")[0];
+          if(selectInterfaceKey == 0){
+              dispatch({type:"interfaces/show", selectModuleKey:selectModuleKey, selectInterfaceKey:selectInterfaceKey, operatorType: "add", interfaceInfo: {}});
+          }else{
+              dispatch({type:"interfaces/info", selectModuleKey:selectModuleKey, selectInterfaceKey:selectInterfaceKey, operatorType: "info"});
+          }
+      }
+  };
   let InterfaceInfoView = Form.create()(
       (props) => {
           return <InterfaceEditor
               form={props.form}
               dispatch={dispatch}
               operatorType={interfaces.operatorType}
-              interfaceInfo={interfaces.interfaceInfo}/>
+              interfaceInfo={interfaces.interfaceInfo}
+              moduleKey={interfaces.moduleKey}/>
       }
   );
   // module
