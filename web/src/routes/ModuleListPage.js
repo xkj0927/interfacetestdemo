@@ -35,19 +35,6 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
   const getInterfacesByModule = moduleId => interfaces.filter((face) => {
     return (face.moduleId == moduleId);
   });
-  const onSelect=(key)=> {
-      debugger;
-      console.log("key",key);
-      if(key[0].length>0 && key[0].indexOf("-")>0){
-          let selectInterfaceKey = key[0].split("-")[1];
-          let selectModuleKey = key[0].split("-")[0];
-          if(selectInterfaceKey == 0){
-              dispatch({type:"interfaces/show", selectModuleKey:selectModuleKey, selectInterfaceKey:selectInterfaceKey, operatorType: "add", interfaceInfo: {}});
-          }else{
-              dispatch({type:"interfaces/info", selectModuleKey:selectModuleKey, selectInterfaceKey:selectInterfaceKey, operatorType: "info"});
-          }
-      }
-  };
   let InterfaceInfoView = Form.create()(
       (props) => {
           return <InterfaceEditor
@@ -74,7 +61,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
         <Button onClick={onRightClickHandle}><FormattedMessage id="module.edit"/></Button>
         <Button onClick={deleteModuleHandle}><FormattedMessage id="module.delete"/></Button>
     </div>;
-    const moduleHandle = <Popover content={editDeleteBtn} trigger="click" placement="rightTop">
+    const moduleHandle = <Popover content={editDeleteBtn} trigger="hover" placement="rightTop">
       {item.moduleName}
     </Popover>;
     return <TreeNode title={moduleHandle} key={item.moduleId} isLeaf={false}>
@@ -89,10 +76,20 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       dispatch({type: "modules/showCurrentModule", payload: selectId});
     }
   };
-  const onSelectHandle = (treeKey) => {
-    const selectId = treeKey[0];
+  const onSelectHandle = (key) => {
+    const selectId = key[0];
     if(selectId && selectId.split('-').length == 1){
       dispatch({type: "modules/updateActive", payload: selectId});
+    }
+
+    if(key[0].length>0 && key[0].indexOf("-")>0){
+      let selectInterfaceKey = key[0].split("-")[1];
+      let selectModuleKey = key[0].split("-")[0];
+      if(selectInterfaceKey == 0){
+        dispatch({type:"interfaces/show", selectModuleKey:selectModuleKey, selectInterfaceKey:selectInterfaceKey, operatorType: "add", interfaceInfo: {}});
+      }else{
+        dispatch({type:"interfaces/info", selectModuleKey:selectModuleKey, selectInterfaceKey:selectInterfaceKey, operatorType: "info"});
+      }
     }
   };
   const moduleNodes = moduleNode(modules);
