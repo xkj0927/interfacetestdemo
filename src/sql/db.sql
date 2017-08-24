@@ -97,7 +97,7 @@ CREATE TABLE `ps_interface_testcase` (
   CONSTRAINT `fk_interface_id` FOREIGN KEY (`interface_id`) REFERENCES `ps_interface` (`interface_id`) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
---- admin/admin
+-- admin/admin
 INSERT INTO `ps_user` (`user_id`, `user_name`, `password`, `email`, `status`, `user_authority`, `latest_login_time`, `create_time`, `update_time`) VALUES('1','admin','$2a$10$P7pwwuhkAHPH/omhVd46GuYATgaX7CExUrf0HRrRaf42CU.F22WGq','admin','0','0','2017-08-23 09:04:00','2017-08-18 09:32:24','2017-08-22 16:55:08');
 INSERT INTO `ps_dept` (`dept_id`, `dept_name`, `dept_code`, `dept_type`, `create_time`, `update_time`) VALUES('1','全部项目','QBXM',1,'2017-08-22 14:28:04','2017-08-22 14:28:04');
 INSERT INTO `ps_dept_user` (`dept_user_id`, `dept_id`, `user_id`, `create_time`, `update_time`) VALUES('1','1','1','2017-08-22 15:44:21','2017-08-22 15:44:25');
