@@ -78,6 +78,9 @@ const zhCN = {
   "project.warn.emptyProjectName": "请输入项目名称",
   "project.warn.tooManyChar20": "不能超过20个字符",
   "project.delConfirm": "确定要删除这个项目",
+  "project.success.addProject": "添加项目成功",
+  "project.success.editProject": "编辑项目成功",
+  "project.success.deleteProject": "删除项目成功",
 
   "msgKey.100001": "用户名或密码不能为空",
   "msgKey.100002": "用户不存在",

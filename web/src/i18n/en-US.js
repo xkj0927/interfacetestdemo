@@ -78,6 +78,9 @@ const enUS = {
   "project.warn.emptyProjectName": "Please input a project name",
   "project.warn.tooManyChar20": "No more than 20 characters",
   "project.delConfirm": "Are you sure you want to delete this project",
+  "project.success.addProject": "Add Project Success",
+  "project.success.editProject": "Edit Project Success",
+  "project.success.deleteProject": "Delete Project Success",
 
   "msgKey.100001": "UserId or password can not be null.",
   "msgKey.100002": "User didn't exist.",

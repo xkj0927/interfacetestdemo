@@ -29,7 +29,7 @@ public interface Constant {
   
   String PROJECT = "project";
   
-  String PROJECT_DELETE = "project/{projectId}";
+  String PROJECT_DELETE = "project/{userId}/{projectId}";
   
   
   /** 用户角色  admin */

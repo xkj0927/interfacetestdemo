@@ -26,13 +26,13 @@ const ProjectComponent = injectIntl(({dispatch, intl, projectInfo}) => {
     </div>
   );
   return (
-    <div className={style.project}>
+    <div className={style.project} onClick={
+      () => {
+        dispatch(routerRedux.push({pathname: '/module/list', query: {projectId: projectInfo.projectId}}));
+      }
+    }>
       <Popover content={content}>
-        <div className={style.info} onClick={
-          () => {
-            dispatch(routerRedux.push({pathname: '/module/list', query: {projectId: projectInfo.projectId}}));
-          }
-        }>
+        <div className={style.info}>
           <div className={style.title}>{projectInfo.projectName}</div>
         </div>
       </Popover>

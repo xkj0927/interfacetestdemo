@@ -43,6 +43,26 @@ export default {
         type: 'update',
         payload: newProjects
       });
+    },
+    *add({payload: projectInfo},{select, put, call}){
+      const {userId, deptId} = yield select(state => state.common);
+      yield call(projectService.addProject, {...projectInfo, ...{createUserId:userId, deptId:deptId}});
+      yield put({type: "reload"});
+      const messages  = yield select(state => state.i18n.messages);
+      message.info(messages["project.success.addProject"]);
+    },
+    *edit({payload: projectInfo},{select, put, call}){
+      yield call(projectService.editProject, projectInfo);
+      yield put({type: "reload"});
+      const messages  = yield select(state => state.i18n.messages);
+      message.info(messages["project.success.editProject"]);
+    },
+    *delete({payload:projectId},{select, put, call}){
+      const {userId} = yield select(state => state.common);
+      yield call(projectService.deleteProject, {userId, projectId});
+      yield put({type: "reload"});
+      const messages  = yield select(state => state.i18n.messages);
+      message.info(messages["project.success.deleteProject"]);
     }
   },
   subscriptions: {
