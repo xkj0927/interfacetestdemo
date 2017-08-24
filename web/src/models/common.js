@@ -12,6 +12,8 @@ export default {
         userAuthority: 1,
         email: '',
         status: '',
+        deptId: 0,
+        deptName: '',
         contextPath: ''
     },
     reducers:{
@@ -24,14 +26,18 @@ export default {
           const {data, result, message: msgkey} = yield call(commonService.login, values);
           const {common, i18n: {messages}} = yield select(state => state);
           if(result){
-              const {user, token}  = data;
+              const {user, dept, token}  = data;
               sessionStorage.setItem("access_token", token);
               for(let property in common){
                   if(user.hasOwnProperty(property)){
                         common[property] = user[property];
                   }
               }
-
+              for(let property in common){
+                if(dept.hasOwnProperty(property)){
+                  common[property] = dept[property];
+                }
+              }
               let contextPath = "";
               let pathName = document.location.pathname;
               if (pathName == "/" || pathName == "/index.html") {

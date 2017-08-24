@@ -4,6 +4,7 @@ import * as projectService from '../services/projects';
 export default {
   namespace: 'projects',
   state: {
+    deptName:"",
     modalKey: 0,
     showDialog: false,
     type: "",
@@ -16,9 +17,9 @@ export default {
     }
   },
   effects: {
-    *reload({userRole}, { select, call, put }) {
-      const {userAuthority, userId} = yield select(state => state.common);
-      const result = yield call(projectService.listProject, {userAuthority, userId, userRole});
+    *reload(action, { select, call, put }) {
+      const {userAuthority, deptId} = yield select(state => state.common);
+      const result = yield call(projectService.listProject, {userAuthority, deptId});
       const newProjects = {projects: result.data, showDialog: false, type: "", modalKey: Math.random(), projectInfo: {}};
       yield put({
         type: 'update',
@@ -30,8 +31,7 @@ export default {
     setup({history, dispatch}){
       return history.listen(({ pathname, query }) => {
         if (pathname === '/project/list') {
-          const {userRole} = query;
-          dispatch({ type: 'reload', userRole});
+          dispatch({ type: 'reload'});
         }
       });
     }

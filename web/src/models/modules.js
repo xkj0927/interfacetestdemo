@@ -7,8 +7,6 @@ export default {
     modules:[],
     moduleIds:[],
     interfaceIds:[],
-    openedInterfaceId:[],
-    closedInterfaceId:[],
     currentInterfaceId:"0",
     flag: false,
   },
@@ -30,6 +28,21 @@ export default {
       let newState = state;
       return newState;
     },
+
+    updateInterfaces(state, {payload : newInterfaces, moduleId : moduleId}){
+      // 1.循环遍历module ,将新获取到的interface更新
+      let modules = state.modules;
+      debugger
+      modules.map(module =>{
+        if(module.moduleId == moduleId){
+          module.interfaceViews = newInterfaces;
+        }
+      });
+      state.flag = !state.flag;
+      state.modules = modules;
+      return state;
+    },
+
   },
   effects: {
     *reload({userRole}, { select, call, put}) {
@@ -97,15 +110,11 @@ export default {
       const moduleIds =  mods.moduleIds;
       const interfaceIds =  mods.interfaceIds;
       let currentInterfaceId = mods.currentInterfaceId;
-      let openedInterfaceId = mods.openedInterfaceId;
-      let closedInterfaceId = mods.closedInterfaceId;
       let interfaceId;
       let hasinterfaceId = false;
       if(null != interfaceIds && interfaceIds.length>0){
         let tempArray1 = [];//临时数组1
         let tempArray2 = [];//临时数组2
-        let tempCurrentArray1 =[];
-        let tempCurrentArray2 =[];
 
         for(var i=0;i<interfaceIds.length;i++){
           tempArray1[interfaceIds[i]] = true;
@@ -119,25 +128,12 @@ export default {
         if(null != tempArray2 && tempArray2.length>0){
           interfaceId = tempArray2[0];
           interfaceIds.push(interfaceId);
-          openedInterfaceId.push(interfaceId);
         }else{
-          for(var i=0;i<iIds.length;i++){
-            tempCurrentArray1[iIds[i]] = true;
-          }
-
-          for(var i=0;i<openedInterfaceId.length;i++){
-            if(!tempCurrentArray1[openedInterfaceId[i]]){
-              tempCurrentArray2.push(openedInterfaceId[i]);
-            }
-          }
           hasinterfaceId = true;
-          interfaceId = tempCurrentArray2[0];
-          openedInterfaceId = iIds;
         }
       }else{
         interfaceId = iIds[0];
         interfaceIds.push(interfaceId);
-        openedInterfaceId.push(interfaceId);
       }
       currentInterfaceId = interfaceId;
       if(!hasinterfaceId){
@@ -162,6 +158,14 @@ export default {
           currentInterfaceId: currentInterfaceId,
         });
       }
+    },
+    *list({payload: moduleId}, {call, put}){
+      const newInterfaces = yield call(moduleService.listinterfaces, moduleId);
+      yield put({
+        type: 'updateInterfaces',
+        payload: newInterfaces.data,
+        moduleId: moduleId
+      });
     },
   },
   subscriptions: {
