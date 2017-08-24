@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Dept;
 import com.wafer.interfacetestdemo.domain.DeptUser;
-import com.wafer.interfacetestdemo.domain.Project;
 import com.wafer.interfacetestdemo.service.DeptService;
 import com.wafer.interfacetestdemo.service.DeptUserService;
 import com.wafer.interfacetestdemo.service.ProjectService;
 import com.wafer.interfacetestdemo.vo.DeptVo;
+import com.wafer.interfacetestdemo.vo.ProjectVo;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
 
 @RestController
@@ -74,7 +74,7 @@ public class DeptController {
   @RequestMapping(value = Constant.DEPT_DELETE, method = RequestMethod.DELETE)
   public ResponseResult deptDelete(@PathVariable long deptId) {
     List<DeptUser> deptUserList = deptUserService.getDeptUserByDeptId(deptId);
-    List<Project> projectList = projectService.getProjectByDeptId(deptId);
+    List<ProjectVo> projectList = projectService.getProjectByDeptId(deptId);
     if (null != deptUserList && deptUserList.size() > 0) {
       return ResponseResult.failure(Constant.USER_EXIST);
     } else if (null != projectList && projectList.size() > 0) {

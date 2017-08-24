@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wafer.interfacetestdemo.config.Constant;
-import com.wafer.interfacetestdemo.domain.Project;
 import com.wafer.interfacetestdemo.service.ProjectService;
+import com.wafer.interfacetestdemo.vo.ProjectVo;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
 
 @RestController
@@ -29,7 +29,7 @@ public class ProjectController {
   @Transactional(readOnly = true)
   public ResponseResult projectList(){
     
-    List<Project> projectList = projectService.getProjectList();
+    List<ProjectVo> projectList = projectService.getProjectList();
     return ResponseResult.success(projectList);
   }
   
@@ -41,7 +41,7 @@ public class ProjectController {
   @Transactional(readOnly = true)
   public ResponseResult projectList(@PathVariable long deptId){
     
-    List<Project> projectList = projectService.getProjectByDeptId(deptId);
+    List<ProjectVo> projectList = projectService.getProjectByDeptId(deptId);
     return ResponseResult.success(projectList);
   }
   

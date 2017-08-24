@@ -72,6 +72,12 @@ const zhCN = {
   "project.projectId": "项目编号",
   "project.projectName": "项目名称",
   "project.createTime": "创建时间",
+  "project.typeAdd": "创建项目",
+  "project.typeMod": "编辑项目",
+  "project.submit": "提交",
+  "project.warn.emptyProjectName": "请输入项目名称",
+  "project.warn.tooManyChar20": "不能超过20个字符",
+  "project.delConfirm": "确定要删除这个项目",
 
   "msgKey.100001": "用户名或密码不能为空",
   "msgKey.100002": "用户不存在",

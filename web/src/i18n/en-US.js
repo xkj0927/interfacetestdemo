@@ -72,6 +72,12 @@ const enUS = {
   "project.projectId": "Project ID",
   "project.projectName": "Project Name",
   "project.createTime": "Create Time",
+  "project.typeAdd": "Create project",
+  "project.typeMod": "Modify project",
+  "project.submit": "Submit",
+  "project.warn.emptyProjectName": "Please input a project name",
+  "project.warn.tooManyChar20": "No more than 20 characters",
+  "project.delConfirm": "Are you sure you want to delete this project",
 
   "msgKey.100001": "UserId or password can not be null.",
   "msgKey.100002": "User didn't exist.",

@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wafer.interfacetestdemo.domain.Project;
 import com.wafer.interfacetestdemo.repository.ProjectRepository;
+import com.wafer.interfacetestdemo.vo.ProjectVo;
 
 @Service
 public class ProjectService {
@@ -14,11 +14,11 @@ public class ProjectService {
   @Autowired
   private ProjectRepository projectRepository;
 
-  public List<Project> getProjectList(){
-    return projectRepository.findAll();
+  public List<ProjectVo> getProjectList(){
+    return projectRepository.getProjectList();
   }
 
-  public List<Project> getProjectByDeptId(long deptId) {
+  public List<ProjectVo> getProjectByDeptId(long deptId) {
     return projectRepository.getProjectByDeptId(deptId);
   }
 
