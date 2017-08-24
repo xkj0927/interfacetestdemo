@@ -1,13 +1,17 @@
 import React from 'react';
 import {connect} from 'dva';
-import {Table, Button, Popconfirm, Spin, Icon, Modal, Form, Collapse, Tree} from 'antd';
+import {Table, Button, Popconfirm, Spin, Icon, Modal, Form, Collapse, Tree, Select, Input, Radio} from 'antd';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import {routerRedux} from 'dva/router';
 import * as constants from '../utils/constants';
 import style from './ModulePage.less';
+import ModuleEditor from '../components/ModuleEditor';
 
 const TreeNode = Tree.TreeNode;
-const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
+const RadioGroup = Radio.Group;
+const FormItem = Form.Item;
+
+const ModuleListPage = ({dispatch, modules = [], addModuleModalVisible = false, modalKey = '', projectInfo, intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
   let interfaceInfo = [];
   console.log(modules);
   const dataSource = [{
@@ -69,16 +73,45 @@ const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, 
     </TreeNode>;
   });
 
+  const onRightClickHandle = (event) => {
+    const selectId = event.node.props.eventKey;
+    if(selectId && selectId.split('-').length == 1){
+      dispatch({type: "modules/show", payload: ""});
+    }
+  };
   const moduleNodes = moduleNode(modules);
-  const moduleTree = <Tree  loadData={onLoadData}>
+  const moduleTree = <Tree  loadData={onLoadData} onRightClick={onRightClickHandle}>
     {moduleNodes}
   </Tree>;
+
+  // Add Module
+  const addModuleShow = () => {
+    dispatch({type: "modules/show", payload: ""});
+  };
+  let ModuleForm = Form.create()(
+    (props) => {
+      return <ModuleEditor
+        form={props.form}
+        dispatch={dispatch}
+        moduleInfo = {{}}
+        addModuleShow={{}}/>
+    }
+  );
+  const addModuleModal = <Modal
+    title="Add Module"
+    visible={addModuleModalVisible}
+    onCancel={addModuleShow}
+    footer={null}
+    key={modalKey}>
+
+    <ModuleForm />
+  </Modal>;
 
   return (
     <div className={style.moduleContainer}>
       <div className={style.ModuleCollapseLeft}>
         {moduleTree}
-        <Button className={style.addModuleBtn}><Icon type="plus-circle-o"/>Add Module</Button>
+        <Button className={style.addModuleBtn} onClick={addModuleShow}><Icon type="plus-circle-o"/>Add Module</Button>
       </div>
       <div className={style.ModuleCollapseRight}>
         <div>
@@ -86,19 +119,23 @@ const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, 
         </div>
         <Table dataSource={dataSource} columns={columns}/>
       </div>
+      {addModuleModal}
     </div>
   );
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const {userRole = constants.USER_ROLE_STUDENT} = ownProps.location.query;
+  const {userRole = constants.USER_ROLE_STUDENT,projectId = 0} = ownProps.location.query;
   const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
-  const loading = state.loading.effects['modules/reload'];
-  const {modules, flag, currentInterfaceId} = state.modules;
+  const loading = state.loading.effects['modules/reload', projectId];
+  const {modules, flag, currentInterfaceId, addModuleModalVisible, modalKey, projectInfo} = state.modules;
   return {
     currentInterfaceId,
     flag,
     modules: modules,
+    addModuleModalVisible: addModuleModalVisible,
+    modalKey:modalKey,
+    projectInfo : projectInfo,
     userRole: parseInt(userRole),
     userAuthority: parseInt(userAuthority),
     loading

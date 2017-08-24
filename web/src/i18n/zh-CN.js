@@ -81,6 +81,12 @@ const zhCN = {
 
   "loading": "加载中",
 
+  "module.moduleName":"模块名称",
+  "module.moduleName.emptyUserName":"请输入模块名称",
+  "module.save":"保存",
+  "project.warn.emptyProject":"项目不能为空",
+  "module.running":"是否运行"
+
 };
 
 export default zhCN;

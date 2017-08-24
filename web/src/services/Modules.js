@@ -24,3 +24,10 @@ export function listtestcases(interfaceId) {
     method: 'GET'
   });
 }
+
+export function addModule(module) {
+  return request(`api/v1/module`, {
+    method: 'POST',
+    body: JSON.stringify(module)
+  });
+}

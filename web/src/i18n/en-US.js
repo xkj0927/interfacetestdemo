@@ -80,6 +80,10 @@ const enUS = {
   "msgKey.200001": "There exitst users in the DepartmentDept.",
 
   "loading": "loading",
+
+  "module.moduleName":"Module Name",
+  "module.moduleName.emptyUserName":"Please ...",
+  "module.save":"Save"
 };
 
 export default enUS;
