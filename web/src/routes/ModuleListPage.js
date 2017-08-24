@@ -5,37 +5,10 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import {routerRedux} from 'dva/router';
 import * as constants from '../utils/constants';
 import style from './ModulePage.less';
+import InterfaceEditor from '../components/InterfaceEditor'
 
 const TreeNode = Tree.TreeNode;
-const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
-  let interfaceInfo = [];
-  console.log(modules);
-  const dataSource = [{
-    key: '1',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号'
-  }, {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号'
-  }];
-
-  const columns = [{
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name',
-  }, {
-    title: '年龄',
-    dataIndex: 'age',
-    key: 'age',
-  }, {
-    title: '住址',
-    dataIndex: 'address',
-    key: 'address',
-  }];
-
+const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
   // 左边module的树结构
   // 异步加载数据
   const onLoadData = (treeNode) => {
@@ -53,8 +26,32 @@ const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, 
       dispatch({type: "modules/list", payload: moduleId});
       resolve();
     });
-  }
-
+  };
+  const getInterfacesByModule = moduleId => interfaces.filter((face) => {
+    return (face.moduleId == moduleId);
+  });
+  const onSelect=(key)=> {
+      debugger;
+      console.log("key",key);
+      if(key[0].length>0 && key[0].indexOf("-")>0){
+          let selectInterfaceKey = key[0].split("-")[1];
+          let selectModuleKey = key[0].split("-")[0];
+          if(selectInterfaceKey == 0){
+              dispatch({type:"interfaces/show", key:selectModuleKey, operatorType: "add", interfaceInfo: {}});
+          }else{
+              dispatch({type:"interfaces/info", key:selectInterfaceKey, operatorType: "info"});
+          }
+      }
+  };
+  let InterfaceInfoView = Form.create()(
+      (props) => {
+          return <InterfaceEditor
+              form={props.form}
+              dispatch={dispatch}
+              operatorType={interfaces.operatorType}
+              interfaceInfo={interfaces.interfaceInfo}/>
+      }
+  );
   // module
   const moduleNode = data => data.map((item) => {
 
@@ -65,12 +62,12 @@ const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, 
 
     return <TreeNode title={item.moduleName} key={item.moduleId} isLeaf={false}>
       {interFaceNodes}
-      <TreeNode isLeaf={true} title={<div className={style.addInterfaceBtn}><Icon type="plus-circle-o" /> Add Interface</div>} />
+      <TreeNode isLeaf={true} key={item.moduleId+"-0"} title={<div className={style.addInterfaceBtn}><Icon type="plus-circle-o" /> Add Interface</div>} />
     </TreeNode>;
   });
 
   const moduleNodes = moduleNode(modules);
-  const moduleTree = <Tree  loadData={onLoadData}>
+  const moduleTree = <Tree  loadData={onLoadData} onSelect={onSelect}>
     {moduleNodes}
   </Tree>;
 
@@ -81,10 +78,7 @@ const ModuleListPage = ({dispatch, modules = [], intl, userRole, userAuthority, 
         <Button className={style.addModuleBtn}><Icon type="plus-circle-o"/>Add Module</Button>
       </div>
       <div className={style.ModuleCollapseRight}>
-        <div>
-          {interfaceInfo}
-        </div>
-        <Table dataSource={dataSource} columns={columns}/>
+        <InterfaceInfoView />
       </div>
     </div>
   );
@@ -95,10 +89,12 @@ const mapStateToProps = (state, ownProps) => {
   const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
   const loading = state.loading.effects['modules/reload'];
   const {modules, flag, currentInterfaceId} = state.modules;
+  const interfaces = state.interfaces;
   return {
     currentInterfaceId,
     flag,
     modules: modules,
+    interfaces:interfaces,
     userRole: parseInt(userRole),
     userAuthority: parseInt(userAuthority),
     loading

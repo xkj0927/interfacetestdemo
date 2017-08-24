@@ -5,6 +5,13 @@ import request from '../utils/request';
 
 const JSON = window.JSON;
 
+export function interfaceinfo(interfaceId) {
+  debugger;
+  return request(`api/v1/interface/${interfaceId}`, {
+    method: 'GET'
+  });
+}
+
 export function listinterfaces(moduleId) {
   return request(`api/v1/interface/module/${moduleId}`, {
     method: 'GET'
