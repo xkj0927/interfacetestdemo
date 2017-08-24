@@ -19,13 +19,6 @@ export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
   debugger
   const {moduleName, run, moduleId} = moduleInfo;
   const type = moduleId ? "update" : "add";
-  let deleteForm = null;
-  if("update" == type){
-    const deleteModuleHandle = (e) => {
-      dispatch({type: "modules/delete", payload: moduleId});
-    };
-    deleteForm = <Button type="button" className={style.deleteModuleBtn} onClick={deleteModuleHandle}><FormattedMessage id="module.delete"/></Button>;
-  }
 
   const submitHandle = (e) => {
     e.preventDefault();
@@ -73,7 +66,6 @@ export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
 
         <br/>
         <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 21}}>
-          {deleteForm}
           <Button type="primary" htmlType="submit"><FormattedMessage id="module.save"/></Button>
         </FormItem>
       </Form>
