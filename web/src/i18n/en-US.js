@@ -90,6 +90,10 @@ const enUS = {
   "msgKey.200002": "This department exitst projects.",
 
   "loading": "loading",
+
+  "module.moduleName":"Module Name",
+  "module.moduleName.emptyUserName":"Please ...",
+  "module.save":"Save"
 };
 
 export default enUS;

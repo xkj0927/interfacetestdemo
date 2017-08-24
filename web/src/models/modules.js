@@ -9,10 +9,12 @@ export default {
     interfaceIds:[],
     currentInterfaceId:"0",
     flag: false,
+    addModuleModalVisible: false,
+    modalKey:'',
+    projectInfo:'',
   },
   reducers: {
     update(state, {modules}) {
-      debugger;
       state.modules = modules;
       state.moduleIds = [];
       state.interfaceIds = [];
@@ -32,7 +34,6 @@ export default {
     updateInterfaces(state, {payload : newInterfaces, moduleId : moduleId}){
       // 1.循环遍历module ,将新获取到的interface更新
       let modules = state.modules;
-      debugger
       modules.map(module =>{
         if(module.moduleId == moduleId){
           module.interfaceViews = newInterfaces;
@@ -42,6 +43,20 @@ export default {
       state.modules = modules;
       return state;
     },
+
+    changeShow(state){
+      state.addModuleModalVisible = !state.addModuleModalVisible;
+      state.modalKey = Math.random();
+      return state;
+    },
+
+    addModule(state, {payload:newModule}){
+      state.modules.concat(newModule);
+      state.addModuleModalVisible = !state.addModuleModalVisible;
+      state.modalKey = Math.random();
+      state.flag = !state.flag;
+      return state;
+    }
 
   },
   effects: {
@@ -55,7 +70,6 @@ export default {
       });
     },
     *interfacelist({payload: mIds}, {select, call, put}){
-      debugger;
       const mods = yield select(state => state.modules);
       const modules = yield select(state => state.modules.modules);
       const moduleIds =  mods.moduleIds;
@@ -104,7 +118,6 @@ export default {
       }
     },
     *testcaselist({payload: iIds}, {select, call, put}){
-      debugger;
       const mods = yield select(state => state.modules);
       const modules = yield select(state => state.modules.modules);
       const moduleIds =  mods.moduleIds;
@@ -166,6 +179,13 @@ export default {
         payload: newInterfaces.data,
         moduleId: moduleId
       });
+    },
+    *show({payload: payload}, {put}){
+      yield put({ type: 'changeShow' , payload: payload});
+    },
+    *add({payload: values}, {call, put}){
+      const newModule = yield call(moduleService.addModule, values);
+      yield put({ type: 'addModule' , payload: newModule});
     },
   },
   subscriptions: {

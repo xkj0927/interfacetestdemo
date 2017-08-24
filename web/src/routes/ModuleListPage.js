@@ -1,14 +1,19 @@
 import React from 'react';
 import {connect} from 'dva';
-import {Table, Button, Popconfirm, Spin, Icon, Modal, Form, Collapse, Tree} from 'antd';
+import {Table, Button, Popconfirm, Spin, Icon, Modal, Form, Collapse, Tree, Select, Input, Radio} from 'antd';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import {routerRedux} from 'dva/router';
 import * as constants from '../utils/constants';
 import style from './ModulePage.less';
 import InterfaceEditor from '../components/InterfaceEditor'
+import ModuleEditor from '../components/ModuleEditor';
 
 const TreeNode = Tree.TreeNode;
-const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
+const RadioGroup = Radio.Group;
+const FormItem = Form.Item;
+
+const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVisible = false, modalKey = '', projectInfo, intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
+  console.log(modules);
   // 左边module的树结构
   // 异步加载数据
   const onLoadData = (treeNode) => {
@@ -27,22 +32,7 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
       resolve();
     });
   };
-  const getInterfacesByModule = moduleId => interfaces.filter((face) => {
-    return (face.moduleId == moduleId);
-  });
-  const onSelect=(key)=> {
-      debugger;
-      console.log("key",key);
-      if(key[0].length>0 && key[0].indexOf("-")>0){
-          let selectInterfaceKey = key[0].split("-")[1];
-          let selectModuleKey = key[0].split("-")[0];
-          if(selectInterfaceKey == 0){
-              dispatch({type:"interfaces/show", key:selectModuleKey, operatorType: "add", interfaceInfo: {}});
-          }else{
-              dispatch({type:"interfaces/info", key:selectInterfaceKey, operatorType: "info"});
-          }
-      }
-  };
+
   let InterfaceInfoView = Form.create()(
       (props) => {
           return <InterfaceEditor
@@ -66,20 +56,50 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
     </TreeNode>;
   });
 
+  const onRightClickHandle = (event) => {
+    const selectId = event.node.props.eventKey;
+    if(selectId && selectId.split('-').length == 1){
+      dispatch({type: "modules/show", payload: ""});
+    }
+  };
   const moduleNodes = moduleNode(modules);
-  const moduleTree = <Tree  loadData={onLoadData} onSelect={onSelect}>
+  const moduleTree = <Tree  loadData={onLoadData} onRightClick={onRightClickHandle}>
     {moduleNodes}
   </Tree>;
+
+  // Add Module
+  const addModuleShow = () => {
+    dispatch({type: "modules/show", payload: ""});
+  };
+  let ModuleForm = Form.create()(
+    (props) => {
+      return <ModuleEditor
+        form={props.form}
+        dispatch={dispatch}
+        moduleInfo = {{}}
+        addModuleShow={{}}/>
+    }
+  );
+  const addModuleModal = <Modal
+    title="Add Module"
+    visible={addModuleModalVisible}
+    onCancel={addModuleShow}
+    footer={null}
+    key={modalKey}>
+
+    <ModuleForm />
+  </Modal>;
 
   return (
     <div className={style.moduleContainer}>
       <div className={style.ModuleCollapseLeft}>
         {moduleTree}
-        <Button className={style.addModuleBtn}><Icon type="plus-circle-o"/>Add Module</Button>
+        <Button className={style.addModuleBtn} onClick={addModuleShow}><Icon type="plus-circle-o"/>Add Module</Button>
       </div>
       <div className={style.ModuleCollapseRight}>
         <InterfaceInfoView />
       </div>
+      {addModuleModal}
     </div>
   );
 };
@@ -88,13 +108,16 @@ const mapStateToProps = (state, ownProps) => {
   const {userRole = constants.USER_ROLE_STUDENT} = ownProps.location.query;
   const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
   const loading = state.loading.effects['modules/reload'];
-  const {modules, flag, currentInterfaceId} = state.modules;
   const interfaces = state.interfaces;
+  const {modules, flag, currentInterfaceId, addModuleModalVisible, modalKey, projectInfo} = state.modules;
   return {
     currentInterfaceId,
     flag,
     modules: modules,
     interfaces:interfaces,
+    addModuleModalVisible: addModuleModalVisible,
+    modalKey:modalKey,
+    projectInfo : projectInfo,
     userRole: parseInt(userRole),
     userAuthority: parseInt(userAuthority),
     loading
