@@ -37,9 +37,9 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
           let selectInterfaceKey = key[0].split("-")[1];
           let selectModuleKey = key[0].split("-")[0];
           if(selectInterfaceKey == 0){
-              dispatch({type:"interfaces/show", key:selectModuleKey, operatorType: "add", interfaceInfo: {}});
+              dispatch({type:"interfaces/show", selectModuleKey:selectModuleKey, selectInterfaceKey:selectInterfaceKey, operatorType: "add", interfaceInfo: {}});
           }else{
-              dispatch({type:"interfaces/info", key:selectInterfaceKey, operatorType: "info"});
+              dispatch({type:"interfaces/info", selectModuleKey:selectModuleKey, selectInterfaceKey:selectInterfaceKey, operatorType: "info"});
           }
       }
   };
@@ -49,7 +49,8 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
               form={props.form}
               dispatch={dispatch}
               operatorType={interfaces.operatorType}
-              interfaceInfo={interfaces.interfaceInfo}/>
+              interfaceInfo={interfaces.interfaceInfo}
+              moduleKey={interfaces.moduleKey}/>
       }
   );
   // module

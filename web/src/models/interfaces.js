@@ -22,24 +22,28 @@ export default {
     },
   },
   effects: {
-    *info({key, operatorType}, {call, put}){
+    *info({selectModuleKey, selectInterfaceKey, operatorType}, {call, put}){
       debugger;
-      const result = yield call(interfaceService.interfaceinfo, key);
+      const result = yield call(interfaceService.interfaceinfo, selectInterfaceKey);
       const interfaceInfo = result.data;
       yield put({
         type: 'update',
         payload: interfaceInfo,
         operateType: operatorType,
-        moduleKey:0
+        moduleKey:selectModuleKey
       });
     },
-    *show({key, operatorType, interfaceInfo}, {put}){
+    *show({selectModuleKey, selectInterfaceKey, operatorType, interfaceInfo}, {put}){
       yield put({
         type: 'update',
         payload: interfaceInfo,
         operateType: operatorType,
-        moduleKey: key
+        moduleKey: selectModuleKey
       });
+    },
+    *add({values}, {call}){
+      debugger;
+      const result = yield call(interfaceService.addinterfaces, values);
     },
   },
 };
