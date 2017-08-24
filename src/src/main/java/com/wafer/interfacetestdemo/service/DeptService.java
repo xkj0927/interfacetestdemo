@@ -34,4 +34,8 @@ public class DeptService {
   public List<DeptVo> getDeptVoList() {
     return deptReposistory.getDeptVoList();
   }
+
+  public Dept getDeptByUserId(long userId) {
+    return deptReposistory.getDeptByUserId(userId);
+  }
 }

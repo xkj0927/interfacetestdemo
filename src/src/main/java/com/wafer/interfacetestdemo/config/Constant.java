@@ -25,6 +25,8 @@ public interface Constant {
   
   String PROJECTS = "projects";
   
+  String PROJECTS_DEPT = "projects/{deptId}";
+  
   String PROJECT = "project";
   
   String PROJECT_DELETE = "project/{projectId}";
@@ -39,6 +41,8 @@ public interface Constant {
   String EMAIL_DUPLICATE = "100004";
   
   String USER_EXIST = "200001";
+  
+  String PROJECT_EXIST = "200002";
   
   String APPLICATION_JSON = "json";
   
