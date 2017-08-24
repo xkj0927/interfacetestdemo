@@ -45,9 +45,9 @@ export default {
 
   },
   effects: {
-    *reload({userRole}, { select, call, put}) {
-      const {userAuthority, userId} = yield select(state => state.common);
-      const result = yield call(moduleService.listmodules, {userAuthority, userId, userRole});
+    *reload({projectId}, { select, call, put}) {
+      const {userAuthority, userId, userRole} = yield select(state => state.common);
+      const result = yield call(moduleService.listmodules, projectId);
       const modules = result.data;
       yield put({
         type: 'update',
@@ -172,8 +172,8 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({pathname, query }) => {
         if(pathname === '/module/list'){
-          const {userRole} = query;
-          dispatch({ type: 'reload' , userRole});
+          const {projectId} = query;
+          dispatch({ type: 'reload' , projectId});
         }
       });
     },

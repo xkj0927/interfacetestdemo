@@ -32,13 +32,6 @@ const Left = ({userAuthority}) => {
         </MenuItem>
       </SubMenu>
   ));
-    subMenu.push((
-        <SubMenu key="module" title={<span><Icon type="team"/><FormattedMessage id="home.projectManager"/></span>}>
-            <MenuItem key="module-list">
-                <Link to="/module/list"><FormattedMessage id="home.projectList"/></Link>
-            </MenuItem>
-        </SubMenu>
-    ));
 
   return (
     <Menu mode="inline" theme="dark" style={{width: '240px'}}>

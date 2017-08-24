@@ -5,8 +5,8 @@ import request from '../utils/request';
 
 const JSON = window.JSON;
 
-export function listmodules() {
-  return request(`api/v1/modules`, {
+export function listmodules(projectId) {
+  return request(`api/v1/module/project/${projectId}`, {
     method: 'GET'
   });
 }
