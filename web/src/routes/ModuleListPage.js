@@ -65,7 +65,6 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
   const getInterfacesByModule = moduleId => interfaces.filter((face) => {
     return (face.moduleId == moduleId);
   });
-
   // module
   const moduleNode = data => data.map((item) => {
     // interface node
@@ -93,21 +92,11 @@ const ModuleListPage = ({dispatch, modules = [], interfaces =[], intl, userRole,
       </div>
       <div className={style.ModuleCollapseRight}>
         <div>
-            <div className={style.ModuleCollapseLeft}>
-                <Collapse onChange={
-                    (keys) => {
-                        console.log(keys);
-                        dispatch({type: "modules/interfacelist", payload: keys});
-                    }
-                }>
-                    {modulePanel}
-                </Collapse>
-            </div>
             <div>
                 <Table columns={columns} dataSource={tabledata}/>
             </div>
         </div>
-        <Table dataSource={dataSource} columns={columns}/>
+        <Table dataSource={tabledata} columns={columns}/>
       </div>
     </div>
   );
