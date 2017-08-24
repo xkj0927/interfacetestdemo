@@ -51,7 +51,8 @@ export default {
     },
 
     addModule(state, {payload:newModule}){
-      state.modules.concat(newModule);
+      debugger
+      state.modules.push(newModule);
       state.addModuleModalVisible = !state.addModuleModalVisible;
       state.modalKey = Math.random();
       state.flag = !state.flag;
@@ -184,8 +185,8 @@ export default {
       yield put({ type: 'changeShow' , payload: payload});
     },
     *add({payload: values}, {call, put}){
-      const newModule = yield call(moduleService.addModule, values);
-      yield put({ type: 'addModule' , payload: newModule});
+      const result = yield call(moduleService.addModule, values);
+      yield put({ type: 'addModule' , payload: result.data});
     },
   },
   subscriptions: {

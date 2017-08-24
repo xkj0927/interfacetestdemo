@@ -1,4 +1,5 @@
 CREATE DATABASE interfacetestdemo;
+use interfacetestdemo;
 
 CREATE TABLE `ps_user` (
   `user_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -69,7 +70,7 @@ CREATE TABLE `ps_interface` (
   `interface_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `module_id` INT(11) NOT NULL COMMENT '模块id',
   `interface_name` VARCHAR(255) NOT NULL COMMENT '接口名',
-  `request_url` VARCHAR(255) NOT NULL COMMENT '接口url',
+  `interface_url` VARCHAR(255) NOT NULL COMMENT '接口url',
   `interface_type` VARCHAR(64) NOT NULL COMMENT '接口类型',
   `request_param` TEXT COMMENT '接口参数',
   `response_result` TEXT COMMENT '接口返回结果',

@@ -55,7 +55,7 @@ export default injectIntl(({form, intl, type, dispatch, moduleInfo, projectInfo}
                 message: intl.formatMessage({id: "project.warn.emptyProject"})
               }
             ],
-            initialValue: "aa"
+            initialValue: "1"
           })( <Select>
               <Select.Option value={projectId}>{projectId}</Select.Option>
           </Select>)}
