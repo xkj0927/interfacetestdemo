@@ -15,7 +15,11 @@ const ProjectComponent = ({dispatch, projectInfo}) => {
   return (
     <div className={style.project}>
       <Popover content={content}>
-        <div className={style.info}>
+        <div className={style.info} onClick={
+          () => {
+            dispatch(routerRedux.push({pathname: '/module/list', query: {projectId: projectInfo.projectId}}));
+          }
+        }>
           <div className={style.title}>{projectInfo.projectName}</div>
         </div>
       </Popover>
