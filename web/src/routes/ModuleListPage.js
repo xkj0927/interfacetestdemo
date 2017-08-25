@@ -74,23 +74,34 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     });
     const interFaceNodes = (item.interfaceViews && item.interfaceViews.length > 0)? interfaceNode(item.interfaceViews) : [];
 
-
+    // 编辑【模块】
     const editModuleHandle = () => {
       if(activeKey && activeKey.split('-').length == 1){
         dispatch({type: "modules/showCurrentModule", payload: activeKey});
       }
     };
+    // 添加接口
+    const addInterfaceHandle = () => {
+      if(activeKey && activeKey.split('-').length == 1){
+        dispatch({type:"interfaces/show", selectModuleKey:activeKey, selectInterfaceKey:0, operatorType: "add", interfaceInfo: {}});
+      }
+    };
 
     const editDeleteBtn = <div className={style.popBtnSpan}>
         <Button onClick={editModuleHandle}><FormattedMessage id="module.edit"/></Button>
-        <Button onClick={deleteHandle}><FormattedMessage id="module.delete"/></Button>
+        <Popconfirm title={<FormattedMessage id="module.delete.confirmTitle"/>}
+                    onConfirm={deleteHandle}
+                    okText={<FormattedMessage id="module.delete.confirm"/>}
+                    cancelText={<FormattedMessage id="module.delete.cancel"/>}>
+          <Button><FormattedMessage id="module.delete"/></Button>
+        </Popconfirm>
+        <Button onClick={addInterfaceHandle}><FormattedMessage id="module.add.interface"/></Button>
     </div>;
     const moduleHandle = <Popover content={editDeleteBtn} trigger="click" placement="rightTop">
       {item.moduleName}
     </Popover>;
     return <TreeNode title={moduleHandle} key={item.moduleId} isLeaf={false}>
         {interFaceNodes}
-        <TreeNode isLeaf={true} key={item.moduleId+"-0"} title={<div className={style.addInterfaceBtn}><Icon type="plus-circle-o" /> Add Interface</div>} />
       </TreeNode>;
   });
 

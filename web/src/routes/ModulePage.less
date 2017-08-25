@@ -58,22 +58,26 @@
 }
 
 .popBtnSpan{
+  display: flex;
+  flex-direction: column;
+
   button{
-    margin-right: 20px;
-  }
+    margin-top: 10px;
+    //background: #108ee9;
+    border: 0;
 
-  button:nth-child(1){
-    background: #108ee9;
     &:hover{
-      color: #F2F2F2;
+      background: green;
+      color: #fff;
+
+      span{
+        border-bottom: 0;
+      }
     }
-  }
 
-  button:nth-child(2){
-    background: #108ee9;
-    &:hover{
-      background: #108ee9;
-      color: #F2F2F2;
+    span{
+      border-bottom: 2px solid;
     }
   }
 }
+
