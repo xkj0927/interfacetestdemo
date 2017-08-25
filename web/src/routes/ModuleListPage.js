@@ -18,23 +18,19 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
   // 异步加载数据
   const onLoadData = (treeNode) => {
     // 获取后台数据，刷新state
-    console.log("treeNode = "+treeNode.props.eventKey);
     return new Promise((resolve) => {
       let keys = treeNode.props.eventKey.split('-');
-      let moduleId = '0';
-      if(keys.length > 1){
-        moduleId = keys[1];
-      }else{
-        moduleId = keys[0];
+      if(keys.length == 1){
+        // 加载interface
+        console.log("moduleId = "+keys[0]);
+        dispatch({type: "modules/list", payload: keys[0]});
+      }else if(keys.length == 2){
+        console.log("interfaceId = "+keys[1] + "; moduleId = "+keys[0]);
+        dispatch({type: "modules/testCaseList", moduleId: keys[0], interfaceId: keys[1]});
       }
-      console.log("moduleId = "+moduleId);
-      dispatch({type: "modules/list", payload: moduleId});
       resolve();
     });
   };
-  const getInterfacesByModule = moduleId => interfaces.filter((face) => {
-    return (face.moduleId == moduleId);
-  });
   let InterfaceInfoView = Form.create()(
       (props) => {
           return <InterfaceEditor
@@ -48,20 +44,47 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
   // module
   const moduleNode = data => data.map((item) => {
 
+    const deleteHandle = () => {
+      debugger
+      if(activeKey){
+        if(activeKey.split('-').length == 1){
+          // 删除模块
+          dispatch({type: "modules/deleteMo", payload: activeKey.split('-')[0]});
+        }else if(activeKey.split('-').length == 2){
+          // 删除接口
+          dispatch({type: "modules/deleteIn", moduleId : activeKey.split('-')[0], interfaceId: activeKey.split('-')[1]});
+        }
+      }
+    };
+
     const interfaceNode = data => data.map((item) => {
-      return <TreeNode title={item.interfaceName} key={item.moduleId +"-"+ item.interfaceId} isLeaf={true}></TreeNode>;
+      // testCase node
+      const testCaseNode = (data,item) => data.map((tesCase) => {
+        return <TreeNode title={tesCase.testCaseName} key={item.moduleId+"-"+tesCase.interfaceId +"-"+ tesCase.interfaceTestCaseId} isLeaf={true}></TreeNode>;
+      });
+      const testCaseNodes = (item.testCaseViews && item.testCaseViews.length > 0)? testCaseNode(item.testCaseViews, item) :[];
+
+      const interfaceName = <Popover content={<Button onClick={deleteHandle}><FormattedMessage id="interface.delete"/></Button>} trigger="click" placement="rightTop">
+        {item.interfaceName}
+      </Popover>;
+      return <TreeNode title={interfaceName} key={item.moduleId +"-"+ item.interfaceId} isLeaf={false}>
+        {testCaseNodes}
+      </TreeNode>;
     });
     const interFaceNodes = (item.interfaceViews && item.interfaceViews.length > 0)? interfaceNode(item.interfaceViews) : [];
 
-    const deleteModuleHandle = () => {
-      dispatch({type: "modules/delete", payload: activeKey});
+
+    const editModuleHandle = () => {
+      if(activeKey && activeKey.split('-').length == 1){
+        dispatch({type: "modules/showCurrentModule", payload: activeKey});
+      }
     };
 
     const editDeleteBtn = <div className={style.popBtnSpan}>
-        <Button onClick={onRightClickHandle}><FormattedMessage id="module.edit"/></Button>
-        <Button onClick={deleteModuleHandle}><FormattedMessage id="module.delete"/></Button>
+        <Button onClick={editModuleHandle}><FormattedMessage id="module.edit"/></Button>
+        <Button onClick={deleteHandle}><FormattedMessage id="module.delete"/></Button>
     </div>;
-    const moduleHandle = <Popover content={editDeleteBtn} trigger="hover" placement="rightTop">
+    const moduleHandle = <Popover content={editDeleteBtn} trigger="click" placement="rightTop">
       {item.moduleName}
     </Popover>;
     return <TreeNode title={moduleHandle} key={item.moduleId} isLeaf={false}>
@@ -70,19 +93,16 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     </TreeNode>;
   });
 
-  const onRightClickHandle = (event) => {
-    const selectId = activeKey;
-    if(selectId && selectId.split('-').length == 1){
-      dispatch({type: "modules/showCurrentModule", payload: selectId});
-    }
-  };
   const onSelectHandle = (key) => {
     const selectId = key[0];
-    if(selectId && selectId.split('-').length == 1){
-      dispatch({type: "modules/updateActive", payload: selectId});
+
+    // 对Module节点的处理
+    if(selectId && (selectId.split('-').length == 1 || selectId.split('-').length == 2)){
+      dispatch({type: "modules/updateActiveKey", payload: selectId});
     }
 
-    if(key[0].length>0 && key[0].indexOf("-")>0){
+    // 对interface节点的处理
+    if(key[0] && key[0].split('-').length == 2){
       let selectInterfaceKey = key[0].split("-")[1];
       let selectModuleKey = key[0].split("-")[0];
       if(selectInterfaceKey == 0){
@@ -110,8 +130,9 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
         projectId={projectId}/>
     }
   );
+  const moduleTitle = currentModule.moduleId ? intl.formatMessage({id: "module.editModule.modal"}) : intl.formatMessage({id: "module.addModule.modal"});
   const addModuleModal = <Modal
-    title="Add Module"
+    title={moduleTitle}
     visible={addModuleModalVisible}
     onCancel={addModuleShow}
     footer={null}

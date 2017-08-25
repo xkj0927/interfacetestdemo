@@ -89,6 +89,24 @@ export default {
       return state;
     },
 
+    deleteInterface(state, {moduleId: moduleId, interfaceId: interfaceId}){
+      state.modules.map(module => {
+        if(module.moduleId == moduleId){
+          let newInterface = [];
+          debugger
+          module.interfaceViews.map(face => {
+            if(face.interfaceId != interfaceId){
+              newInterface.push(face);
+            }
+          });
+
+          module.interfaceViews = newInterface;
+        }
+      });
+      state.flag = !state.flag;
+      return state;
+    },
+
     updateCurrentModule(state, {payload: moduleId}){
       state.modules.map(module => {
         if(module.moduleId == moduleId){
@@ -100,8 +118,22 @@ export default {
       return state;
     },
 
-    updateActiveKey(state, {payload: moduleId}){
+    updateAcKey(state, {payload: moduleId}){
       state.activeKey = moduleId;
+      return state;
+    },
+
+    updateTestCase(state, {moduleId:moduleId, interfaceId: interfaceId, testCases: testCase}){
+      state.modules.map(module => {
+        if(module.moduleId == moduleId){
+          module.interfaceViews.map(face =>{
+            if(face.interfaceId == interfaceId){
+              face.testCaseViews = testCase;
+            }
+          });
+        }
+      });
+      state.flag = !state.flag;
       return state;
     }
 
@@ -239,17 +271,27 @@ export default {
       const result = yield call(moduleService.editModule, values);
       yield put({ type: 'editModule' , payload: result.data});
     },
-    *delete({payload: moduleId}, {call, put}){
+    *deleteMo({payload: moduleId}, {call, put}){
       yield call(moduleService.deleteModule, moduleId);
       yield put({ type: 'deleteModule' , payload: moduleId});
+    },
+    *deleteIn({moduleId: moduleId, interfaceId: interfaceId}, {call, put}){
+      yield call(moduleService.deleteInterface, interfaceId);
+      yield put({ type: 'deleteInterface' , moduleId: moduleId, interfaceId: interfaceId});
     },
 
     *showCurrentModule({payload: moduleId}, {put}){
       yield put({ type: 'updateCurrentModule' , payload: moduleId});
     },
 
-    *updateActive({payload: moduleId}, {put}){
-      yield put({ type: 'updateActiveKey' , payload: moduleId});
+    *updateActiveKey({payload: moduleId}, {put}){
+      yield put({ type: 'updateAcKey' , payload: moduleId});
+    },
+
+    *testCaseList({moduleId : moduleId, interfaceId: interfaceId}, {call, put}){
+      const result = yield call(moduleService.testCaseList, interfaceId);
+      debugger
+      yield put({ type: 'updateTestCase' , moduleId:moduleId, interfaceId: interfaceId, testCases: result.data});
     },
   },
   subscriptions: {
