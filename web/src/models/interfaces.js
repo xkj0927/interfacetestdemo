@@ -10,13 +10,21 @@ export default {
     interfaces: [],
     interfaceInfo: null,
     operatorType:"",
-    moduleKey: 0
+    moduleKey: 0,
+    displayInterParamDia: false
   },
   reducers: {
-    update(state, { payload: interfaceInfo, operateType: operatorType, moduleKey: moduleKey}) {
+    update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
       state.interfaceInfo = interfaceInfo;
       state.operatorType = operatorType;
       state.moduleKey = moduleKey;
+      let newState = state;
+      return newState;
+    },
+    changestate(state, { interfaceInfo: interfaceInfo}) {
+      debugger;
+      state.interfaceInfo = interfaceInfo;
+      state.displayInterParamDia = !state.displayInterParamDia;
       let newState = state;
       return newState;
     },
@@ -29,7 +37,7 @@ export default {
       yield put({
         type: 'update',
         payload: interfaceInfo,
-        operateType: operatorType,
+        operatorType: operatorType,
         moduleKey:selectModuleKey
       });
     },
@@ -37,8 +45,14 @@ export default {
       yield put({
         type: 'update',
         payload: interfaceInfo,
-        operateType: operatorType,
+        operatorType: operatorType,
         moduleKey: selectModuleKey
+      });
+    },
+    *showParam({interfaceInfo}, {put}){
+      yield put({
+        type: 'changestate',
+        interfaceInfo: interfaceInfo,
       });
     },
     *add({values}, {call}){
