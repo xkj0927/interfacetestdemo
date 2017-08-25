@@ -28,7 +28,9 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
         console.log("interfaceId = "+keys[1] + "; moduleId = "+keys[0]);
         dispatch({type: "modules/testCaseList", moduleId: keys[0], interfaceId: keys[1]});
       }
-      resolve();
+      setTimeout(() => {
+        resolve();
+      },500)
     });
   };
   let InterfaceInfoView = Form.create()(
@@ -87,9 +89,9 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       {item.moduleName}
     </Popover>;
     return <TreeNode title={moduleHandle} key={item.moduleId} isLeaf={false}>
-      {interFaceNodes}
-      <TreeNode isLeaf={true} key={item.moduleId+"-0"} title={<div className={style.addInterfaceBtn}><Icon type="plus-circle-o" /> Add Interface</div>} />
-    </TreeNode>;
+        {interFaceNodes}
+        <TreeNode isLeaf={true} key={item.moduleId+"-0"} title={<div className={style.addInterfaceBtn}><Icon type="plus-circle-o" /> Add Interface</div>} />
+      </TreeNode>;
   });
 
   const onSelectHandle = (key) => {
@@ -112,9 +114,9 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     }
   };
   const moduleNodes = moduleNode(modules);
-  const moduleTree = <Tree  loadData={onLoadData} onSelect={onSelectHandle}>
+  const moduleTree = <Spin spinning={loading} tip={intl.formatMessage({id: 'loading'})}><Tree  loadData={onLoadData} onSelect={onSelectHandle}>
     {moduleNodes}
-  </Tree>;
+  </Tree></Spin>;
 
   // Add Module
   const addModuleShow = () => {
