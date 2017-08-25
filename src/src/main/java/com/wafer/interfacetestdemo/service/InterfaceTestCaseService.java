@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wafer.interfacetestdemo.config.Constants;
+import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.InterfaceTestCase;
 import com.wafer.interfacetestdemo.repository.InterfaceTestCaseRepository;
 
@@ -63,7 +63,7 @@ public class InterfaceTestCaseService {
    * @return
    */
   public List<InterfaceTestCase> findInterfaceTestCaseByFaceAndIsRun(long faceId, boolean isRun) {
-    int running = isRun ? Constants.RUNNING : Constants.NOT_RUNNING;
+    int running = isRun ? Constant.RUNNING : Constant.NOT_RUNNING;
     return interfaceCaseRepository.findByInterfaceIdAndIsRun(faceId, running);
   }
 }

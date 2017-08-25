@@ -2,7 +2,7 @@ package com.wafer.interfacetestdemo.vo;
 
 import java.util.List;
 
-import com.wafer.interfacetestdemo.config.Constants;
+import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Interface;
 import com.wafer.interfacetestdemo.utils.DateUtils;
 
@@ -113,7 +113,7 @@ public class InterfaceView {
     faceView.setModuleId(face.getModuleId());
     faceView.setRequestParam(face.getRequestParam());
     faceView.setResponseResult(face.getResponseResult());
-    faceView.setRun(Constants.RUNNING == face.getIsRun());
+    faceView.setRun(Constant.RUNNING == face.getIsRun());
     faceView.setUpdateTime(DateUtils.formatDateTime(face.getUpdateTime()));
     faceView.setCreateTime(DateUtils.formatDateTime(face.getCreateTime()));
     return faceView;

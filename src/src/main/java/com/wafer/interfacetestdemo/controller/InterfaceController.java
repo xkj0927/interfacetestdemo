@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wafer.interfacetestdemo.config.Constants;
+import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Interface;
 import com.wafer.interfacetestdemo.service.InterfaceService;
 import com.wafer.interfacetestdemo.vo.InterfaceView;
@@ -23,7 +23,7 @@ import com.wafer.interfacetestdemo.vo.ResponseResult;
 
 @RestController
 @Transactional
-@RequestMapping(Constants.CONTROLLER_PATH)
+@RequestMapping(Constant.CONTROLLER_PATH)
 public class InterfaceController {
 
   Logger logger = LoggerFactory.getLogger(InterfaceController.class);
@@ -70,7 +70,7 @@ public class InterfaceController {
     face.setInterfaceName(faceView.getInterfaceName());
     face.setInterfaceType(faceView.getInterfaceType());
     face.setInterfaceUrl(faceView.getInterfaceUrl());
-    face.setIsRun(faceView.isRun() ? Constants.RUNNING : Constants.NOT_RUNNING);
+    face.setIsRun(faceView.isRun() ? Constant.RUNNING : Constant.NOT_RUNNING);
     face.setRequestParam(faceView.getRequestParam());
     face.setResponseResult(faceView.getResponseResult());
     

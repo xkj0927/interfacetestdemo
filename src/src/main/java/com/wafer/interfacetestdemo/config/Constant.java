@@ -32,11 +32,23 @@ public interface Constant {
   String PROJECT_DELETE = "project/{userId}/{projectId}";
   
   
+  
+  
+  String APPLICATION_JSON = "json";
+  
   /** 用户角色  admin */
   String USER_ROLE_ADMIN = "ADMIN";
   
   /** 用户角色  user */
   String USER_ROLE_USER = "USER";
+  
+  /** 运行 */
+  int RUNNING = 0;
+  
+  /** 不运行 */
+  int NOT_RUNNING = 1;
+  
+  
   
   String EMAIL_DUPLICATE = "100004";
   
@@ -44,6 +56,6 @@ public interface Constant {
   
   String PROJECT_EXIST = "200002";
   
-  String APPLICATION_JSON = "json";
+  
   
 }

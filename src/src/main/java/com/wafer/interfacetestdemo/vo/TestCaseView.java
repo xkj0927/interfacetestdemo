@@ -1,6 +1,6 @@
 package com.wafer.interfacetestdemo.vo;
 
-import com.wafer.interfacetestdemo.config.Constants;
+import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.InterfaceTestCase;
 import com.wafer.interfacetestdemo.utils.DateUtils;
 
@@ -99,7 +99,7 @@ public class TestCaseView {
     tcv.setInterfaceTestCaseId(testCase.getInterfaceTestCaseId());
     tcv.setTestCaseName(testCase.getTestCaseName());
     tcv.setParamCase(testCase.getParamCase());
-    tcv.setRun(Constants.RUNNING == testCase.getIsRun() ? true : false);
+    tcv.setRun(Constant.RUNNING == testCase.getIsRun() ? true : false);
     tcv.setCreateTime(DateUtils.formatDateTime(testCase.getCreateTime()));
     tcv.setUpdateTime(DateUtils.formatDateTime(testCase.getUpdateTime()));
     return tcv;

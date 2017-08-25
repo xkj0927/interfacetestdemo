@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.wafer.interfacetestdemo.config.Constants;
+import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.vo.TestCaseView;
 
 @Entity
@@ -114,7 +114,7 @@ public class InterfaceTestCase {
     testCase.setInterfaceTestCaseId(testCaseView.getInterfaceTestCaseId());
     testCase.setTestCaseName(testCaseView.getTestCaseName());
     testCase.setParamCase(testCaseView.getParamCase());
-    testCase.setIsRun(testCaseView.isRun() ? Constants.RUNNING : Constants.NOT_RUNNING);
+    testCase.setIsRun(testCaseView.isRun() ? Constant.RUNNING : Constant.NOT_RUNNING);
     return testCase;
   }
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wafer.interfacetestdemo.config.Constants;
+import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.InterfaceTestCase;
 import com.wafer.interfacetestdemo.service.InterfaceTestCaseService;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
@@ -23,7 +23,7 @@ import com.wafer.interfacetestdemo.vo.TestCaseView;
 
 @RestController
 @Transactional
-@RequestMapping(Constants.CONTROLLER_PATH)
+@RequestMapping(Constant.CONTROLLER_PATH)
 public class InterfaceTestCaseController {
 
   Logger logger = LoggerFactory.getLogger(InterfaceTestCaseController.class);
@@ -81,7 +81,7 @@ public class InterfaceTestCaseController {
     if (null != testCaseView.getParamCase()) {
       testCase.setParamCase(testCaseView.getParamCase());
     }
-    testCase.setIsRun(testCaseView.isRun() ? Constants.RUNNING : Constants.NOT_RUNNING);
+    testCase.setIsRun(testCaseView.isRun() ? Constant.RUNNING : Constant.NOT_RUNNING);
     testCase = testCaseService.saveInterfaceCase(testCase);
     return ResponseResult.success(TestCaseView.transformViewToTestCase(testCase));
   }
