@@ -133,6 +133,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
   const addModuleShow = () => {
     dispatch({type: "modules/show", payload: ""});
   };
+
   let ModuleForm = Form.create()(
     (props) => {
       return <ModuleEditor

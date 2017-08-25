@@ -2,7 +2,6 @@ import React from "react";
 import {Form, Input, InputNumber, Select, Button, message, Switch} from "antd";
 import {routerRedux} from "dva/router";
 import {FormattedMessage, injectIntl} from 'react-intl';
-import style from './module-editor.less';
 
 const FormItem = Form.Item;
 const formLayout = {
