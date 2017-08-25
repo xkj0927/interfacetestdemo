@@ -44,3 +44,16 @@ export function deleteModule(moduleId) {
     method: 'DELETE'
   });
 }
+
+export function deleteInterface(interfaceId) {
+  return request(`api/v1/interface/${interfaceId}`, {
+    method: 'DELETE'
+  });
+}
+
+export function testCaseList(interfaceId) {
+  return request(`api/v1/interfacecase/interface/${interfaceId}`, {
+    method: 'GET'
+  });
+}
+

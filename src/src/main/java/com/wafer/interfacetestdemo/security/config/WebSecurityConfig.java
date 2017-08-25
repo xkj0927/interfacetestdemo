@@ -59,6 +59,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
               // 允许对于网站静态资源的无授权访问
               .antMatchers(
                       HttpMethod.GET,
+                      "/**/swagger-resources/**",
+                      "/**/api-docs/**",
+                      "/**/webjars/**",
                       "/**/static/**",
                       "/*.html",
                       "/favicon.ico",

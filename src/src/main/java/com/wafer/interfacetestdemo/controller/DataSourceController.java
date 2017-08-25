@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.wafer.interfacetestdemo.config.Constants;
+import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Interface;
 import com.wafer.interfacetestdemo.domain.InterfaceTestCase;
 import com.wafer.interfacetestdemo.service.InterfaceService;
@@ -34,7 +34,7 @@ import com.wafer.interfacetestdemo.vo.TestCaseView;
 
 @RestController
 @Transactional
-@RequestMapping(Constants.CONTROLLER_PATH)
+@RequestMapping(Constant.CONTROLLER_PATH)
 public class DataSourceController {
 
   Logger logger = LoggerFactory.getLogger(DataSourceController.class);

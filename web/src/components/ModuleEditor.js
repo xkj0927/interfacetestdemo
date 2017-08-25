@@ -16,7 +16,6 @@ const formLayout = {
 
 export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
   const {getFieldDecorator, validateFields} = form;
-  debugger
   const {moduleName, run, moduleId} = moduleInfo;
   const type = moduleId ? "update" : "add";
 
