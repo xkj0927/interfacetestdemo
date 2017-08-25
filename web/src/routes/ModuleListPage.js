@@ -45,7 +45,6 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
   const moduleNode = data => data.map((item) => {
 
     const deleteHandle = () => {
-      debugger
       if(activeKey){
         if(activeKey.split('-').length == 1){
           // 删除模块

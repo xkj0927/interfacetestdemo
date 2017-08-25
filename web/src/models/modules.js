@@ -93,7 +93,6 @@ export default {
       state.modules.map(module => {
         if(module.moduleId == moduleId){
           let newInterface = [];
-          debugger
           module.interfaceViews.map(face => {
             if(face.interfaceId != interfaceId){
               newInterface.push(face);
@@ -290,7 +289,6 @@ export default {
 
     *testCaseList({moduleId : moduleId, interfaceId: interfaceId}, {call, put}){
       const result = yield call(moduleService.testCaseList, interfaceId);
-      debugger
       yield put({ type: 'updateTestCase' , moduleId:moduleId, interfaceId: interfaceId, testCases: result.data});
     },
   },
