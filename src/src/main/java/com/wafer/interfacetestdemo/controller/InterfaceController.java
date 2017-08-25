@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Interface;
+import com.wafer.interfacetestdemo.domain.InterfaceTestCase;
 import com.wafer.interfacetestdemo.service.InterfaceService;
+import com.wafer.interfacetestdemo.service.InterfaceTestCaseService;
 import com.wafer.interfacetestdemo.vo.InterfaceView;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
+import com.wafer.interfacetestdemo.vo.TestCaseView;
 
 @RestController
 @Transactional
@@ -30,6 +33,9 @@ public class InterfaceController {
  
   @Autowired
   InterfaceService interfaceService;
+  
+  @Autowired
+  InterfaceTestCaseService testCaseService;
   
   /**
    * 新增一个【接口】
@@ -100,6 +106,24 @@ public class InterfaceController {
   public ResponseResult getInterfaceById(@PathVariable long interfaceId){
     Interface face= interfaceService.findInterfaceById(interfaceId);
     return ResponseResult.success(InterfaceView.transformInterfaceToView(face));
+  }
+  
+  /**
+   * 通过interfaceId查询一个【接口】的详情
+   * @param interfaceId
+   * @return
+   */
+  @RequestMapping(value = "interface/testcase/{interfaceId}", method = RequestMethod.GET)
+  public ResponseResult getInterfaceAndTestCasesById(@PathVariable long interfaceId){
+    Interface face= interfaceService.findInterfaceById(interfaceId);
+    InterfaceView faceView = InterfaceView.transformInterfaceToView(face);
+    if(null != face){
+      List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(face.getInterfaceId());
+      List<TestCaseView> testCaseViews = new ArrayList<>();
+      testCases.parallelStream().forEach(testCase -> testCaseViews.add(TestCaseView.transformViewToTestCase(testCase)));
+      faceView.setTestCaseViews(testCaseViews);
+    }
+    return ResponseResult.success(faceView);
   }
   
 }

@@ -19,6 +19,8 @@ public class InterfaceView {
   private String createTime;
   private String updateTime;
   
+  private List<TestCaseView> testCaseViews;
+  
   private List<TestCaseView> testCases;
 
   public long getInterfaceId() {
@@ -100,6 +102,22 @@ public class InterfaceView {
   public void setUpdateTime(String updateTime) {
     this.updateTime = updateTime;
   }
+  
+  public List<TestCaseView> getTestCases() {
+    return testCases;
+  }
+
+  public void setTestCases(List<TestCaseView> testCases) {
+    this.testCases = testCases;
+  }
+
+  public List<TestCaseView> getTestCaseViews() {
+    return testCaseViews;
+  }
+
+  public void setTestCaseViews(List<TestCaseView> testCaseViews) {
+    this.testCaseViews = testCaseViews;
+  }
 
   public static InterfaceView transformInterfaceToView(Interface face) {
     if (null == face) {
@@ -117,13 +135,5 @@ public class InterfaceView {
     faceView.setUpdateTime(DateUtils.formatDateTime(face.getUpdateTime()));
     faceView.setCreateTime(DateUtils.formatDateTime(face.getCreateTime()));
     return faceView;
-  }
-
-  public List<TestCaseView> getTestCases() {
-    return testCases;
-  }
-
-  public void setTestCases(List<TestCaseView> testCases) {
-    this.testCases = testCases;
   }
 }
