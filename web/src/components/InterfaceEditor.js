@@ -7,12 +7,14 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import style from "./InterfaceEditor.less"
 import InterfaceParamEditor from "./InterfaceParamEditor";
 import TestCaseDetailInfo from "./TestCaseDetailInfo";
+import TestCaseEditor from '../components/TestCaseEditor'
 
 const FormItem = Form.Item;
-export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia, testCaseDetailInfo, fromWhere, form, intl}) => {
+export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia, displayEditTestCaseModal, currentTestCase, testCaseDetailInfo, fromWhere, form, intl}) => {
     const {getFieldDecorator, validateFields} = form;
     let requestTabledata = [];
     let responseTabledata = [];
+
     const columns = [
         {
             title: "ParamName",
@@ -23,6 +25,30 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             dataIndex: 'paramType'
         },
     ];
+    const editTestCaseModalShow = () => {
+      dispatch({type:"interfaces/showEditTestCaseModal", payload:""});
+    };
+    const showEditTestCaseModal = (testCase) =>{
+      dispatch({type:"interfaces/showEditTestCaseModal", currentTestCase:testCase});
+    };
+
+    let TestCaseEditorForm = Form.create()(
+      (props) => {
+        return <TestCaseEditor form={props.form} dispatch={dispatch} currentTestCase={props.currentTestCase} interfaceId ={props.interfaceId}/>
+      }
+    );
+
+    const moduleTitle = currentTestCase? intl.formatMessage({id: "testCase.editModalTitle"}):intl.formatMessage({id: "testCase.addModalTitle"});
+    const editTestCaseModal = <Modal
+          title={moduleTitle}
+          visible={displayEditTestCaseModal}
+          onCancel={editTestCaseModalShow}
+          footer={null}
+          key={moduleKey}>
+
+      <TestCaseEditorForm currentTestCase={currentTestCase} interfaceId = {interfaceInfo?interfaceInfo.interfaceId:""}/>
+    </Modal>;
+
     const testCaseOperatorColumns = [
         {
             title: "InterfaceTestCaseId",
@@ -37,8 +63,8 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             dataIndex: 'expectStatus'
         },
         {
-            title: "isRun",
-            dataIndex: 'run'
+             title: "isRun",
+             dataIndex: 'run'
         },
         {
             title: intl.formatMessage({id: "user.operation"}),
@@ -46,12 +72,11 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 return (
                     <Button.Group type="ghost">
                         <Button title="detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record)}><Icon type="info" /></Button>
-                        <Button title="edit"  size="small" ><Icon type="edit" /></Button>
+                        <Button title="edit"  size="small" onClick={showEditTestCaseModal.bind(this, record)}><Icon type="edit"/></Button>
                         <Popconfirm title="delete"
                                     onConfirm={
                                         () => {
-                                            dispatch({type: "interfaces/deleteTestCase", payload: record});
-                                            dispatch({type:"interfaces/info", selectModuleKey:moduleKey, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
+                                            dispatch({type: "interfaces/deleteTestCase", payload: record.testCaseId});
                                         }
                                     }>
                             <Button title="delete" size="small"><Icon type="delete" /></Button>
@@ -63,11 +88,11 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     ];
     const testCaseColumns = [
         {
-            title: "Interface Test Case Id",
+            title: "InterfaceTestCaseId",
             dataIndex: 'interfaceTestCaseId'
         },
         {
-            title: "Test Case Name",
+            title: "TestCaseName",
             dataIndex: 'testCaseName'
         },
         {
@@ -89,13 +114,16 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             if(undefined != interfaceInfo.interfaceId){
                 values.interfaceId = interfaceInfo.interfaceId;
             }
-            dispatch({type:"interfaces/add", payload:values});
+            dispatch({type:"interfaces/add", values});
         });
         dispatch({type:"interfaces/info", selectModuleKey:moduleKey, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
 
     };
-    const showInterfaceRequestParamDialog =(param)=>{
+
+
+    const showInterfaceParamDialog =()=>{
         debugger;
+         console.log(interfaceInfo);
         dispatch({type:"interfaces/showParam", interfaceInfo: interfaceInfo, fromWhere: param});
     };
     let ParamEditor = Form.create()(
@@ -119,13 +147,12 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         title="Edit Interface Response Param"
     }
     const addParamEditorModal = <Modal
-        title={title}
+        title="Edit Interface Request Param"
         visible={displayInterParamDia}
-        onCancel={showInterfaceRequestParamDialog}
+        onCancel={showInterfaceParamDialog}
         footer={null}>
         <ParamEditor />
     </Modal>;
-
     let TcDetailInfo = Form.create()(
         (props) => {
             return <TestCaseDetailInfo
@@ -142,7 +169,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         footer={null}>
         <TcDetailInfo />
     </Modal>;
-    debugger;
     if("info" == operatorType){
         debugger;
         requestTabledata = JSON.parse(interfaceInfo.requestParam);
@@ -261,13 +287,13 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             initialValue: run
                         })(
                             <Select defaultValue={run}>
-                                <Option value="true">yes</Option>
-                                <Option value="false">no</Option>
+                                <Option value="0">yes</Option>
+                                <Option value="1">no</Option>
                             </Select>
                         )}
                     </FormItem>
                     <div>
-                        <b>Request Param: </b>
+                    <b>Request Param: </b>
                         <Button className={style.editInterfaceBtn} onClick={showInterfaceRequestParamDialog.bind(this, "requestParam")}><Icon type="save"/>Add Request Param</Button>
                     </div>
                     <div>
@@ -281,14 +307,16 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
                     </div>
                     <div>
-                        <b>Interface TestCase List: </b>
+                        <b>Interface TestCase List: <Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
                     </div>
+
                     <div>
                         <Table columns={testCaseOperatorColumns} dataSource={interfaceInfo.testCaseViews} pagination={false}/>
                     </div>
                 </Form>
                 {addParamEditorModal}
                 {TestCaseDetailInfoModal}
+              {editTestCaseModal}
             </div>
         );
     }else if("add" == operatorType){
@@ -330,12 +358,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             ],
                             initialValue: interfaceType
                         })(
-                            <Select defaultValue="POST">
-                                <Option value="POST">POST</Option>
-                                <Option value="GET">GET</Option>
-                                <Option value="DELETE">DELETE</Option>
-                                <Option value="PUT">PUT</Option>
-                            </Select>
+                            <Input type="text"/>
                         )}
                     </FormItem>
                     <FormItem  label={"interfaceUrl:"}>

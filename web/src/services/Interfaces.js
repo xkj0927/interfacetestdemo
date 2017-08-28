@@ -32,3 +32,17 @@ export function editinterfaces(interfacevalues) {
     body: JSON.stringify(interfacevalues)
   });
 }
+
+export function addTestCase(testCase) {
+  return request(`api/v1/interfacecase`, {
+    method: 'POST',
+    body: JSON.stringify(testCase)
+  });
+}
+
+export function editTestCase(testCase) {
+  return request(`api/v1/interfacecase`, {
+    method: 'PUT',
+    body: JSON.stringify(testCase)
+  });
+}

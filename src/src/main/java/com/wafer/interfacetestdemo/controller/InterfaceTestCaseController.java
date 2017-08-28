@@ -81,6 +81,9 @@ public class InterfaceTestCaseController {
     if (null != testCaseView.getParamCase()) {
       testCase.setParamCase(testCaseView.getParamCase());
     }
+    if(null != testCaseView.getTestCaseName()){
+      testCase.setTestCaseName(testCaseView.getTestCaseName());
+    }
     testCase.setIsRun(testCaseView.isRun() ? Constant.RUNNING : Constant.NOT_RUNNING);
     testCase = testCaseService.saveInterfaceCase(testCase);
     return ResponseResult.success(TestCaseView.transformViewToTestCase(testCase));

@@ -44,7 +44,9 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
               displayInterParamDia={interfaces.displayInterParamDia}
               displayTestCaseDia={interfaces.displayTestCaseDia}
               testCaseDetailInfo={interfaces.testCaseDetailInfo}
-              fromWhere={interfaces.fromWhere}/>
+              fromWhere={interfaces.fromWhere}
+              displayEditTestCaseModal= {interfaces.displayEditTestCaseModal}
+              currentTestCase = {interfaces.currentTestCase}/>
       }
   );
   // module

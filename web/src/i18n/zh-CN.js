@@ -105,6 +105,14 @@ const zhCN = {
   "module.editModule.modal":"编辑模块",
   "module.addModule.modal":"添加模块",
   "interface.delete":"删除",
+  "testCase.testCaseName":"用例名称",
+  "testCase.testCaseName.emptyTestCase":"用例名称不能为空",
+  "testCase.paramCase":"用例参数",
+  "testCase.expectResult":"期望结果",
+  "testCase.expectStatus":"期望状态码",
+  "testCase.running":"是否执行",
+  "testCase.editModalTitle":"修改测试用例",
+  "testCase.addModalTitle":"新增测试用例",
 
 };
 
