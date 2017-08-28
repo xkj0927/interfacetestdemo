@@ -7,7 +7,7 @@ const JSON = window.JSON;
 
 export function interfaceinfo(interfaceId) {
   debugger;
-  return request(`api/v1/interface/${interfaceId}`, {
+  return request(`api/v1/interface/testcase/${interfaceId}`, {
     method: 'GET'
   });
 }

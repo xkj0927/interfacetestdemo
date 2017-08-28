@@ -6,9 +6,10 @@ import {Input, Form, Button, DatePicker, Select, message, Table, Icon, Popconfir
 import {FormattedMessage, injectIntl} from 'react-intl';
 import style from "./InterfaceEditor.less"
 import InterfaceParamEditor from "./InterfaceParamEditor";
+import TestCaseDetailInfo from "./TestCaseDetailInfo";
 
 const FormItem = Form.Item;
-export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, form, intl}) => {
+export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia, form, intl}) => {
     const {getFieldDecorator, validateFields} = form;
     let requestTabledata = [];
     let responseTabledata = [];
@@ -21,28 +22,45 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             title: "ParamType",
             dataIndex: 'paramType'
         },
-        // {
-        //     title: intl.formatMessage({id: "user.operation"}),
-        //     render: (text, record) => {
-        //         return (
-        //             <Button.Group type="ghost">
-        //                 <Button title={intl.formatMessage({id: "user.editUser"})}  size="small" onClick={
-        //                     () => {
-        //                         dispatch({type: "users/show", payload: "mod", userInfo: record});
-        //                     }
-        //                 }><Icon type="edit" /></Button>
-        //                 <Popconfirm title={intl.formatMessage({id: "user.delConfirm"})}
-        //                             onConfirm={
-        //                                 () => {
-        //                                     dispatch({type: "users/delete", payload: record.userId});
-        //                                 }
-        //                             }>
-        //                     <Button title={intl.formatMessage({id: "user.delUser"})} size="small"><Icon type="delete" /></Button>
-        //                 </Popconfirm>
-        //             </Button.Group>
-        //         );
-        //     }
-        // }
+    ];
+    const testCaseOperatorColumns = [
+        {
+            title: "InterfaceTestCaseId",
+            dataIndex: 'interfaceTestCaseId'
+        },
+        {
+            title: "TestCaseName",
+            dataIndex: 'testCaseName'
+        },
+        {
+            title: intl.formatMessage({id: "user.operation"}),
+            render: (text, record) => {
+                return (
+                    <Button.Group type="ghost">
+                        <Button title="info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record)}><Icon type="info" /></Button>
+                        <Button title="edit"  size="small" ><Icon type="edit" /></Button>
+                        <Popconfirm title="delete"
+                                    onConfirm={
+                                        () => {
+                                            {/*dispatch({type: "users/delete", payload: record.userId});*/}
+                                        }
+                                    }>
+                            <Button title="delete" size="small"><Icon type="delete" /></Button>
+                        </Popconfirm>
+                    </Button.Group>
+                );
+            }
+        }
+    ];
+    const testCaseColumns = [
+        {
+            title: "InterfaceTestCaseId",
+            dataIndex: 'interfaceTestCaseId'
+        },
+        {
+            title: "TestCaseName",
+            dataIndex: 'testCaseName'
+        },
     ];
     const handleSubmit=(e)=> {
         e.preventDefault();
@@ -72,12 +90,33 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 interfaceInfo = {interfaceInfo}/>
         }
     );
+    const showTestCaseDetailInfoDialog =(testCase)=>{
+        debugger;
+        console.log(testCase);
+        dispatch({type:"interfaces/showTestCase", record: testCase});
+    };
     const addParamEditorModal = <Modal
         title="Edit Interface Request Param"
         visible={displayInterParamDia}
         onCancel={showInterfaceParamDialog}
         footer={null}>
         <ParamEditor />
+    </Modal>;
+
+    let TcDetailInfo = Form.create()(
+        (props) => {
+            return <TestCaseDetailInfo
+                form={props.form}
+                dispatch={dispatch}
+                interfaceInfo = {interfaceInfo}/>
+        }
+    );
+    const TestCaseDetailInfoModal = <Modal
+        title="TestCase Detail Info"
+        visible={displayTestCaseDia}
+        onCancel={showTestCaseDetailInfoDialog}
+        footer={null}>
+        <TcDetailInfo />
     </Modal>;
     debugger;
     if("info" == operatorType){
@@ -90,6 +129,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         }else{
             run = "no";
         }
+
         const {interfaceName,interfaceType, interfaceUrl, interfaceId} = interfaceInfo;
         return (
            <div>
@@ -103,10 +143,22 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                <div><b>interfaceUrl:</b>{interfaceUrl}</div>
                <div><b>isRun:</b>{run}</div>
                <div>
+                   <b>Request Param: </b>
+               </div>
+               <div>
                    <Table columns={columns} dataSource={requestTabledata} pagination={false}/>
                </div>
                <div>
+                   <b>Response Param: </b>
+               </div>
+               <div>
                    <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
+               </div>
+               <div>
+                   <b>Interface TestCase List: </b>
+               </div>
+               <div>
+                   <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} pagination={false}/>
                </div>
            </div>
         );
@@ -204,8 +256,15 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                     <div>
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
                     </div>
+                    <div>
+                        <b>Interface TestCase List: </b>
+                    </div>
+                    <div>
+                        <Table columns={testCaseOperatorColumns} dataSource={interfaceInfo.testCaseViews} pagination={false}/>
+                    </div>
                 </Form>
                 {addParamEditorModal}
+                {TestCaseDetailInfoModal}
             </div>
         );
     }else if("add" == operatorType){
