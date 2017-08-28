@@ -2,6 +2,7 @@ import React from "react";
 import {Form, Input, InputNumber, Select, Button, message, Switch} from "antd";
 import {routerRedux} from "dva/router";
 import {FormattedMessage, injectIntl} from 'react-intl';
+import {format} from '../utils/JSONFormat';
 
 const FormItem = Form.Item;
 const {TextArea} = Input;
@@ -35,7 +36,7 @@ export default injectIntl(({form, intl, dispatch, currentTestCase, interfaceId})
   };
 
   return (
-    <div style={{width: "400px"}}>
+    <div style={{width: "450px"}}>
       <Form onSubmit={submitHandle}>
         <FormItem label={intl.formatMessage({id: "testCase.testCaseName"}) + ":"} {...formLayout}>
           {getFieldDecorator("testCaseName", {
@@ -53,17 +54,17 @@ export default injectIntl(({form, intl, dispatch, currentTestCase, interfaceId})
 
         <FormItem label={intl.formatMessage({id: "testCase.paramCase"}) + ":"} {...formLayout}>
           {getFieldDecorator("paramCase", {
-            initialValue: paramCase
+            initialValue: format(paramCase, false)
           })(
-            <TextArea rows={4} />
+            <TextArea rows={4} autosize={true}/>
           )}
         </FormItem>
 
         <FormItem label={intl.formatMessage({id: "testCase.expectResult"}) + ":"} {...formLayout}>
           {getFieldDecorator("moduleName", {
-            initialValue: expectResult
+            initialValue: format(expectResult, false)
           })(
-            <TextArea rows={4} />
+            <TextArea rows={4} autosize={true}/>
           )}
         </FormItem>
 
