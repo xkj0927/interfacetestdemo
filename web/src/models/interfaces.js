@@ -13,25 +13,30 @@ export default {
     operatorType:"",
     moduleKey: 0,
     displayInterParamDia: false,
-    displayTestCaseDia: false
+    displayTestCaseDia: false,
+    testCaseDetailInfo:null,
+    fromWhere:""
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
       state.interfaceInfo = interfaceInfo;
       state.operatorType = operatorType;
       state.moduleKey = moduleKey;
+      state.displayInterParamDia = false;
       let newState = state;
       return newState;
     },
-    changestate(state, { interfaceInfo: interfaceInfo}) {
+    changestate(state, { interfaceInfo: interfaceInfo, fromWhere: fromWhere}) {
       debugger;
       state.interfaceInfo = interfaceInfo;
       state.displayInterParamDia = !state.displayInterParamDia;
+      state.fromWhere =  fromWhere;
       let newState = state;
       return newState;
     },
-    changetestcasestate(state, {}) {
+    changetestcasestate(state, {testCaseDetailInfo}) {
       state.displayTestCaseDia = !state.displayTestCaseDia;
+      state.testCaseDetailInfo = testCaseDetailInfo;
       let newState = state;
       return newState;
     },
@@ -56,26 +61,36 @@ export default {
         moduleKey: selectModuleKey
       });
     },
-    *showParam({interfaceInfo}, {put}){
+    *showParam({interfaceInfo, fromWhere}, {put}){
       yield put({
         type: 'changestate',
         interfaceInfo: interfaceInfo,
+        fromWhere: fromWhere
       });
     },
-    *showTestCase({showTestCase}, {put}){
+    *showTestCase({record: testCase}, {put}){
+      debugger;
       yield put({
         type: 'changetestcasestate',
+        testCaseDetailInfo: testCase
       });
     },
-    *deleteTestCase({payload: id}, {call, put}){
-      yield call(testCaseService.deleteTestCase, id);
-      yield put({type: "reload"});
-      const messages  = yield select(state => state.i18n.messages);
-      message.info("success delete");
-    },
-    *add({values}, {call}){
+    *deleteTestCase({payload: record}, {call, put}){
       debugger;
-      const result = yield call(interfaceService.addinterfaces, values);
+      yield call(testCaseService.deleteTestCase, record.interfaceTestCaseId);
+      // yield put({
+      //   type: 'changetestcasestate',
+      // });
+    },
+    *add({payload}, {call, put}){
+      debugger;
+      const {data} = yield call(interfaceService.addinterfaces, payload);
+      yield put({
+        type: 'update',
+        payload: data,
+        operatorType: "info",
+        moduleKey: data.moduleId
+      });
     },
   },
 };

@@ -2,27 +2,44 @@
  * Created by Administrator on 2017/8/25 0025.
  */
 import React from "react";
-import {Form, Input, InputNumber, Select, Button, message, Switch, Icon, Table, Row, Col} from "antd";
+import {Form, Table} from "antd";
 import {routerRedux} from "dva/router";
 import {FormattedMessage, injectIntl} from 'react-intl';
-import style from "./InterfaceEditor.less"
 
-const FormItem = Form.Item;
-const formLayout = {
-    labelCol: {
-        span: 7
-    },
-    wrapperCol: {
-        span: 16
+export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailInfo}) => {
+    var testCaseparamCase = JSON.parse(testCaseDetailInfo.paramCase);
+    var paramCase = [];
+    const columns = [
+        {
+            title: "paramCaseName",
+            dataIndex: 'paramCaseName'
+        },
+        {
+            title: "paramCaseValue",
+            dataIndex: 'paramCaseValue'
+        },
+    ];
+    for(var obj in testCaseparamCase){
+        debugger;
+        console.log(obj);
+        console.log(testCaseparamCase[obj]);
+        var newJson={"paramCaseName": obj, "paramCaseValue": testCaseparamCase[obj]};
+        paramCase.push(newJson);
+        console.log(paramCase);
     }
-};
-
-export default injectIntl(({form, intl, dispatch, interfaceInfo}) => {
-    const {getFieldDecorator, validateFields} = form;
-    console.log(interfaceInfo);
     return (
         <div>
-           hhjhhyhhh
+            <div><b>TestCase Name:</b>{testCaseDetailInfo.testCaseName}</div>
+            <div><b>Expect Status:</b>{testCaseDetailInfo.expectStatus}</div>
+            <div><b>Is Run:</b>{testCaseDetailInfo.isRun}</div>
+            <div><b>Create Time:</b>{testCaseDetailInfo.createTime}</div>
+            <div><b>Update Time:</b>{testCaseDetailInfo.updateTime}</div>
+            <div>
+                <b>Param Case:</b>
+            </div>
+            <div>
+                <Table columns={columns} dataSource={paramCase} pagination={false}/>
+            </div>
         </div>
     );
 });
