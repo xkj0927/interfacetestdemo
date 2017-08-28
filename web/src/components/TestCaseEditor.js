@@ -61,7 +61,7 @@ export default injectIntl(({form, intl, dispatch, currentTestCase, interfaceId})
         </FormItem>
 
         <FormItem label={intl.formatMessage({id: "testCase.expectResult"}) + ":"} {...formLayout}>
-          {getFieldDecorator("moduleName", {
+          {getFieldDecorator("expectResult", {
             initialValue: expectResult?format(expectResult, false):""
           })(
             <TextArea rows={4} autosize={true} minRows={4}/>
