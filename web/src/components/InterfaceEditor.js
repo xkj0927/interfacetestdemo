@@ -107,6 +107,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     const handleSubmit=(e)=> {
         e.preventDefault();
         validateFields((err, values) => {
+            debugger;
             console.log("values:", values);
             values.moduleId = moduleKey;
             values.requestParam = interfaceInfo.requestParam;
@@ -114,16 +115,14 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             if(undefined != interfaceInfo.interfaceId){
                 values.interfaceId = interfaceInfo.interfaceId;
             }
-            dispatch({type:"interfaces/add", values});
+            dispatch({type:"interfaces/add", payload:values});
         });
         dispatch({type:"interfaces/info", selectModuleKey:moduleKey, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
 
     };
 
 
-    const showInterfaceParamDialog =()=>{
-        debugger;
-         console.log(interfaceInfo);
+    const showInterfaceParamDialog =(param)=>{
         dispatch({type:"interfaces/showParam", interfaceInfo: interfaceInfo, fromWhere: param});
     };
     let ParamEditor = Form.create()(
@@ -136,8 +135,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         }
     );
     const showTestCaseDetailInfoDialog =(testCase)=>{
-        debugger;
-        console.log(testCase);
         dispatch({type:"interfaces/showTestCase", record: testCase});
     };
     let title = "";
@@ -173,7 +170,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         debugger;
         requestTabledata = JSON.parse(interfaceInfo.requestParam);
         responseTabledata = JSON.parse(interfaceInfo.responseResult);
-        let run = "0";
+        let run = "";
         if(interfaceInfo.run){
             run = "yes";
         }else{
@@ -287,21 +284,21 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             initialValue: run
                         })(
                             <Select defaultValue={run}>
-                                <Option value="0">yes</Option>
-                                <Option value="1">no</Option>
+                                <Option value="true">yes</Option>
+                                <Option value="false">no</Option>
                             </Select>
                         )}
                     </FormItem>
                     <div>
                     <b>Request Param: </b>
-                        <Button className={style.editInterfaceBtn} onClick={showInterfaceRequestParamDialog.bind(this, "requestParam")}><Icon type="save"/>Add Request Param</Button>
+                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "requestParam")}><Icon type="save"/>Add Request Param</Button>
                     </div>
                     <div>
                         <Table columns={columns} dataSource={requestTabledata} pagination={false}/>
                     </div>
                     <div>
                         <b>Response Param: </b>
-                        <Button className={style.editInterfaceBtn} onClick={showInterfaceRequestParamDialog.bind(this, "responseParam")}><Icon type="save"/>Add Response Param</Button>
+                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "responseParam")}><Icon type="save"/>Add Response Param</Button>
                     </div>
                     <div>
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
@@ -320,7 +317,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             </div>
         );
     }else if("add" == operatorType){
-        const {interfaceName = [],interfaceType = [], interfaceUrl =[], isRun=[]} = interfaceInfo;
+        const {interfaceName = [],interfaceType = [], interfaceUrl =[], run=[]} = interfaceInfo;
         return (
             <div>
                 <FormItem>
@@ -379,7 +376,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         )}
                     </FormItem>
                     <FormItem  label={"isRun:"}>
-                        <Select defaultValue={isRun}>
+                        <Select defaultValue={run}>
                             <Option value="true">yes</Option>
                             <Option value="false">no</Option>
                         </Select>

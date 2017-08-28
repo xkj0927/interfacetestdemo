@@ -31,7 +31,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
         <div>
             <div><b>TestCase Name:</b>{testCaseDetailInfo.testCaseName}</div>
             <div><b>Expect Status:</b>{testCaseDetailInfo.expectStatus}</div>
-            <div><b>Is Run:</b>{testCaseDetailInfo.isRun}</div>
+            <div><b>Is Run:</b>{(testCaseDetailInfo.run)?"yes":"no"}</div>
             <div><b>Create Time:</b>{testCaseDetailInfo.createTime}</div>
             <div><b>Update Time:</b>{testCaseDetailInfo.updateTime}</div>
             <div>
