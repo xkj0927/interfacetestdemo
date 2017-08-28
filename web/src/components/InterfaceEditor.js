@@ -304,7 +304,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
                     </div>
                     <div>
-                        <b>Interface TestCase List: <Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
+                        <b>Interface TestCase List: <Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
                     </div>
 
                     <div>
