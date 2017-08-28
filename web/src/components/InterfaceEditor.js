@@ -249,7 +249,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             ],
                             initialValue: interfaceType
                         })(
-                            <Select defaultValue={interfaceType}>
+                            <Select>
                                 <Option value="POST">POST</Option>
                                 <Option value="GET">GET</Option>
                                 <Option value="DELETE">DELETE</Option>
@@ -283,7 +283,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             ],
                             initialValue: run
                         })(
-                            <Select defaultValue={run}>
+                            <Select>
                                 <Option value="true">yes</Option>
                                 <Option value="false">no</Option>
                             </Select>
@@ -376,7 +376,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         )}
                     </FormItem>
                     <FormItem  label={"isRun:"}>
-                        <Select defaultValue={run}>
+                        <Select>
                             <Option value="true">yes</Option>
                             <Option value="false">no</Option>
                         </Select>

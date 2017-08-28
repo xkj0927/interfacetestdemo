@@ -99,6 +99,7 @@ const zhCN = {
   "module.delete.confirm":"确定",
   "module.delete.cancel":"取消",
   "module.add.interface":"添加接口",
+  "add.module":"添加模块",
   "module.edit" : "编辑",
   "project.warn.emptyProject":"项目不能为空",
   "module.running":"是否运行",

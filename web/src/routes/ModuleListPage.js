@@ -164,7 +164,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     <div className={style.moduleContainer}>
       <div className={style.ModuleCollapseLeft}>
         {moduleTree}
-        <Button className={style.addModuleBtn} onClick={addModuleShow}><Icon type="plus-circle-o"/>Add Module</Button>
+        <Button className={style.addModuleBtn} onClick={addModuleShow}><Icon type="plus-circle-o"/>{intl.formatMessage({id: "add.module"})}</Button>
       </div>
       <div className={style.ModuleCollapseRight}>
         <InterfaceInfoView />
