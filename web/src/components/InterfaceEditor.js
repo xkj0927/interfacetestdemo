@@ -144,7 +144,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         title="Edit Interface Response Param"
     }
     const addParamEditorModal = <Modal
-        title="Edit Interface Request Param"
+        title={title}
         visible={displayInterParamDia}
         onCancel={showInterfaceParamDialog}
         footer={null}>
