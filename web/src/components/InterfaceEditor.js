@@ -37,12 +37,12 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             render: (text, record) => {
                 return (
                     <Button.Group type="ghost">
-                        <Button title="info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record)}><Icon type="info" /></Button>
+                        <Button title="detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record)}><Icon type="info" /></Button>
                         <Button title="edit"  size="small" ><Icon type="edit" /></Button>
                         <Popconfirm title="delete"
                                     onConfirm={
                                         () => {
-                                            {/*dispatch({type: "users/delete", payload: record.userId});*/}
+                                            dispatch({type: "interfaces/deleteTestCase", payload: record.testCaseId});
                                         }
                                     }>
                             <Button title="delete" size="small"><Icon type="delete" /></Button>

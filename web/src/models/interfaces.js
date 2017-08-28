@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import * as interfaceService from '../services/Interfaces';
+import * as testCaseService from '../services/testcase';
 
 export default {
   namespace: 'interfaces',
@@ -65,6 +66,12 @@ export default {
       yield put({
         type: 'changetestcasestate',
       });
+    },
+    *deleteTestCase({payload: id}, {call, put}){
+      yield call(testCaseService.deleteTestCase, id);
+      yield put({type: "reload"});
+      const messages  = yield select(state => state.i18n.messages);
+      message.info("success delete");
     },
     *add({values}, {call}){
       debugger;
