@@ -75,6 +75,11 @@ export default {
       debugger;
       const result = yield call(interfaceService.interfaceinfo, selectInterfaceKey);
       const interfaceInfo = result.data;
+      if(interfaceInfo && interfaceInfo.testCaseViews && interfaceInfo.testCaseViews.length > 0){
+        interfaceInfo.testCaseViews.map(testCase => {
+          testCase.key = testCase.interfaceTestCaseId;
+        })
+      }
       yield put({
         type: 'update',
         payload: interfaceInfo,
