@@ -41,7 +41,8 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
               operatorType={interfaces.operatorType}
               interfaceInfo={interfaces.interfaceInfo}
               moduleKey={interfaces.moduleKey}
-              displayInterParamDia={interfaces.displayInterParamDia}/>
+              displayInterParamDia={interfaces.displayInterParamDia}
+              displayTestCaseDia={interfaces.displayTestCaseDia}/>
       }
   );
   // module

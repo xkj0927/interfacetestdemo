@@ -11,7 +11,8 @@ export default {
     interfaceInfo: null,
     operatorType:"",
     moduleKey: 0,
-    displayInterParamDia: false
+    displayInterParamDia: false,
+    displayTestCaseDia: false
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
@@ -25,6 +26,11 @@ export default {
       debugger;
       state.interfaceInfo = interfaceInfo;
       state.displayInterParamDia = !state.displayInterParamDia;
+      let newState = state;
+      return newState;
+    },
+    changetestcasestate(state, {}) {
+      state.displayTestCaseDia = !state.displayTestCaseDia;
       let newState = state;
       return newState;
     },
@@ -53,6 +59,11 @@ export default {
       yield put({
         type: 'changestate',
         interfaceInfo: interfaceInfo,
+      });
+    },
+    *showTestCase({showTestCase}, {put}){
+      yield put({
+        type: 'changetestcasestate',
       });
     },
     *add({values}, {call}){
