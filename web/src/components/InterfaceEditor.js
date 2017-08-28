@@ -7,12 +7,14 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import style from "./InterfaceEditor.less"
 import InterfaceParamEditor from "./InterfaceParamEditor";
 import TestCaseDetailInfo from "./TestCaseDetailInfo";
+import TestCaseEditor from '../components/TestCaseEditor'
 
 const FormItem = Form.Item;
-export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia, form, intl}) => {
+export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia, displayEditTestCaseModal, currentTestCase, form, intl}) => {
     const {getFieldDecorator, validateFields} = form;
     let requestTabledata = [];
     let responseTabledata = [];
+
     const columns = [
         {
             title: "ParamName",
@@ -23,6 +25,30 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             dataIndex: 'paramType'
         },
     ];
+    const editTestCaseModalShow = () => {
+      dispatch({type:"interfaces/showEditTestCaseModal", payload:""});
+    };
+    const showEditTestCaseModal = (testCase) =>{
+      dispatch({type:"interfaces/showEditTestCaseModal", currentTestCase:testCase});
+    };
+
+    let TestCaseEditorForm = Form.create()(
+      (props) => {
+        return <TestCaseEditor form={props.form} dispatch={dispatch} currentTestCase={props.currentTestCase} interfaceId ={props.interfaceId}/>
+      }
+    );
+
+    const moduleTitle = currentTestCase? intl.formatMessage({id: "testCase.editModalTitle"}):intl.formatMessage({id: "testCase.addModalTitle"});
+    const editTestCaseModal = <Modal
+          title={moduleTitle}
+          visible={displayEditTestCaseModal}
+          onCancel={editTestCaseModalShow}
+          footer={null}
+          key={moduleKey}>
+
+      <TestCaseEditorForm currentTestCase={currentTestCase} interfaceId = {interfaceInfo?interfaceInfo.interfaceId:""}/>
+    </Modal>;
+
     const testCaseOperatorColumns = [
         {
             title: "InterfaceTestCaseId",
@@ -38,7 +64,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 return (
                     <Button.Group type="ghost">
                         <Button title="detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record)}><Icon type="info" /></Button>
-                        <Button title="edit"  size="small" ><Icon type="edit" /></Button>
+                        <Button title="edit"  size="small" onClick={showEditTestCaseModal.bind(this, record)}><Icon type="edit"/></Button>
                         <Popconfirm title="delete"
                                     onConfirm={
                                         () => {
@@ -102,7 +128,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         footer={null}>
         <ParamEditor />
     </Modal>;
-
     let TcDetailInfo = Form.create()(
         (props) => {
             return <TestCaseDetailInfo
@@ -118,7 +143,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         footer={null}>
         <TcDetailInfo />
     </Modal>;
-    debugger;
     if("info" == operatorType){
         debugger;
         requestTabledata = JSON.parse(interfaceInfo.requestParam);
@@ -257,14 +281,16 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
                     </div>
                     <div>
-                        <b>Interface TestCase List: </b>
+                        <b>Interface TestCase List: <Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
                     </div>
+
                     <div>
                         <Table columns={testCaseOperatorColumns} dataSource={interfaceInfo.testCaseViews} pagination={false}/>
                     </div>
                 </Form>
                 {addParamEditorModal}
                 {TestCaseDetailInfoModal}
+              {editTestCaseModal}
             </div>
         );
     }else if("add" == operatorType){

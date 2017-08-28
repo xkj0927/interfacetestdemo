@@ -13,7 +13,9 @@ export default {
     operatorType:"",
     moduleKey: 0,
     displayInterParamDia: false,
-    displayTestCaseDia: false
+    displayTestCaseDia: false,
+    displayEditTestCaseModal: false,
+    currentTestCase:"",
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
@@ -35,6 +37,33 @@ export default {
       let newState = state;
       return newState;
     },
+
+    displayEditModal(state,{currentTestCase}){
+      state.displayEditTestCaseModal = !state.displayEditTestCaseModal;
+      state.currentTestCase = currentTestCase;
+      state.moduleKey = Math.random();
+      return state;
+    },
+
+    modifyTestCase(state, {operateType, newTestCase}){
+      if('add' == operateType){
+        state.interfaceInfo.testCaseViews.push(newTestCase);
+      }else{
+        let cases = [];
+        state.interfaceInfo.testCaseViews.map((testCase) => {
+          if(testCase.interfaceTestCaseId == newTestCase.interfaceTestCaseId){
+            cases.push(newTestCase);
+          }else{
+            cases.push(testCase);
+          }
+        });
+        state.interfaceInfo.testCaseViews = cases;
+      }
+      state.displayEditTestCaseModal = false;
+      state.currentTestCase = "";
+      state.moduleKey = Math.random();
+      return state;
+    }
   },
   effects: {
     *info({selectModuleKey, selectInterfaceKey, operatorType}, {call, put}){
@@ -77,5 +106,19 @@ export default {
       debugger;
       const result = yield call(interfaceService.addinterfaces, values);
     },
+    *showEditTestCaseModal({currentTestCase:currentTestCase}, {put}){
+      yield put({type:"displayEditModal",currentTestCase:currentTestCase});
+    },
+    *editTestCase({testCase:testCase}, {call, put}){
+      debugger
+      const result = yield call(interfaceService.editTestCase, testCase);
+      yield put({type:"modifyTestCase",operateType:"edit", newTestCase:result.data});
+    },
+
+    *addTestCase({testCase:testCase}, {call, put}){
+      const result = yield call(interfaceService.addTestCase, testCase);
+      yield put({type:"modifyTestCase",operateType:"add", newTestCase:result.data});
+    },
+
   },
 };
