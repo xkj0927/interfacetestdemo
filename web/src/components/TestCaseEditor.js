@@ -54,7 +54,7 @@ export default injectIntl(({form, intl, dispatch, currentTestCase, interfaceId})
 
         <FormItem label={intl.formatMessage({id: "testCase.paramCase"}) + ":"} {...formLayout}>
           {getFieldDecorator("paramCase", {
-            initialValue: format(paramCase, false)
+            initialValue: paramCase?format(paramCase, false):""
           })(
             <TextArea rows={4} autosize={true}/>
           )}
@@ -62,9 +62,9 @@ export default injectIntl(({form, intl, dispatch, currentTestCase, interfaceId})
 
         <FormItem label={intl.formatMessage({id: "testCase.expectResult"}) + ":"} {...formLayout}>
           {getFieldDecorator("moduleName", {
-            initialValue: format(expectResult, false)
+            initialValue: expectResult?format(expectResult, false):""
           })(
-            <TextArea rows={4} autosize={true}/>
+            <TextArea rows={4} autosize={true} minRows={4}/>
           )}
         </FormItem>
 
