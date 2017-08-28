@@ -71,7 +71,11 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       });
       const testCaseNodes = (item.testCaseViews && item.testCaseViews.length > 0)? testCaseNode(item.testCaseViews, item) :[];
 
-      const interfaceName = <Popover content={<Button onClick={deleteHandle}><FormattedMessage id="interface.delete"/></Button>} trigger="click" placement="rightTop">
+      const interfaceName = <Popover content={<Popconfirm title={<FormattedMessage id="module.delete.confirmTitle"/>}
+                                                          onConfirm={deleteHandle}
+                                                          okText={<FormattedMessage id="module.delete.confirm"/>}
+                                                          cancelText={<FormattedMessage id="module.delete.cancel"/>}>
+            <Button><FormattedMessage id="interface.delete"/></Button></Popconfirm>} trigger="click" placement="rightTop">
         {item.interfaceName}
       </Popover>;
       return <TreeNode title={interfaceName} key={item.moduleId +"-"+ item.interfaceId} isLeaf={false}>

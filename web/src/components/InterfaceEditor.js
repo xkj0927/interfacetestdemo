@@ -284,8 +284,8 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             initialValue: run
                         })(
                             <Select>
-                                <Option value="true">yes</Option>
-                                <Option value="false">no</Option>
+                                <Select.Option value="true">yes</Select.Option>
+                                <Select.Option value="false">no</Select.Option>
                             </Select>
                         )}
                     </FormItem>
