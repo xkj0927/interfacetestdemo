@@ -109,7 +109,7 @@ public class InterfaceTestCaseController {
    */
   @RequestMapping(value = "interfacecase/interface/{faceId}", method = RequestMethod.GET)
   public ResponseResult getInterfaceCaseByFace(@PathVariable long faceId) {
-    List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(faceId);
+    List<InterfaceTestCase> testCases = testCaseService.findTestCaseByFaceOrderByCaseId(faceId);
     List<TestCaseView> testCaseViews = new ArrayList<>();
     testCases.forEach((testCase -> {
       testCaseViews.add(TestCaseView.transformViewToTestCase(testCase));
