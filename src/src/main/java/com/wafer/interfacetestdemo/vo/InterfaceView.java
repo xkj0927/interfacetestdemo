@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Interface;
+import com.wafer.interfacetestdemo.domain.RequestParam;
 import com.wafer.interfacetestdemo.utils.DateUtils;
 
 public class InterfaceView {
@@ -18,6 +19,8 @@ public class InterfaceView {
   private boolean isRun;
   private String createTime;
   private String updateTime;
+  
+  private List<RequestParam> requestParams;
   
   private List<TestCaseView> testCaseViews;
   
@@ -103,6 +106,14 @@ public class InterfaceView {
     this.updateTime = updateTime;
   }
   
+  public List<RequestParam> getRequestParams() {
+	return requestParams;
+  }
+
+  public void setRequestParams(List<RequestParam> requestParams) {
+	this.requestParams = requestParams;
+  }
+
   public List<TestCaseView> getTestCases() {
     return testCases;
   }
