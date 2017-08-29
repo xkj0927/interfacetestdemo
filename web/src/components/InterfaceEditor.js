@@ -17,12 +17,16 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
 
     const columns = [
         {
-            title: "ParamName",
+            title: "Param Name",
             dataIndex: 'paramName'
         },
         {
-            title: "ParamType",
+            title: "Param Type",
             dataIndex: 'paramType'
+        },
+        {
+            title: "Description",
+            dataIndex: 'description'
         },
     ];
     const editTestCaseModalShow = () => {
@@ -51,32 +55,27 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
 
     const testCaseOperatorColumns = [
         {
-            title: "InterfaceTestCaseId",
+            title: "Interface TestCase Id",
             dataIndex: 'interfaceTestCaseId'
         },
         {
-            title: "TestCaseName",
+            title: "TestCase Name",
             dataIndex: 'testCaseName'
         },
         {
-            title: "expectStatus",
+            title: "Expect Status",
             dataIndex: 'expectStatus'
         },
         {
-             title: "isRun",
-             dataIndex: 'run'
-        },
-        {
-            title: intl.formatMessage({id: "user.operation"}),
+            title: intl.formatMessage({id: "testCase.operation"}),
             render: (text, record) => {
                 return (
                     <Button.Group type="ghost">
-                        <Button title="detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record)}><Icon type="info" /></Button>
                         <Button title="edit"  size="small" onClick={showEditTestCaseModal.bind(this, record)}><Icon type="edit"/></Button>
                         <Popconfirm title="delete"
                                     onConfirm={
                                         () => {
-                                            dispatch({type: "interfaces/deleteTestCase", payload: record.testCaseId});
+                                            dispatch({type: "interfaces/deleteTestCase", payload: record});
                                         }
                                     }>
                             <Button title="delete" size="small"><Icon type="delete" /></Button>
@@ -88,11 +87,11 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     ];
     const testCaseColumns = [
         {
-            title: "InterfaceTestCaseId",
+            title: "Interface TestCase Id",
             dataIndex: 'interfaceTestCaseId'
         },
         {
-            title: "TestCaseName",
+            title: "TestCase Name",
             dataIndex: 'testCaseName'
         },
         {
@@ -100,9 +99,15 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             dataIndex: 'expectStatus'
         },
         {
-            title: "is Run",
-            dataIndex: 'run'
-        },
+            title: intl.formatMessage({id: "testCase.detailInfo"}),
+            render: (text, record) => {
+                return (
+                    <Button.Group type="ghost">
+                        <Button title="detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record)}><Icon type="info" /></Button>
+                    </Button.Group>
+                );
+            }
+        }
     ];
     const handleSubmit=(e)=> {
         e.preventDefault();
@@ -117,10 +122,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             }
             dispatch({type:"interfaces/add", payload:values});
         });
-        dispatch({type:"interfaces/info", selectModuleKey:moduleKey, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
-
     };
-
 
     const showInterfaceParamDialog =(param)=>{
         dispatch({type:"interfaces/showParam", interfaceInfo: interfaceInfo, fromWhere: param});
@@ -144,7 +146,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         title="Edit Interface Response Param"
     }
     const addParamEditorModal = <Modal
-        title="Edit Interface Request Param"
+        title={title}
         visible={displayInterParamDia}
         onCancel={showInterfaceParamDialog}
         footer={null}>
@@ -168,8 +170,12 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     </Modal>;
     if("info" == operatorType){
         debugger;
-        requestTabledata = JSON.parse(interfaceInfo.requestParam);
-        responseTabledata = JSON.parse(interfaceInfo.responseResult);
+        if(null != interfaceInfo.requestParam && "" != interfaceInfo.requestParam){
+            requestTabledata = JSON.parse(interfaceInfo.requestParam);
+        }
+        if(null != interfaceInfo.responseResult && "" != interfaceInfo.responseResult){
+            responseTabledata = JSON.parse(interfaceInfo.responseResult);
+        }
         let run = "";
         if(interfaceInfo.run){
             run = "yes";
@@ -184,34 +190,39 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                    () => {
                        dispatch({type: "interfaces/show", key: interfaceId, operatorType: "edit", interfaceInfo: interfaceInfo, selectModuleKey:interfaceInfo.moduleId});
                    }
-               }><Icon type="edit"/>Edit Interface</Button>
-               <div><b>interfaceName:</b>{interfaceName}</div>
-               <div><b>interfaceType:</b>{interfaceType}</div>
-               <div><b>interfaceUrl:</b>{interfaceUrl}</div>
-               <div><b>isRun:</b>{run}</div>
+               }><Icon type="edit"/>{intl.formatMessage({id: "interface.editInterface"})}</Button>
+               <div className={style.interfaceInfoDiv}><b>interfaceName:</b>{interfaceName}</div>
+               <div className={style.interfaceInfoDiv}><b>interfaceType:</b>{interfaceType}</div>
+               <div className={style.interfaceInfoDiv}><b>interfaceUrl:</b>{interfaceUrl}</div>
+               <div className={style.interfaceInfoDiv}><b>isRun:</b>{run}</div>
                <div>
-                   <b>Request Param: </b>
+                   <b>{intl.formatMessage({id: "interface.requestParam"})}</b>
                </div>
                <div>
                    <Table columns={columns} dataSource={requestTabledata} pagination={false} bordered/>
                </div>
                <div>
-                   <b>Response Param: </b>
+                   <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
                </div>
                <div>
                    <Table columns={columns} dataSource={responseTabledata} pagination={false} bordered/>
                </div>
                <div>
-                   <b>Interface TestCase List: </b>
+                   <b>{intl.formatMessage({id: "interface.testCaseList"})}</b>
                </div>
                <div>
                    <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} pagination={false}/>
                </div>
+               {TestCaseDetailInfoModal}
            </div>
         );
     }else if("edit" == operatorType){
-        requestTabledata = JSON.parse(interfaceInfo.requestParam);
-        responseTabledata = JSON.parse(interfaceInfo.responseResult);
+        if(null != interfaceInfo.requestParam && "" != interfaceInfo.requestParam){
+            requestTabledata = JSON.parse(interfaceInfo.requestParam);
+        }
+        if(null != interfaceInfo.responseResult && "" != interfaceInfo.responseResult){
+            responseTabledata = JSON.parse(interfaceInfo.responseResult);
+        }
         let run = "true";
         if(!interfaceInfo.run){
             run = "false";
@@ -220,7 +231,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         return (
             <div>
                 <FormItem>
-                    <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>Save Interface</Button>
+                    <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>{intl.formatMessage({id: "interface.saveInterface"})}</Button>
                 </FormItem>
                 <Form>
                     <FormItem  label={"interfaceName:"}>
@@ -228,11 +239,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             rules: [
                                 {
                                     required: true,
-                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                                },
-                                {
-                                    pattern: /^.{1,20}$/,
-                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceName"})
                                 }
                             ],
                             initialValue: interfaceName
@@ -262,12 +269,9 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             rules: [
                                 {
                                     required: true,
-                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
+                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceURL"})
                                 },
-                                {
-                                    pattern: /^.{1,20}$/,
-                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
-                                }
+
                             ],
                             initialValue: interfaceUrl
                         })(
@@ -290,21 +294,21 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         )}
                     </FormItem>
                     <div>
-                    <b>Request Param: </b>
-                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "requestParam")}><Icon type="save"/>Add Request Param</Button>
+                    <b>{intl.formatMessage({id: "interface.requestParam"})}</b>
+                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "requestParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addRequestParam"})}</Button>
                     </div>
                     <div>
                         <Table columns={columns} dataSource={requestTabledata} pagination={false}/>
                     </div>
                     <div>
-                        <b>Response Param: </b>
-                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "responseParam")}><Icon type="save"/>Add Response Param</Button>
+                        <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
+                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "responseParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addResponseParam"})}</Button>
                     </div>
                     <div>
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
                     </div>
                     <div>
-                        <b>Interface TestCase List: <Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
+                        <b>{intl.formatMessage({id: "interface.testCaseList"})}<Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
                     </div>
 
                     <div>
@@ -312,7 +316,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                     </div>
                 </Form>
                 {addParamEditorModal}
-                {TestCaseDetailInfoModal}
               {editTestCaseModal}
             </div>
         );
@@ -329,11 +332,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             rules: [
                                 {
                                     required: true,
-                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                                },
-                                {
-                                    pattern: /^.{1,20}$/,
-                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceName"})
                                 }
                             ],
                             initialValue: interfaceName
@@ -346,16 +345,16 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             rules: [
                                 {
                                     required: true,
-                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
                                 },
-                                {
-                                    pattern: /^.{1,20}$/,
-                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
-                                }
                             ],
-                            initialValue: interfaceType
+                            initialValue: "POST"
                         })(
-                            <Input type="text"/>
+                            <Select>
+                                <Option value="POST">POST</Option>
+                                <Option value="GET">GET</Option>
+                                <Option value="DELETE">DELETE</Option>
+                                <Option value="PUT">PUT</Option>
+                            </Select>
                         )}
                     </FormItem>
                     <FormItem  label={"interfaceUrl:"}>
@@ -363,11 +362,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             rules: [
                                 {
                                     required: true,
-                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                                },
-                                {
-                                    pattern: /^.{1,20}$/,
-                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceURL"})
                                 }
                             ],
                             initialValue: interfaceUrl
@@ -376,10 +371,19 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         )}
                     </FormItem>
                     <FormItem  label={"isRun:"}>
-                        <Select>
-                            <Option value="true">yes</Option>
-                            <Option value="false">no</Option>
-                        </Select>
+                        {getFieldDecorator("run", {
+                            rules: [
+                                {
+                                    required: true,
+                                },
+                            ],
+                            initialValue: "true"
+                        })(
+                            <Select>
+                                <Select.Option value="true">yes</Select.Option>
+                                <Select.Option value="false">no</Select.Option>
+                            </Select>
+                        )}
                     </FormItem>
                 </Form>
             </div>

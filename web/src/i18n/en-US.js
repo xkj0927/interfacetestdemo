@@ -91,6 +91,18 @@ const enUS = {
 
   "loading": "loading",
 
+  "module.warn.emptyInterfaceName": "Please input interface name",
+  "module.warn.emptyInterfaceURL": "Please input interface url",
+  "testCase.operation":"Operation",
+  "testCase.detailInfo" :"Detail Info",
+  "interface.editInterface":"Edit Interface",
+  "interface.saveInterface":"Save Interface",
+  "interface.addRequestParam":"Edit Request Param",
+  "interface.addResponseParam":"Edit Response Param",
+  "interface.requestParam":"Request Param:",
+  "interface.responseParam":"Response Param:",
+  "interface.testCaseList":"TestCase List:",
+
   "module.moduleName":"Module Name",
   "module.moduleName.emptyUserName":"Please ...",
   "module.save":"Save"

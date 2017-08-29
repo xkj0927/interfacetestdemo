@@ -91,6 +91,18 @@ const zhCN = {
 
   "loading": "加载中",
 
+  "module.warn.emptyInterfaceName": "请输入接口名",
+  "module.warn.emptyInterfaceURL": "请输入接口url",
+  "testCase.operation":"操作",
+  "testCase.detailInfo" :"详细信息",
+  "interface.editInterface":"编辑接口",
+  "interface.saveInterface":"保存接口",
+  "interface.addRequestParam":"编辑请求参数",
+  "interface.addResponseParam":"编辑响应参数",
+  "interface.requestParam":"请求参数:",
+  "interface.responseParam":"响应参数:",
+  "interface.testCaseList":"用例列表:",
+
   "module.moduleName":"模块名称",
   "module.moduleName.emptyUserName":"请输入模块名称",
   "module.save":"保存",

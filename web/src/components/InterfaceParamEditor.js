@@ -31,11 +31,15 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, fromWhere}) => 
     let fieldName = "";
     if("requestParam" == fromWhere){
         title = "interface Request Param:";
-        textValue = interfaceInfo.requestParam;
+        if(null != interfaceInfo.requestParam && "" != interfaceInfo.requestParam){
+            textValue = interfaceInfo.requestParam;
+        }
         fieldName = "interfaceRequestParam";
     }else if("responseParam" == fromWhere){
         title = "interface Response Param:";
-        textValue = interfaceInfo.responseResult;
+        if(null != interfaceInfo.responseResult && "" != interfaceInfo.responseResult){
+            textValue = interfaceInfo.responseResult;
+        }
         fieldName = "interfaceResponseParam";
     }
     if(null != interfaceInfo.requestParam){
