@@ -68,6 +68,18 @@ export default {
       state.currentTestCase = "";
       state.moduleKey = Math.random();
       return state;
+    },
+
+    // 增加一条新的参数列
+    addParam(state, {paramValue:paramValue}){
+      if(state.interfaceInfo.paramValues){
+        state.interfaceInfo.paramValues.push(paramValue);
+      }else {
+        state.interfaceInfo.paramValues = [];
+        state.interfaceInfo.paramValues.push(paramValue);
+      }
+      state.moduleKey = Math.random();
+      return state;
     }
   },
   effects: {
@@ -139,6 +151,23 @@ export default {
       const result = yield call(interfaceService.addTestCase, testCase);
       yield put({type:"modifyTestCase",operateType:"add", newTestCase:result.data});
     },
+    *addInterfaceParam({paramValue:paramValue}, {put}){
+      yield put({type:"addParam",paramValue:paramValue});
+    },
+    // 新增一个参数
+    *addRequestParam({interfaceId: interfaceId,requestParam:requestParam}, {call, put}){
+      const {data} = yield call(interfaceService.addInterfaceRequestParam, interfaceId, requestParam);
+      yield put({type:"addParam",requestParam:data});
+    },
 
+    *addResponseParam({interfaceId: interfaceId,responseParam:responseParam}, {call, put}){
+      // const {data} = yield call(interfaceService.addTestCase, interfaceId, responseParam);
+      // yield put({type:"addParam",requestParam:data});
+    },
+
+    *deleteRequestParam({interfaceId: interfaceId, requestParam:requestParam}, {call, put}){
+      const {data} = yield call(interfaceService.deleteRequestParam, interfaceId, requestParam);
+      yield put({type:"addParam",requestParam:data});
+    },
   },
 };

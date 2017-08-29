@@ -12,23 +12,49 @@ import TestCaseEditor from '../components/TestCaseEditor'
 const FormItem = Form.Item;
 export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia, displayEditTestCaseModal, currentTestCase, testCaseDetailInfo, fromWhere, form, intl}) => {
     const {getFieldDecorator, validateFields} = form;
-    let requestTabledata = [];
+    let requestTableData = [];
     let responseTabledata = [];
 
     const columns = [
         {
-            title: "Param Name",
+            title: intl.formatMessage({id: "interface.request.paramName"}),
             dataIndex: 'paramName'
         },
         {
-            title: "Param Type",
+            title: intl.formatMessage({id: "interface.request.paramType"}),
             dataIndex: 'paramType'
         },
         {
-            title: "Description",
+            title: intl.formatMessage({id: "interface.request.paramDesc"}),
             dataIndex: 'description'
         },
+      {
+        title: "",
+        render: (text, record) => {
+          return (
+            <Button.Group type="ghost">
+              <Button title="edit"  size="small" onClick={showEditInterfaceParamModal.bind(this, record)}><Icon type="edit"/></Button>
+              <Popconfirm title={intl.formatMessage({id: "interface.request.deleteConfirm"})}
+                          onConfirm={
+                            () => {
+                              const {interfaceId} = interfaceInfo;
+                              dispatch({type: "interfaces/deleteRequestParam", interfaceId: interfaceId, payload: record});
+                            }
+                          }>
+                <Button title="delete" size="small"><Icon type="delete" /></Button>
+              </Popconfirm>
+            </Button.Group>
+          );
+        }
+      }
     ];
+
+    const showEditInterfaceParamModal = (param) =>{
+      const {interfaceId} = interfaceInfo;
+      debugger
+      dispatch({type:"interfaces/showParam", interfaceId: interfaceId, fromWhere: param});
+    };
+
     const editTestCaseModalShow = () => {
       dispatch({type:"interfaces/showEditTestCaseModal", payload:""});
     };
@@ -118,6 +144,11 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
 
     const showInterfaceParamDialog =(param)=>{
         dispatch({type:"interfaces/showParam", interfaceInfo: interfaceInfo, fromWhere: param});
+      // 给参数Table上增加一行记录
+      // const paramValue = {
+      //   "paramName":<></>
+      // };
+      // dispatch({type:"interfaces/addInterfaceParam", paramValue:paramValue});
     };
     let ParamEditor = Form.create()(
         (props) => {
@@ -133,9 +164,9 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     };
     let title = "";
     if("requestParam" == fromWhere){
-        title="Edit Interface Request Param"
+        title=intl.formatMessage({id: "interface.request.title"})
     }else if("responseParam" == fromWhere){
-        title="Edit Interface Response Param"
+        title=intl.formatMessage({id: "interface.response.title"})
     }
     const addParamEditorModal = <Modal
         title={title}
@@ -163,7 +194,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     if("info" == operatorType){
         debugger;
         if(null != interfaceInfo.requestParam && "" != interfaceInfo.requestParam){
-            requestTabledata = JSON.parse(interfaceInfo.requestParam);
+            requestTableData = JSON.parse(interfaceInfo.requestParam);
         }
         if(null != interfaceInfo.responseResult && "" != interfaceInfo.responseResult){
             responseTabledata = JSON.parse(interfaceInfo.responseResult);
@@ -191,7 +222,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                    <b>{intl.formatMessage({id: "interface.requestParam"})}</b>
                </div>
                <div>
-                   <Table columns={columns} dataSource={requestTabledata} pagination={false} bordered/>
+                   <Table columns={columns} dataSource={requestTableData} pagination={false} bordered/>
                </div>
                <div className={style.interfaceInfoDiv}>
                    <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
@@ -210,7 +241,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         );
     }else if("edit" == operatorType){
         if(null != interfaceInfo.requestParam && "" != interfaceInfo.requestParam){
-            requestTabledata = JSON.parse(interfaceInfo.requestParam);
+            requestTableData = JSON.parse(interfaceInfo.requestParam);
         }
         if(null != interfaceInfo.responseResult && "" != interfaceInfo.responseResult){
             responseTabledata = JSON.parse(interfaceInfo.responseResult);
@@ -290,7 +321,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "requestParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addRequestParam"})}</Button>
                     </div>
                     <div>
-                        <Table columns={columns} dataSource={requestTabledata} pagination={false}/>
+                        <Table columns={columns} dataSource={requestTableData} pagination={false}/>
                     </div>
                     <div>
                         <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
