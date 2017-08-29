@@ -91,6 +91,9 @@ const enUS = {
 
   "loading": "loading",
 
+  "module.warn.emptyInterfaceName": "Please input interface name",
+  "module.warn.emptyInterfaceURL": "Please input interface url",
+
   "module.moduleName":"Module Name",
   "module.moduleName.emptyUserName":"Please ...",
   "module.save":"Save"

@@ -91,6 +91,9 @@ const zhCN = {
 
   "loading": "加载中",
 
+  "module.warn.emptyInterfaceName": "请输入接口名",
+  "module.warn.emptyInterfaceURL": "请输入接口url",
+
   "module.moduleName":"模块名称",
   "module.moduleName.emptyUserName":"请输入模块名称",
   "module.save":"保存",
