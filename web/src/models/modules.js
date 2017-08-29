@@ -134,8 +134,16 @@ export default {
       });
       state.flag = !state.flag;
       return state;
-    }
+    },
 
+    duplicateInterface(state, {moduleId: moduleId, newInterface:newInterface}){
+      state.modules.map(module => {
+        if(module.moduleId == moduleId){
+          module.interfaceViews.push(newInterface);
+        }
+      });
+      return state;
+    }
   },
   effects: {
     *reload({projectId}, { select, call, put}) {
@@ -290,6 +298,11 @@ export default {
     *testCaseList({moduleId : moduleId, interfaceId: interfaceId}, {call, put}){
       const result = yield call(moduleService.testCaseList, interfaceId);
       yield put({ type: 'updateTestCase' , moduleId:moduleId, interfaceId: interfaceId, testCases: result.data});
+    },
+
+    *duplicate({moduleId : moduleId, interfaceId: interfaceId}, {call, put}){
+      const result = yield call(moduleService.duplicateInterface, interfaceId);
+      yield put({ type: 'duplicateInterface', moduleId:moduleId, newInterface: result.data});
     },
   },
   subscriptions: {

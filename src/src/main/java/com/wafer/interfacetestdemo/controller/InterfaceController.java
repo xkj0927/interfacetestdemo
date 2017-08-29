@@ -126,4 +126,46 @@ public class InterfaceController {
     return ResponseResult.success(faceView);
   }
   
+  /**
+   * 通过interfaceId查询一个【接口】的详情
+   * @param interfaceId
+   * @return
+   */
+  @RequestMapping(value = "interface/{interfaceId}", method = RequestMethod.POST)
+  public ResponseResult duplicateInterface(@PathVariable long interfaceId){
+    Interface face= interfaceService.findInterfaceById(interfaceId);
+    InterfaceView faceView = null;
+    if(null != face){
+      Interface newFace = new Interface();
+      newFace.setInterfaceType(face.getInterfaceType());
+      newFace.setInterfaceUrl(face.getInterfaceUrl());
+      newFace.setIsRun(face.getIsRun());
+      newFace.setModuleId(face.getModuleId());
+      newFace.setRequestParam(face.getRequestParam());
+      newFace.setResponseResult(face.getResponseResult());
+      newFace.setInterfaceName("Copy of "+face.getInterfaceName());
+      newFace.setCreateTime(new Date());
+      newFace = interfaceService.saveInterface(newFace);
+      
+      final long newInterfaceId = newFace.getInterfaceId();
+      // 复制TestCase
+      List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(interfaceId);
+      if(testCases.size() > 0){
+        testCases.forEach(testCase -> {
+          InterfaceTestCase fCase = new InterfaceTestCase();
+          fCase.setExpectResult(testCase.getExpectResult());
+          fCase.setExpectStatus(testCase.getExpectStatus());
+          fCase.setInterfaceId(newInterfaceId);
+          fCase.setIsRun(testCase.getIsRun());
+          fCase.setParamCase(testCase.getParamCase());
+          fCase.setTestCaseName("Copy Of "+testCase.getTestCaseName());
+          fCase.setCreateTime(new Date());
+          testCaseService.saveInterfaceCase(fCase);
+        });
+      }
+      faceView = InterfaceView.transformInterfaceToView(newFace);
+    }
+    return ResponseResult.success(faceView);
+  }
+  
 }
