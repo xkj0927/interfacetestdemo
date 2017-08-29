@@ -102,6 +102,10 @@ const enUS = {
   "interface.requestParam":"Request Param:",
   "interface.responseParam":"Response Param:",
   "interface.testCaseList":"TestCase List:",
+  "interface.interfaceName":"Interface Name:",
+  "interface.interfaceType":"Interface Type:",
+  "interface.interfaceURL":"Interface URL:",
+  "interface.interfaceRun":"Is Run:",
 
   "module.moduleName":"Module Name",
   "module.moduleName.emptyUserName":"Please ...",
