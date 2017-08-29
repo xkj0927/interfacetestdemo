@@ -43,7 +43,7 @@ public class RequestParamController {
 		
 	  RP.setRequestParamName(requestParam.getRequestParamName());
 	  RP.setRequestParamType(requestParam.getRequestParamType());
-	  RP.setRequestParamDescrption(requestParam.getRequestParamDescrption());
+	  RP.setRequestParamDescription(requestParam.getRequestParamDescription());
 	  
 	  requestParamService.saveRequestParam(RP);
 	  return ResponseResult.success();
@@ -55,7 +55,7 @@ public class RequestParamController {
 		
 	  RP.setRequestParamName(requestParam.getRequestParamName());
 	  RP.setRequestParamType(requestParam.getRequestParamType());
-	  RP.setRequestParamDescrption(requestParam.getRequestParamDescrption());
+	  RP.setRequestParamDescription(requestParam.getRequestParamDescription());
 	  RP.setInterfaceId(requestParam.getInterfaceId());
 	  RP.setCreateTime(new Date());
 	  
