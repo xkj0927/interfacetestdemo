@@ -99,6 +99,18 @@ CREATE TABLE `ps_interface_testcase` (
   CONSTRAINT `fk_interface_id` FOREIGN KEY (`interface_id`) REFERENCES `ps_interface` (`interface_id`) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `ps_request_param`(  
+  `request_param_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `request_param_name` VARCHAR(125) NOT NULL COMMENT '参数名',
+  `request_param_type` VARCHAR(64) NOT NULL COMMENT '参数类型',
+  `request_param_descrption` VARCHAR(256) NOT NULL COMMENT '请求描述',
+  `interface_id` INT(11) NOT NULL COMMENT '接口Id',
+  `create_time` DATETIME NOT NULL COMMENT '创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`request_param_id`),
+  CONSTRAINT `fk_requestparam_iid` FOREIGN KEY (`interface_id`) REFERENCES `interfacetestdemo`.`ps_interface`(`interface_id`) ON DELETE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 -- admin/admin
 INSERT INTO `ps_user` (`user_id`, `user_name`, `password`, `email`, `status`, `user_authority`, `latest_login_time`, `create_time`, `update_time`) VALUES('1','admin','$2a$10$P7pwwuhkAHPH/omhVd46GuYATgaX7CExUrf0HRrRaf42CU.F22WGq','admin','0','0','2017-08-23 09:04:00','2017-08-18 09:32:24','2017-08-22 16:55:08');
 INSERT INTO `ps_dept` (`dept_id`, `dept_name`, `dept_code`, `dept_type`, `create_time`, `update_time`) VALUES('1','全部项目','QBXM',1,'2017-08-22 14:28:04','2017-08-22 14:28:04');
