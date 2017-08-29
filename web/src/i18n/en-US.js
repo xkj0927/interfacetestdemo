@@ -93,6 +93,7 @@ const enUS = {
 
   "module.warn.emptyInterfaceName": "Please input interface name",
   "module.warn.emptyInterfaceURL": "Please input interface url",
+  "testcase.operation":"Operation",
 
   "module.moduleName":"Module Name",
   "module.moduleName.emptyUserName":"Please ...",

@@ -93,6 +93,7 @@ const zhCN = {
 
   "module.warn.emptyInterfaceName": "请输入接口名",
   "module.warn.emptyInterfaceURL": "请输入接口url",
+  "testcase.operation":"操作",
 
   "module.moduleName":"模块名称",
   "module.moduleName.emptyUserName":"请输入模块名称",
