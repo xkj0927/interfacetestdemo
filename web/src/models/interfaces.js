@@ -18,6 +18,8 @@ export default {
     fromWhere:"" ,
     displayEditTestCaseModal: false,
     currentTestCase:"",
+    reqOrResp:"",
+    currentReqParam:"",
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
@@ -28,11 +30,12 @@ export default {
       let newState = state;
       return newState;
     },
-    changestate(state, { interfaceInfo: interfaceInfo, fromWhere: fromWhere}) {
-      debugger;
-      state.interfaceInfo = interfaceInfo;
+    // 是否展示requestPram ResponseParam
+    changeParamModalState(state, { interfaceId: interfaceId, currentReqParam: currentReqParam, reqOrResp: reqOrResp}) {
+      state.currentReqParam = currentReqParam;
       state.displayInterParamDia = !state.displayInterParamDia;
-      state.fromWhere =  fromWhere;
+      state.reqOrResp =  reqOrResp;
+      state.moduleKey = Math.random();
       let newState = state;
       return newState;
     },
@@ -79,6 +82,14 @@ export default {
         state.interfaceInfo.paramValues.push(paramValue);
       }
       state.moduleKey = Math.random();
+      state.displayInterParamDia = !state.displayInterParamDia;
+      return state;
+    },
+
+    updateInterfaceInfo(state,{interfaceInfo}){
+      state.interfaceInfo = interfaceInfo;
+      state.moduleKey = Math.random();
+      state.displayInterParamDia = !state.displayInterParamDia;
       return state;
     }
   },
@@ -107,11 +118,12 @@ export default {
         moduleKey: selectModuleKey
       });
     },
-    *showParam({interfaceInfo, fromWhere}, {put}){
+    *showParam({interfaceId: interfaceId, currentReqParam: currentReqParam, reqOrResp: reqOrResp}, {put}){
       yield put({
-        type: 'changestate',
-        interfaceInfo: interfaceInfo,
-        fromWhere: fromWhere
+        type: 'changeParamModalState',
+        currentReqParam: currentReqParam,
+        interfaceId: interfaceId,
+        reqOrResp: reqOrResp
       });
     },
     *showTestCase({record: testCase}, {put}){
@@ -155,14 +167,22 @@ export default {
       yield put({type:"addParam",paramValue:paramValue});
     },
     // 新增一个参数
-    *addRequestParam({interfaceId: interfaceId,requestParam:requestParam}, {call, put}){
-      const {data} = yield call(interfaceService.addInterfaceRequestParam, interfaceId, requestParam);
+    *addRequestParam({requestParam:requestParam}, {call, put}){
+      const {data} = yield call(interfaceService.addInterfaceRequestParam, requestParam);
       yield put({type:"addParam",requestParam:data});
     },
 
-    *addResponseParam({interfaceId: interfaceId,responseParam:responseParam}, {call, put}){
-      // const {data} = yield call(interfaceService.addTestCase, interfaceId, responseParam);
-      // yield put({type:"addParam",requestParam:data});
+    *editRequestParam({requestParam:requestParam}, {call, put}){
+      const {data} = yield call(interfaceService.editInterfaceRequestParam, requestParam);
+      yield put({type:"addParam",requestParam:data});
+    },
+
+    *addResponseParam({interfaceView:interfaceView}, {call, put}){
+      const face = {"interfaceId":interfaceView.interfaceId,"interfaceName":interfaceView.interfaceName,"interfaceType":interfaceView.interfaceType,
+        "interfaceUrl":interfaceView.interfaceUrl,"moduleId":interfaceView.moduleId,"requestParam":interfaceView.requestParam,
+        "responseResult":"["+JSON.stringify(interfaceView.responseResult)+"]","run":interfaceView.run};
+      yield call(interfaceService.editinterfaces, face);
+      yield put({type:"updateInterfaceInfo",interfaceView});
     },
 
     *deleteRequestParam({interfaceId: interfaceId, requestParam:requestParam}, {call, put}){
