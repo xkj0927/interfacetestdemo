@@ -67,11 +67,10 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             dataIndex: 'expectStatus'
         },
         {
-            title: intl.formatMessage({id: "testcase.operation"}),
+            title: intl.formatMessage({id: "testCase.operation"}),
             render: (text, record) => {
                 return (
                     <Button.Group type="ghost">
-                        <Button title="detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record)}><Icon type="info" /></Button>
                         <Button title="edit"  size="small" onClick={showEditTestCaseModal.bind(this, record)}><Icon type="edit"/></Button>
                         <Popconfirm title="delete"
                                     onConfirm={
@@ -100,7 +99,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             dataIndex: 'expectStatus'
         },
         {
-            title: intl.formatMessage({id: "testcase.operation"}),
+            title: intl.formatMessage({id: "testCase.detailInfo"}),
             render: (text, record) => {
                 return (
                     <Button.Group type="ghost">
@@ -191,7 +190,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                    () => {
                        dispatch({type: "interfaces/show", key: interfaceId, operatorType: "edit", interfaceInfo: interfaceInfo, selectModuleKey:interfaceInfo.moduleId});
                    }
-               }><Icon type="edit"/>Edit Interface</Button>
+               }><Icon type="edit"/>{intl.formatMessage({id: "interface.editInterface"})}</Button>
                <div><b>interfaceName:</b>{interfaceName}</div>
                <div><b>interfaceType:</b>{interfaceType}</div>
                <div><b>interfaceUrl:</b>{interfaceUrl}</div>
@@ -214,6 +213,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                <div>
                    <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} pagination={false}/>
                </div>
+               {TestCaseDetailInfoModal}
            </div>
         );
     }else if("edit" == operatorType){
@@ -231,7 +231,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         return (
             <div>
                 <FormItem>
-                    <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>Save Interface</Button>
+                    <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>{intl.formatMessage({id: "interface.saveInterface"})}</Button>
                 </FormItem>
                 <Form>
                     <FormItem  label={"interfaceName:"}>
@@ -294,15 +294,15 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         )}
                     </FormItem>
                     <div>
-                    <b>Request Param: </b>
-                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "requestParam")}><Icon type="save"/>Add Request Param</Button>
+                    <b>{intl.formatMessage({id: "interface.requestParam"})}</b>
+                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "requestParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addRequestParam"})}</Button>
                     </div>
                     <div>
                         <Table columns={columns} dataSource={requestTabledata} pagination={false}/>
                     </div>
                     <div>
-                        <b>Response Param: </b>
-                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "responseParam")}><Icon type="save"/>Add Response Param</Button>
+                        <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
+                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "responseParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addResponseParam"})}</Button>
                     </div>
                     <div>
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
@@ -316,7 +316,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                     </div>
                 </Form>
                 {addParamEditorModal}
-                {TestCaseDetailInfoModal}
               {editTestCaseModal}
             </div>
         );
