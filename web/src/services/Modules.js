@@ -57,3 +57,9 @@ export function testCaseList(interfaceId) {
   });
 }
 
+export function duplicateInterface(interfaceId) {
+  return request(`api/v1/interface/${interfaceId}`, {
+    method: 'POST'
+  });
+}
+
