@@ -26,7 +26,7 @@ public class RequestParamService {
 		return requestParamRepository.findRequestParamByRequestParamId(requestParamId);
 	}
 
-	public void saveRequestParam(RequestParam rP) {
-		requestParamRepository.save(rP);
+	public RequestParam saveRequestParam(RequestParam rP) {
+		return requestParamRepository.save(rP);
 	}
 }

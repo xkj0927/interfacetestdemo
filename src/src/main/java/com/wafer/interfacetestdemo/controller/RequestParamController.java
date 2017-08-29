@@ -59,7 +59,7 @@ public class RequestParamController {
 	  RP.setInterfaceId(requestParam.getInterfaceId());
 	  RP.setCreateTime(new Date());
 	  
-	  requestParamService.saveRequestParam(RP);
-	  return ResponseResult.success();
+	  RequestParam currentRequestParam = requestParamService.saveRequestParam(RP);
+	  return ResponseResult.success(currentRequestParam);
 	}
 }
