@@ -122,6 +122,7 @@ const zhCN = {
   "module.editModule.modal":"编辑模块",
   "module.addModule.modal":"添加模块",
   "interface.delete":"删除",
+  "interface.duplicate":"复制",
   "testCase.testCaseName":"用例名称",
   "testCase.testCaseName.emptyTestCase":"用例名称不能为空",
   "testCase.paramCase":"用例参数",
@@ -130,6 +131,20 @@ const zhCN = {
   "testCase.running":"是否执行",
   "testCase.editModalTitle":"修改测试用例",
   "testCase.addModalTitle":"新增测试用例",
+  "interface.request.title":"编辑接口参数",
+  "interface.request.paramName":"参数名称",
+  "interface.request.paramName.empty":"参数名称不能为空",
+  "interface.request.paramType":"参数类型",
+  "interface.request.paramType.empty":"参数类型不能为空",
+  "interface.request.paramDesc":"描述",
+  "interface.request.deleteConfirm":"确定要删除吗？",
+
+  "interface.response.title":"编辑接口返回值",
+  "interface.response.paramName":"返回值名称",
+  "interface.response.paramName.empty":"返回值名称不能为空",
+  "interface.response.paramType":"返回值类型",
+  "interface.response.paramType.empty":"返回值类型不能为空",
+  "interface.response.paramDesc":"描述",
 
 };
 

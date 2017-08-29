@@ -46,3 +46,24 @@ export function editTestCase(testCase) {
     body: JSON.stringify(testCase)
   });
 }
+
+export function addInterfaceRequestParam(requestParam) {
+  return request(`api/v1/interface/requestParam`, {
+    method: 'POST',
+    body: JSON.stringify(requestParam)
+  });
+}
+
+export function editInterfaceRequestParam(requestParam) {
+  return request(`api/v1/interface/requestParam`, {
+    method: 'PUT',
+    body: JSON.stringify(requestParam)
+  });
+}
+
+export function deleteRequestParam(interfaceId, requestParam) {
+  return request(`api/v1/interfacecase`, {
+    method: 'POST',
+    body: JSON.stringify(testCase)
+  });
+}
