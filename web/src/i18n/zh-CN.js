@@ -101,6 +101,7 @@ const zhCN = {
   "interface.addResponseParam":"编辑响应参数",
   "interface.requestParam":"请求参数:",
   "interface.responseParam":"响应参数:",
+  "interface.testCaseList":"用例列表:",
 
   "module.moduleName":"模块名称",
   "module.moduleName.emptyUserName":"请输入模块名称",

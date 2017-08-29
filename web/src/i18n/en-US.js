@@ -101,6 +101,7 @@ const enUS = {
   "interface.addResponseParam":"Edit Response Param",
   "interface.requestParam":"Request Param:",
   "interface.responseParam":"Response Param:",
+  "interface.testCaseList":"TestCase List:",
 
   "module.moduleName":"Module Name",
   "module.moduleName.emptyUserName":"Please ...",

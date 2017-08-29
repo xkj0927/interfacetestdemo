@@ -191,24 +191,24 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                        dispatch({type: "interfaces/show", key: interfaceId, operatorType: "edit", interfaceInfo: interfaceInfo, selectModuleKey:interfaceInfo.moduleId});
                    }
                }><Icon type="edit"/>{intl.formatMessage({id: "interface.editInterface"})}</Button>
-               <div><b>interfaceName:</b>{interfaceName}</div>
-               <div><b>interfaceType:</b>{interfaceType}</div>
-               <div><b>interfaceUrl:</b>{interfaceUrl}</div>
-               <div><b>isRun:</b>{run}</div>
+               <div className={style.interfaceInfoDiv}><b>interfaceName:</b>{interfaceName}</div>
+               <div className={style.interfaceInfoDiv}><b>interfaceType:</b>{interfaceType}</div>
+               <div className={style.interfaceInfoDiv}><b>interfaceUrl:</b>{interfaceUrl}</div>
+               <div className={style.interfaceInfoDiv}><b>isRun:</b>{run}</div>
                <div>
-                   <b>Request Param: </b>
+                   <b>{intl.formatMessage({id: "interface.requestParam"})}</b>
                </div>
                <div>
                    <Table columns={columns} dataSource={requestTabledata} pagination={false}/>
                </div>
                <div>
-                   <b>Response Param: </b>
+                   <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
                </div>
                <div>
                    <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
                </div>
                <div>
-                   <b>Interface TestCase List: </b>
+                   <b>{intl.formatMessage({id: "interface.testCaseList"})}</b>
                </div>
                <div>
                    <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} pagination={false}/>
@@ -308,7 +308,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
                     </div>
                     <div>
-                        <b>Interface TestCase List: <Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
+                        <b>{intl.formatMessage({id: "interface.testCaseList"})}<Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
                     </div>
 
                     <div>
