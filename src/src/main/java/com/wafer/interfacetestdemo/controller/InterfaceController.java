@@ -91,7 +91,7 @@ public class InterfaceController {
    */
   @RequestMapping(value = "interface/module/{moduleId}", method = RequestMethod.GET)
   public ResponseResult getInterfaceByModule(@PathVariable long moduleId){
-    List<Interface> interfaces = interfaceService.findInterfaceByModule(moduleId);
+    List<Interface> interfaces = interfaceService.findInterfaceByModuleOrderBy(moduleId);
     List<InterfaceView> faceViews = new ArrayList<>();
     interfaces.parallelStream().forEach((face) -> faceViews.add(InterfaceView.transformInterfaceToView(face)));
     return ResponseResult.success(faceViews);

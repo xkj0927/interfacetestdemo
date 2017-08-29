@@ -87,6 +87,7 @@ DROP TABLE IF EXISTS `ps_interface_testcase`;
 CREATE TABLE `ps_interface_testcase` (
   `interface_testcase_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `interface_id` INT(11) NOT NULL COMMENT '接口id',
+  `test_case_name` varchar(255) COMMENT '测试用例名称',
   `param_case` TEXT COMMENT '接口入参',
   `expect_result` TEXT COMMENT '期望结果',
   `expect_status` INT(11) NOT NULL COMMENT '期望状态',

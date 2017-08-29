@@ -54,6 +54,16 @@ public class InterfaceTestCaseService {
   public List<InterfaceTestCase> findInterfaceTestCaseByFace(long faceId) {
     return interfaceCaseRepository.findByInterfaceId(faceId);
   }
+  
+  /**
+   * 通过interfaceId 查询一个接口下的所有TestCase 默认排序
+   * 
+   * @param faceId
+   * @return
+   */
+  public List<InterfaceTestCase> findTestCaseByFaceOrderByCaseId(long faceId) {
+    return interfaceCaseRepository.findByInterfaceIdOrderByInterfaceTestCaseIdDesc(faceId);
+  }
 
   /**
    * 通过interfaceId 查询一个接口下的所有 run 或者 not run的TestCase
