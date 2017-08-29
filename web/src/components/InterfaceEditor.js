@@ -63,10 +63,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             dataIndex: 'expectStatus'
         },
         {
-             title: "isRun",
-             dataIndex: 'run'
-        },
-        {
             title: intl.formatMessage({id: "user.operation"}),
             render: (text, record) => {
                 return (
@@ -76,7 +72,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         <Popconfirm title="delete"
                                     onConfirm={
                                         () => {
-                                            dispatch({type: "interfaces/deleteTestCase", payload: record.testCaseId});
+                                            dispatch({type: "interfaces/deleteTestCase", payload: record});
                                         }
                                     }>
                             <Button title="delete" size="small"><Icon type="delete" /></Button>
@@ -99,10 +95,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             title: "Expect Status",
             dataIndex: 'expectStatus'
         },
-        {
-            title: "is Run",
-            dataIndex: 'run'
-        },
     ];
     const handleSubmit=(e)=> {
         e.preventDefault();
@@ -120,7 +112,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         dispatch({type:"interfaces/info", selectModuleKey:moduleKey, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
 
     };
-
 
     const showInterfaceParamDialog =(param)=>{
         dispatch({type:"interfaces/showParam", interfaceInfo: interfaceInfo, fromWhere: param});
@@ -168,8 +159,12 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     </Modal>;
     if("info" == operatorType){
         debugger;
-        requestTabledata = JSON.parse(interfaceInfo.requestParam);
-        responseTabledata = JSON.parse(interfaceInfo.responseResult);
+        if(null != interfaceInfo.requestParam && "" != interfaceInfo.requestParam){
+            requestTabledata = JSON.parse(interfaceInfo.requestParam);
+        }
+        if(null != interfaceInfo.responseResult && "" != interfaceInfo.responseResult){
+            responseTabledata = JSON.parse(interfaceInfo.responseResult);
+        }
         let run = "";
         if(interfaceInfo.run){
             run = "yes";
@@ -210,8 +205,12 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
            </div>
         );
     }else if("edit" == operatorType){
-        requestTabledata = JSON.parse(interfaceInfo.requestParam);
-        responseTabledata = JSON.parse(interfaceInfo.responseResult);
+        if(null != interfaceInfo.requestParam && "" != interfaceInfo.requestParam){
+            requestTabledata = JSON.parse(interfaceInfo.requestParam);
+        }
+        if(null != interfaceInfo.responseResult && "" != interfaceInfo.responseResult){
+            responseTabledata = JSON.parse(interfaceInfo.responseResult);
+        }
         let run = "true";
         if(!interfaceInfo.run){
             run = "false";
@@ -228,11 +227,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             rules: [
                                 {
                                     required: true,
-                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                                },
-                                {
-                                    pattern: /^.{1,20}$/,
-                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceName"})
                                 }
                             ],
                             initialValue: interfaceName
@@ -262,12 +257,9 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             rules: [
                                 {
                                     required: true,
-                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
+                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceURL"})
                                 },
-                                {
-                                    pattern: /^.{1,20}$/,
-                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
-                                }
+
                             ],
                             initialValue: interfaceUrl
                         })(
@@ -329,11 +321,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             rules: [
                                 {
                                     required: true,
-                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                                },
-                                {
-                                    pattern: /^.{1,20}$/,
-                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceName"})
                                 }
                             ],
                             initialValue: interfaceName
@@ -363,11 +351,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             rules: [
                                 {
                                     required: true,
-                                    message: intl.formatMessage({id: "user.warn.emptyUserName"})
-                                },
-                                {
-                                    pattern: /^.{1,20}$/,
-                                    message: intl.formatMessage({id: "user.warn.tooManyChar20"})
+                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceURL"})
                                 }
                             ],
                             initialValue: interfaceUrl
