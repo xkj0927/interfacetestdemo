@@ -244,7 +244,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             ],
                             initialValue: interfaceType
                         })(
-                            <Select defaultValue={interfaceType}>
+                            <Select>
                                 <Option value="POST">POST</Option>
                                 <Option value="GET">GET</Option>
                                 <Option value="DELETE">DELETE</Option>
@@ -275,9 +275,9 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             ],
                             initialValue: run
                         })(
-                            <Select defaultValue={run}>
-                                <Option value="true">yes</Option>
-                                <Option value="false">no</Option>
+                            <Select>
+                                <Select.Option value="true">yes</Select.Option>
+                                <Select.Option value="false">no</Select.Option>
                             </Select>
                         )}
                     </FormItem>
@@ -296,7 +296,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
                     </div>
                     <div>
-                        <b>Interface TestCase List: <Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
+                        <b>Interface TestCase List: <Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
                     </div>
 
                     <div>
@@ -360,7 +360,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                         )}
                     </FormItem>
                     <FormItem  label={"isRun:"}>
-                        <Select defaultValue={run}>
+                        <Select>
                             <Option value="true">yes</Option>
                             <Option value="false">no</Option>
                         </Select>
