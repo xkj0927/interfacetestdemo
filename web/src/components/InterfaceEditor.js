@@ -55,10 +55,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
 
     const testCaseOperatorColumns = [
         {
-            title: "Interface TestCase Id",
-            dataIndex: 'interfaceTestCaseId'
-        },
-        {
             title: "TestCase Name",
             dataIndex: 'testCaseName'
         },
@@ -86,10 +82,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         }
     ];
     const testCaseColumns = [
-        {
-            title: "Interface TestCase Id",
-            dataIndex: 'interfaceTestCaseId'
-        },
         {
             title: "TestCase Name",
             dataIndex: 'testCaseName'
@@ -191,23 +183,23 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                        dispatch({type: "interfaces/show", key: interfaceId, operatorType: "edit", interfaceInfo: interfaceInfo, selectModuleKey:interfaceInfo.moduleId});
                    }
                }><Icon type="edit"/>{intl.formatMessage({id: "interface.editInterface"})}</Button>
-               <div className={style.interfaceInfoDiv}><b>interfaceName:</b>{interfaceName}</div>
-               <div className={style.interfaceInfoDiv}><b>interfaceType:</b>{interfaceType}</div>
-               <div className={style.interfaceInfoDiv}><b>interfaceUrl:</b>{interfaceUrl}</div>
-               <div className={style.interfaceInfoDiv}><b>isRun:</b>{run}</div>
-               <div>
+               <div className={style.interfaceInfoDiv}><b>{intl.formatMessage({id: "interface.interfaceName"})}</b>{interfaceName}</div>
+               <div className={style.interfaceInfoDiv}><b>{intl.formatMessage({id: "interface.interfaceType"})}</b>{interfaceType}</div>
+               <div className={style.interfaceInfoDiv}><b>{intl.formatMessage({id: "interface.interfaceURL"})}</b>{interfaceUrl}</div>
+               <div className={style.interfaceInfoDiv}><b>{intl.formatMessage({id: "interface.interfaceRun"})}</b>{run}</div>
+               <div className={style.interfaceInfoDiv}>
                    <b>{intl.formatMessage({id: "interface.requestParam"})}</b>
                </div>
                <div>
                    <Table columns={columns} dataSource={requestTabledata} pagination={false} bordered/>
                </div>
-               <div>
+               <div className={style.interfaceInfoDiv}>
                    <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
                </div>
                <div>
                    <Table columns={columns} dataSource={responseTabledata} pagination={false} bordered/>
                </div>
-               <div>
+               <div className={style.interfaceInfoDiv}>
                    <b>{intl.formatMessage({id: "interface.testCaseList"})}</b>
                </div>
                <div>
@@ -234,7 +226,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                     <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>{intl.formatMessage({id: "interface.saveInterface"})}</Button>
                 </FormItem>
                 <Form>
-                    <FormItem  label={"interfaceName:"}>
+                    <FormItem  label={intl.formatMessage({id: "interface.interfaceName"})}>
                         {getFieldDecorator("interfaceName", {
                             rules: [
                                 {
@@ -247,7 +239,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             <Input type="text"/>
                         )}
                     </FormItem>
-                    <FormItem  label={"interfaceType:"}>
+                    <FormItem  label={intl.formatMessage({id: "interface.interfaceType"})}>
                         {getFieldDecorator("interfaceType", {
                             rules: [
                                 {
@@ -264,7 +256,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             </Select>
                         )}
                     </FormItem>
-                    <FormItem  label={"interfaceUrl:"}>
+                    <FormItem  label={intl.formatMessage({id: "interface.interfaceURL"})}>
                         {getFieldDecorator("interfaceUrl", {
                             rules: [
                                 {
@@ -278,7 +270,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                             <Input type="text"/>
                         )}
                     </FormItem>
-                    <FormItem  label={"isRun:"}>
+                    <FormItem  label={intl.formatMessage({id: "interface.interfaceRun"})}>
                         {getFieldDecorator("run", {
                             rules: [
                                 {
