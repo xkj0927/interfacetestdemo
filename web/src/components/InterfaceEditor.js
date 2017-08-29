@@ -18,15 +18,15 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     const columns = [
         {
             title: intl.formatMessage({id: "interface.request.paramName"}),
-            dataIndex: 'paramName'
+            dataIndex: 'requestParamName'
         },
         {
             title: intl.formatMessage({id: "interface.request.paramType"}),
-            dataIndex: 'paramType'
+            dataIndex: 'requestParamType'
         },
         {
             title: intl.formatMessage({id: "interface.request.paramDesc"}),
-            dataIndex: 'description'
+            dataIndex: 'requestParamDescrption'
         },
       {
         title: "",
@@ -144,11 +144,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
 
     const showInterfaceParamDialog =(param)=>{
         dispatch({type:"interfaces/showParam", interfaceInfo: interfaceInfo, fromWhere: param});
-      // 给参数Table上增加一行记录
-      // const paramValue = {
-      //   "paramName":<></>
-      // };
-      // dispatch({type:"interfaces/addInterfaceParam", paramValue:paramValue});
     };
     let ParamEditor = Form.create()(
         (props) => {
@@ -194,7 +189,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     if("info" == operatorType){
         debugger;
         if(null != interfaceInfo.requestParam && "" != interfaceInfo.requestParam){
-            requestTableData = JSON.parse(interfaceInfo.requestParam);
+            requestTableData = interfaceInfo.requestParams;
         }
         if(null != interfaceInfo.responseResult && "" != interfaceInfo.responseResult){
             responseTabledata = JSON.parse(interfaceInfo.responseResult);
