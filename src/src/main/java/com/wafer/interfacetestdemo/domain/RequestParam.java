@@ -22,8 +22,8 @@ public class RequestParam {
 	private String requestParamName;
 	@Column(name = "request_param_type")
 	private String requestParamType;
-	@Column(name = "request_param_descrption")
-	private String requestParamDescrption;
+	@Column(name = "request_param_description")
+	private String requestParamDescription;
 	@Column(name = "interface_id")
 	private long interfaceId;
 	@Column(name = "create_time")
@@ -48,11 +48,11 @@ public class RequestParam {
 	public void setRequestParamType(String requestParamType) {
 		this.requestParamType = requestParamType;
 	}
-	public String getRequestParamDescrption() {
-		return requestParamDescrption;
+	public String getRequestParamDescription() {
+		return requestParamDescription;
 	}
-	public void setRequestParamDescrption(String requestParamDescrption) {
-		this.requestParamDescrption = requestParamDescrption;
+	public void setRequestParamDescription(String requestParamDescription) {
+		this.requestParamDescription = requestParamDescription;
 	}
 	public long getInterfaceId() {
 		return interfaceId;
@@ -76,12 +76,12 @@ public class RequestParam {
 		super();
 	}
 	public RequestParam(long requestParamId, String requestParamName, String requestParamType,
-			String requestParamDescrption, long interfaceId, Date createTime, Date updateTime) {
+			String requestParamDescription, long interfaceId, Date createTime, Date updateTime) {
 		super();
 		this.requestParamId = requestParamId;
 		this.requestParamName = requestParamName;
 		this.requestParamType = requestParamType;
-		this.requestParamDescrption = requestParamDescrption;
+		this.requestParamDescription = requestParamDescription;
 		this.interfaceId = interfaceId;
 		this.createTime = createTime;
 		this.updateTime = updateTime;

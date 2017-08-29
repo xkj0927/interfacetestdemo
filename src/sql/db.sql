@@ -103,7 +103,7 @@ CREATE TABLE `ps_request_param`(
   `request_param_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `request_param_name` VARCHAR(125) NOT NULL COMMENT '参数名',
   `request_param_type` VARCHAR(64) NOT NULL COMMENT '参数类型',
-  `request_param_descrption` VARCHAR(256) NOT NULL COMMENT '请求描述',
+  `request_param_description` VARCHAR(256) NOT NULL COMMENT '请求描述',
   `interface_id` INT(11) NOT NULL COMMENT '接口Id',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
