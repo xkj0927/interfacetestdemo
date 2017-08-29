@@ -193,13 +193,13 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                    <b>Request Param: </b>
                </div>
                <div>
-                   <Table columns={columns} dataSource={requestTabledata} pagination={false}/>
+                   <Table columns={columns} dataSource={requestTabledata} pagination={false} bordered/>
                </div>
                <div>
                    <b>Response Param: </b>
                </div>
                <div>
-                   <Table columns={columns} dataSource={responseTabledata} pagination={false}/>
+                   <Table columns={columns} dataSource={responseTabledata} pagination={false} bordered/>
                </div>
                <div>
                    <b>Interface TestCase List: </b>
