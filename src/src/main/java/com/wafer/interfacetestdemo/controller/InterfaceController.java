@@ -19,9 +19,11 @@ import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Interface;
 import com.wafer.interfacetestdemo.domain.InterfaceTestCase;
 import com.wafer.interfacetestdemo.domain.RequestParam;
+import com.wafer.interfacetestdemo.domain.ResponseParam;
 import com.wafer.interfacetestdemo.service.InterfaceService;
 import com.wafer.interfacetestdemo.service.InterfaceTestCaseService;
 import com.wafer.interfacetestdemo.service.RequestParamService;
+import com.wafer.interfacetestdemo.service.ResponseParamService;
 import com.wafer.interfacetestdemo.vo.InterfaceView;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
 import com.wafer.interfacetestdemo.vo.TestCaseView;
@@ -41,6 +43,9 @@ public class InterfaceController {
   
   @Autowired
   RequestParamService requestParamService;
+  
+  @Autowired
+  ResponseParamService responseParamService;
   
   /**
    * 新增一个【接口】
@@ -125,10 +130,12 @@ public class InterfaceController {
     if(null != face){
       List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(face.getInterfaceId());
       List<RequestParam> requestParamList= requestParamService.getRequestParamByInterfaceId(interfaceId);
+      List<ResponseParam> responseParamList= responseParamService.getResponseParamByInterfaceId(interfaceId);
       List<TestCaseView> testCaseViews = new ArrayList<>();
       testCases.parallelStream().forEach(testCase -> testCaseViews.add(TestCaseView.transformViewToTestCase(testCase)));
       faceView.setTestCaseViews(testCaseViews);
       faceView.setRequestParams(requestParamList);
+      faceView.setResponseParams(responseParamList);
     }
     return ResponseResult.success(faceView);
   }
