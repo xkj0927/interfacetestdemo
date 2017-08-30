@@ -47,7 +47,8 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
               reqOrResp={interfaces.reqOrResp}
               displayEditTestCaseModal= {interfaces.displayEditTestCaseModal}
               currentTestCase = {interfaces.currentTestCase}
-              currentReqParam={interfaces.currentReqParam}/>
+              currentReqParam={interfaces.currentReqParam}
+              currentRespParam={interfaces.currentRespParam}/>
       }
   );
   // module

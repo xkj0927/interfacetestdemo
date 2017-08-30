@@ -20,6 +20,7 @@ export default {
     currentTestCase:"",
     reqOrResp:"",
     currentReqParam:"",
+    currentRespParam:"",
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
@@ -118,13 +119,12 @@ export default {
         moduleKey: selectModuleKey
       });
     },
-    *showParam({interfaceId: interfaceId, currentReqParam: currentReqParam, reqOrResp: reqOrResp}, {put}){
-      yield put({
-        type: 'changeParamModalState',
-        currentReqParam: currentReqParam,
-        interfaceId: interfaceId,
-        reqOrResp: reqOrResp
-      });
+    *showParam({interfaceId: interfaceId, currentParam: currentParam, reqOrResp: reqOrResp}, {put}){
+      if("requestParam" == reqOrResp){
+        yield put({type: 'changeParamModalState',currentReqParam: currentParam, currentRespParam: "", interfaceId: interfaceId, reqOrResp: reqOrResp});
+      }else{
+        yield put({type: 'changeParamModalState',currentReqParam: "", currentRespParam: currentParam, interfaceId: interfaceId, reqOrResp: reqOrResp});
+      }
     },
     *showTestCase({record: testCase}, {put}){
       debugger;
@@ -177,6 +177,12 @@ export default {
       yield put({type:"addParam",requestParam:data});
     },
 
+    *deleteRequestParam({interfaceId: interfaceId, requestParam:requestParam}, {call, put}){
+      const {data} = yield call(interfaceService.deleteRequestParam, interfaceId, requestParam);
+      yield put({type:"addParam",requestParam:data});
+    },
+
+
     *addResponseParam({interfaceView:interfaceView}, {call, put}){
       const face = {"interfaceId":interfaceView.interfaceId,"interfaceName":interfaceView.interfaceName,"interfaceType":interfaceView.interfaceType,
         "interfaceUrl":interfaceView.interfaceUrl,"moduleId":interfaceView.moduleId,"requestParam":interfaceView.requestParam,
@@ -185,8 +191,8 @@ export default {
       yield put({type:"updateInterfaceInfo",interfaceView});
     },
 
-    *deleteRequestParam({interfaceId: interfaceId, requestParam:requestParam}, {call, put}){
-      const {data} = yield call(interfaceService.deleteRequestParam, interfaceId, requestParam);
+    *deleteResponseParam({interfaceId: interfaceId, responseParam:responseParam}, {call, put}){
+      const {data} = yield call(interfaceService.deleteRequestParam, interfaceId, responseParam);
       yield put({type:"addParam",requestParam:data});
     },
   },

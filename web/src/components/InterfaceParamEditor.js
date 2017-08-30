@@ -18,7 +18,7 @@ const formLayout = {
   }
 };
 
-export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam, reqOrResp}) => {
+export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam, currentRespParam, reqOrResp}) => {
   const {getFieldDecorator, validateFields} = form;
   const {requestParam, responseResult, interfaceId} = interfaceInfo;
 
@@ -33,7 +33,13 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
       paramDesc = currentReqParam.requestParamDescription;
     }
   }else{
-
+    InterfaceType = "response";
+    if(currentRespParam && currentRespParam.interfaceId){
+      operateType = "edit";
+      paramName = currentRespParam.responseParamName;
+      paramType = currentRespParam.responseParamType;
+      paramDesc = currentRespParam.responseParamDescription;
+    }
   }
 
   const paramSubmit = (e) => {
@@ -53,9 +59,16 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
             dispatch({type: "interfaces/addRequestParam", requestParam:requestParam});
           }
         }else{
-          // 针对responseParam 的处理， 一个interface只能有一个期望的返回值，所以此处只更新不累加
-          const interfaceView = {...interfaceInfo, ...{"responseResult":values}};
-          dispatch({type: "interfaces/addResponseParam", interfaceView:interfaceView});
+          // 针对responseParam 的处理，
+          if("edit" == operateType){
+            // 编辑
+            const requestParam = {"responseParamId":currentRespParam.requestParamId, "interfaceId": interfaceId, "responseParamName":values.paramName, "responseParamType":values.paramType, "responseParamDescription":values.paramDesc};
+            dispatch({type: "interfaces/editResponseParam", requestParam:requestParam});
+          }else{
+            // 创建
+            const requestParam = {"interfaceId": interfaceId, "responseParamName":values.paramName, "responseParamType":values.paramType, "responseParamDescription":values.paramDesc};
+            dispatch({type: "interfaces/addResponseParam", requestParam:requestParam});
+          }
         }
       } else {
         message.warn(JSON.stringify(err));
