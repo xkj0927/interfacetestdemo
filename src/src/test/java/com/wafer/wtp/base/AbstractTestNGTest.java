@@ -7,6 +7,7 @@ import java.net.URL;
 
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -39,6 +41,9 @@ public class AbstractTestNGTest extends AbstractTransactionalTestNGSpringContext
 
   @Autowired
   private WebApplicationContext context;
+  
+  @Autowired
+  private RestTemplateBuilder restTemplateBuilder;
 
   private MockMvc mockMvc;
 
@@ -154,6 +159,10 @@ public class AbstractTestNGTest extends AbstractTransactionalTestNGSpringContext
    */
   @DataProvider(name = DP_API_DATA)
   public Object[][] getAPICommonData(Method targetMethod) throws IOException {
+    
+    String s = restTemplateBuilder.build().getForObject("http://localhost:8001/democms/api/v1/test", String.class);
+    
+    
     StringBuffer xlsBuffer = new StringBuffer("classpath*:");
     xlsBuffer.append(this.getClass().getSimpleName());
     xlsBuffer.append("*.xls");
