@@ -73,6 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
               .antMatchers("**/socket/**").permitAll()
               // 对于获取token的rest api要允许匿名访问
               .antMatchers("/api/v1/login").permitAll()
+              .antMatchers("/api/v1/dss/**").permitAll()
               // .access("hasRole('ADMIN') and hasRole('DBA')")
               .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll() // 注册用户
               .antMatchers("/api/v1/logout").permitAll()
