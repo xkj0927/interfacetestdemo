@@ -91,7 +91,17 @@ public class InterfaceController {
     face.setResponseResult(faceView.getResponseResult());
     
     face = interfaceService.saveInterface(face);
-    return ResponseResult.success(InterfaceView.transformInterfaceToView(face));
+    
+    InterfaceView faceViews = InterfaceView.transformInterfaceToView(face);
+    List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(face.getInterfaceId());
+    List<RequestParam> requestParamList= requestParamService.getRequestParamByInterfaceId(face.getInterfaceId());
+    List<ResponseParam> responseParamList= responseParamService.getResponseParamByInterfaceId(face.getInterfaceId());
+    List<TestCaseView> testCaseViews = new ArrayList<>();
+    testCases.parallelStream().forEach(testCase -> testCaseViews.add(TestCaseView.transformViewToTestCase(testCase)));
+    faceViews.setTestCaseViews(testCaseViews);
+    faceViews.setRequestParams(requestParamList);
+    faceViews.setResponseParams(responseParamList);
+    return ResponseResult.success(faceViews);
   }
   
   /**

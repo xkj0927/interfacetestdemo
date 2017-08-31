@@ -11,7 +11,7 @@ import TestCaseEditor from '../components/TestCaseEditor'
 
 const FormItem = Form.Item;
 export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia,
-  displayEditTestCaseModal, currentTestCase, currentReqParam, currentRespParam, testCaseDetailInfo, reqOrResp, form, intl}) => {
+  displayEditTestCaseModal, currentTestCase, currentReqParam, currentRespParam, testCaseDetailInfo, jsonEditModal, testCaseParamFrom, reqOrResp, form, intl}) => {
     const {getFieldDecorator, validateFields} = form;
     let requestTableData = [];
     let responseTableData = [];
@@ -55,15 +55,15 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
   const responseResultColumns = [
     {
       title: intl.formatMessage({id: "interface.request.paramName"}),
-      dataIndex: 'paramName'
+      dataIndex: 'responseParamName'
     },
     {
       title: intl.formatMessage({id: "interface.request.paramType"}),
-      dataIndex: 'paramType'
+      dataIndex: 'responseParamType'
     },
     {
       title: intl.formatMessage({id: "interface.request.paramDesc"}),
-      dataIndex: 'paramDesc'
+      dataIndex: 'responseParamDescription'
     },
     {
       title: "",
@@ -130,6 +130,14 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             dataIndex: 'expectStatus'
         },
         {
+            title: "Param Case",
+            dataIndex: 'paramCase'
+        },
+        {
+            title: "Expect Result",
+            dataIndex: 'expectResult'
+        },
+        {
             title: intl.formatMessage({id: "testCase.operation"}),
             render: (text, record) => {
                 return (
@@ -151,22 +159,46 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     const testCaseColumns = [
         {
             title: intl.formatMessage({id: "testCase.testCaseName"}),
-            dataIndex: 'testCaseName'
+            dataIndex: 'testCaseName',
+            width: '20%',
         },
         {
             title: intl.formatMessage({id: "testCase.expectStatus"}),
-            dataIndex: 'expectStatus'
+            dataIndex: 'expectStatus',
+            width: '10%',
         },
         {
-            title: intl.formatMessage({id: "testCase.detailInfo"}),
+            title: "",
+            width: '3%',
             render: (text, record) => {
                 return (
                     <Button.Group type="ghost">
-                        <Button title="detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record)}><Icon type="info" /></Button>
+                        <Button title="param Case detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record,"paramCase")}><Icon type="info" /></Button>
                     </Button.Group>
                 );
             }
-        }
+        },
+        {
+            title: "Param Case",
+            dataIndex: 'paramCase',
+            width: '32%',
+        },
+        {
+            title: "",
+            width: '3%',
+            render: (text, record) => {
+                return (
+                    <Button.Group type="ghost">
+                        <Button title="detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record, "expectResult")}><Icon type="info" /></Button>
+                    </Button.Group>
+                );
+            }
+        },
+        {
+            title: "Expect Result",
+            dataIndex: 'expectResult',
+            width: '32%',
+        },
     ];
     const handleSubmit=(e)=> {
         e.preventDefault();
@@ -181,6 +213,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             }
             dispatch({type:"interfaces/add", payload:values});
         });
+        dispatch({type:"interfaces/info", selectModuleKey:interfaceInfo.moduleId, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
     };
 
     const showInterfaceParamDialog =(param)=>{
@@ -197,8 +230,8 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 currentRespParam={currentRespParam}/>
         }
     );
-    const showTestCaseDetailInfoDialog =(testCase)=>{
-        dispatch({type:"interfaces/showTestCase", record: testCase});
+    const showTestCaseDetailInfoDialog =(testCase, testCaseParamFrom)=>{
+        dispatch({type:"interfaces/showTestCase", record: testCase, testCaseParamFrom: testCaseParamFrom});
     };
     let title = "";
     if("requestParam" == reqOrResp){
@@ -219,7 +252,9 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 form={props.form}
                 dispatch={dispatch}
                 interfaceInfo = {interfaceInfo}
-                testCaseDetailInfo = {testCaseDetailInfo}/>
+                testCaseDetailInfo = {testCaseDetailInfo}
+                jsonEditModal = {jsonEditModal}
+                testCaseParamFrom = {testCaseParamFrom}/>
         }
     );
     const TestCaseDetailInfoModal = <Modal
@@ -230,12 +265,14 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         <TcDetailInfo />
     </Modal>;
     if("info" == operatorType){
-        if(interfaceInfo.requestParam){
-            requestTableData = interfaceInfo.requestParams;
-        }
-        if(interfaceInfo.responseResult){
-            responseTableData = JSON.parse(interfaceInfo.responseResult);
-        }
+        // if(interfaceInfo.requestParam){
+        //     requestTableData = interfaceInfo.requestParams;
+        // }
+        // if(interfaceInfo.responseResult){
+        //     responseTableData = interfaceInfo.responseParams;
+        // }
+        requestTableData = interfaceInfo.requestParams;
+        responseTableData = interfaceInfo.responseParams;
 
         const {interfaceName,interfaceType, interfaceUrl, interfaceId} = interfaceInfo;
         return (
@@ -272,17 +309,19 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
            </div>
         );
     }else if("edit" == operatorType){
-        if(interfaceInfo.requestParam){
-            requestTableData = interfaceInfo.requestParams;
-        }
-        if(interfaceInfo.responseResult){
-            responseTableData = [];
-            try{
-              responseTableData = JSON.parse(interfaceInfo.responseResult);
-            }catch (e){
-              console.log(e);
-            }
-        }
+        requestTableData = interfaceInfo.requestParams;
+        responseTableData = interfaceInfo.responseParams;
+        // if(interfaceInfo.requestParam){
+        //     requestTableData = interfaceInfo.requestParams;
+        // }
+        // if(interfaceInfo.responseResult){
+        //     responseTableData = [];
+        //     try{
+        //       responseTableData = interfaceInfo.responseParams;
+        //     }catch (e){
+        //       console.log(e);
+        //     }
+        // }
         const {interfaceName = [],interfaceType = [], interfaceUrl =[], isRun=[]} = interfaceInfo;
         return (
             <div>

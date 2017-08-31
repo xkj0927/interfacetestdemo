@@ -16,14 +16,18 @@ export default {
     displayTestCaseDia: false,
     testCaseDetailInfo:null,
     fromWhere:"" ,
+    testCaseParamFrom:"",
     displayEditTestCaseModal: false,
     currentTestCase:"",
     reqOrResp:"",
     currentReqParam:"",
     currentRespParam:"",
+    jsonEditModal:false,
+    interfaceFlag: false
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
+      debugger;
       state.interfaceInfo = interfaceInfo;
       state.operatorType = operatorType;
       state.moduleKey = moduleKey;
@@ -32,17 +36,19 @@ export default {
       return newState;
     },
     // 是否展示requestPram ResponseParam
-    changeParamModalState(state, { interfaceId: interfaceId, currentReqParam: currentReqParam, reqOrResp: reqOrResp}) {
+    changeParamModalState(state, { interfaceId: interfaceId, currentReqParam: currentReqParam, currentRespParam: currentRespParam, reqOrResp: reqOrResp}) {
       state.currentReqParam = currentReqParam;
+      state.currentRespParam = currentRespParam;
       state.displayInterParamDia = !state.displayInterParamDia;
       state.reqOrResp =  reqOrResp;
       state.moduleKey = Math.random();
       let newState = state;
       return newState;
     },
-    changetestcasestate(state, {testCaseDetailInfo}) {
+    changetestcasestate(state, {testCaseDetailInfo, testCaseParamFrom}) {
       state.displayTestCaseDia = !state.displayTestCaseDia;
       state.testCaseDetailInfo = testCaseDetailInfo;
+      state.testCaseParamFrom = testCaseParamFrom;
       let newState = state;
       return newState;
     },
@@ -69,6 +75,8 @@ export default {
         state.interfaceInfo.testCaseViews = cases;
       }
       state.displayEditTestCaseModal = false;
+      state.displayTestCaseDia = false;
+      state.jsonEditModal = false;
       state.currentTestCase = "";
       state.moduleKey = Math.random();
       return state;
@@ -76,21 +84,29 @@ export default {
 
     // 增加一条新的参数列
     addParam(state, {paramValue:paramValue}){
-      if(state.interfaceInfo.paramValues){
-        state.interfaceInfo.paramValues.push(paramValue);
+      debugger;
+      if(state.interfaceInfo.requestParam){
+        // state.interfaceInfo.requestParam.add(paramValue);
+        console.log(state.interfaceInfo.requestParam)
       }else {
-        state.interfaceInfo.paramValues = [];
-        state.interfaceInfo.paramValues.push(paramValue);
+        // state.interfaceInfo.requestParam = [];
+        // state.interfaceInfo.requestParam.add(paramValue);
       }
-      state.moduleKey = Math.random();
-      state.displayInterParamDia = !state.displayInterParamDia;
-      return state;
+      // state.moduleKey = Math.random();
+      state.displayInterParamDia = false;
+      let newState = state;
+      return newState;
     },
 
     updateInterfaceInfo(state,{interfaceInfo}){
       state.interfaceInfo = interfaceInfo;
       state.moduleKey = Math.random();
       state.displayInterParamDia = !state.displayInterParamDia;
+      return state;
+    },
+    jsonChangeEdit(state,{interfaceInfo}){
+      state.interfaceInfo = interfaceInfo;
+      state.jsonEditModal = !state.jsonEditModal;
       return state;
     }
   },
@@ -126,19 +142,16 @@ export default {
         yield put({type: 'changeParamModalState',currentReqParam: "", currentRespParam: currentParam, interfaceId: interfaceId, reqOrResp: reqOrResp});
       }
     },
-    *showTestCase({record: testCase}, {put}){
+    *showTestCase({record: testCase, testCaseParamFrom: testCaseParamFrom}, {put}){
       debugger;
       yield put({
         type: 'changetestcasestate',
-        testCaseDetailInfo: testCase
+        testCaseDetailInfo: testCase,
+        testCaseParamFrom: testCaseParamFrom
       });
     },
     *deleteTestCase({payload: record}, {call, put}){
-      debugger;
       yield call(testCaseService.deleteTestCase, record.interfaceTestCaseId);
-      // yield put({
-      //   type: 'changetestcasestate',
-      // });
     },
     *add({payload}, {call, put}){
       debugger;
@@ -192,8 +205,12 @@ export default {
     },
 
     *deleteResponseParam({interfaceId: interfaceId, responseParam:responseParam}, {call, put}){
-      const {data} = yield call(interfaceService.deleteRequestParam, interfaceId, responseParam);
+      const {data} = yield call(interfaceService.deleteResponseParam, interfaceId, responseParam);
       yield put({type:"addParam",requestParam:data});
+    },
+
+    *changeEditWay({interfaceInfo: interfaceInfo}, {put}){
+      yield put({type:"jsonChangeEdit", interfaceInfo});
     },
   },
 };
