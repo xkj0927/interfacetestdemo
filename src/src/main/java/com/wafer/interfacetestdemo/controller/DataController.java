@@ -27,7 +27,7 @@ public class DataController {
    */
   @RequestMapping(value = Constant.DATA_SERVICE, method = RequestMethod.GET)
   @Transactional(readOnly = true)
-  public List<Object[]> deptList(@PathVariable long projectId) {
+  public List<Object[]> testCaseDataList(@PathVariable long projectId) {
     return dataService.getTestCaseData(projectId);
   }
 }
