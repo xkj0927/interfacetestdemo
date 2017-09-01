@@ -34,7 +34,7 @@ export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
   };
 
   return (
-    <div style={{width: "400px"}}>
+    <div style={{width: "450px"}}>
       <Form onSubmit={submitHandle}>
         <FormItem label={intl.formatMessage({id: "module.moduleName"}) + ":"} {...formLayout}>
           {getFieldDecorator("moduleName", {
@@ -56,7 +56,7 @@ export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
         >
           {getFieldDecorator('run', {
             valuePropName: 'checked',
-            initialValue : run
+            initialValue : (undefined != run? run: true)
           })(
             <Switch/>
           )}
