@@ -31,6 +31,10 @@ public interface Constant {
   
   String PROJECT_DELETE = "project/{userId}/{projectId}";
   
+  String DATA_SERVICE = "dss/{projectId}";
+  
+  String DATA_SERVICE_TESTCASE = "dss/{projectId}/{moduleName}/{interfaceName}";
+  
   
   
   
