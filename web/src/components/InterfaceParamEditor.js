@@ -45,7 +45,6 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
   const paramSubmit = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
-      debugger
       if (!err) {
         if(InterfaceType == "request"){
           // 针对requestParam 的处理

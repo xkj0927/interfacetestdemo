@@ -95,6 +95,7 @@ const enUS = {
   "module.warn.emptyInterfaceURL": "Please input interface url",
   "testCase.operation":"Operation",
   "testCase.detailInfo" :"Detail Info",
+  "testCase.addTestCase":"Add Test Case",
   "interface.editInterface":"Edit Interface",
   "interface.saveInterface":"Save Interface",
   "interface.addRequestParam":"Edit Request Param",

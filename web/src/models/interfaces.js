@@ -28,7 +28,6 @@ export default {
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
-      debugger;
       state.interfaceInfo = interfaceInfo;
       state.operatorType = operatorType;
       state.moduleKey = moduleKey;
@@ -94,7 +93,6 @@ export default {
 
     // 增加一条新的参数列
     addParam(state, {paramValue:paramValue}){
-      debugger;
       if(state.interfaceInfo.requestParam){
         // state.interfaceInfo.requestParam.add(paramValue);
         console.log(state.interfaceInfo.requestParam)
@@ -122,7 +120,6 @@ export default {
   },
   effects: {
     *info({selectModuleKey, selectInterfaceKey, operatorType}, {call, put}){
-      debugger;
       const result = yield call(interfaceService.interfaceinfo, selectInterfaceKey);
       const interfaceInfo = result.data;
       if(interfaceInfo && interfaceInfo.testCaseViews && interfaceInfo.testCaseViews.length > 0){
@@ -160,7 +157,6 @@ export default {
       });
     },
     *showInterfaceInfo({from}, {put}){
-    debugger;
       yield put({
         type: 'changeInterfaceInfoState',
         editInterfaceFrom: from,

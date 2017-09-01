@@ -10,7 +10,6 @@ import style from "./InterfaceEditor.less"
 const FormItem = Form.Item;
 const Option = Select.Option;
 export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}) => {
-    debugger;
     let {interfaceName = [],interfaceType = [], interfaceUrl =[], run =[]} = interfaceInfo;
     const {getFieldDecorator, validateFields} = form;
     if("interfaceCreate" == from){

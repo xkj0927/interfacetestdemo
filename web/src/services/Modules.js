@@ -12,14 +12,12 @@ export function listmodules(projectId) {
 }
 
 export function listinterfaces(moduleId) {
-  debugger;
   return request(`api/v1/interface/module/${moduleId}`, {
     method: 'GET'
   });
 }
 
 export function listtestcases(interfaceId) {
-  debugger;
   return request(`api/v1/interfacecase/interface/${interfaceId}`, {
     method: 'GET'
   });

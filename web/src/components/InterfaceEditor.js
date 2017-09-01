@@ -132,44 +132,50 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         {
             title: intl.formatMessage({id: "testCase.testCaseName"}),
             dataIndex: 'testCaseName',
-            width: '16%',
+            width: '20%',
         },
         {
             title: intl.formatMessage({id: "testCase.expectStatus"}),
             dataIndex: 'expectStatus',
             width: '8%',
         },
-        {
-            title: "",
-            width: '4%',
-            render: (text, record) => {
-                return (
-                    <Button.Group type="ghost">
-                        <Button title="Edit Param Case"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record,"paramCase")}><Icon type="edit" /></Button>
-                    </Button.Group>
-                );
-            }
-        },
+        // {
+        //     title: "",
+        //     width: '4%',
+        //     render: (text, record) => {
+        //         return (
+        //             <Button.Group type="ghost">
+        //                 <Button title="Edit Param Case"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record,"paramCase")}><Icon type="edit" /></Button>
+        //             </Button.Group>
+        //         );
+        //     }
+        // },
         {
             title: "Param Case",
             dataIndex: 'paramCase',
-            width: '30%',
+            width: '32%',
+            onCellClick: (record)=>{
+                dispatch({type:"interfaces/showTestCase", record: record, testCaseParamFrom: "paramCase"});
+            },
         },
-        {
-            title: "",
-            width: '4%',
-            render: (text, record) => {
-                return (
-                    <Button.Group type="ghost">
-                        <Button title="Edit Expect Result"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record, "expectResult")}><Icon type="edit" /></Button>
-                    </Button.Group>
-                );
-            }
-        },
+        // {
+        //     title: "",
+        //     width: '4%',
+        //     render: (text, record) => {
+        //         return (
+        //             <Button.Group type="ghost">
+        //                 <Button title="Edit Expect Result"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record, "expectResult")}><Icon type="edit" /></Button>
+        //             </Button.Group>
+        //         );
+        //     }
+        // },
         {
             title: "Expect Result",
             dataIndex: 'expectResult',
-            width: '30%',
+            width: '32%',
+            onCellClick: (record)=>{
+                dispatch({type:"interfaces/showTestCase", record: record, testCaseParamFrom: "expectResult"});
+            },
         },
         {
             title: intl.formatMessage({id: "testCase.operation"}),
@@ -194,7 +200,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     const handleSubmit=(e)=> {
         e.preventDefault();
         validateFields((err, values) => {
-            debugger;
             console.log("values:", values);
             values.moduleId = moduleKey;
             values.requestParam = interfaceInfo.requestParam;
@@ -304,7 +309,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                    <Table columns={responseResultColumns} dataSource={responseTableData} pagination={false} bordered/>
                </div>
                <div>
-                   <b>{intl.formatMessage({id: "interface.testCaseList"})}<Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
+                   <b>{intl.formatMessage({id: "interface.testCaseList"})}<Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addTestCase"})}</Button></b>
                </div>
                <div className={style.interfaceInfoDiv}>
                    <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} pagination={false} bordered/>

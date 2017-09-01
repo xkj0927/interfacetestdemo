@@ -6,7 +6,6 @@ import request from '../utils/request';
 const JSON = window.JSON;
 
 export function interfaceinfo(interfaceId) {
-  debugger;
   return request(`api/v1/interface/testcase/${interfaceId}`, {
     method: 'GET'
   });
@@ -76,7 +75,6 @@ export function editInterfaceResponseParam(responseParam) {
 }
 
 export function deleteRequestParam(interfaceId, requestParam) {
-  debugger;
   return request(`api/v1/interface/requestParam/${requestParam.requestParamId}/${interfaceId}`, {
     method: 'DELETE',
   });

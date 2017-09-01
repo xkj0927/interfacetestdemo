@@ -95,6 +95,7 @@ const zhCN = {
   "module.warn.emptyInterfaceURL": "请输入接口url",
   "testCase.operation":"操作",
   "testCase.detailInfo" :"详细信息",
+  "testCase.addTestCase":"新增测试用例",
   "interface.editInterface":"编辑接口",
   "interface.saveInterface":"保存接口",
   "interface.addRequestParam":"新增请求参数",

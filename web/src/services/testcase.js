@@ -6,7 +6,6 @@ import request from '../utils/request';
 const JSON = window.JSON;
 
 export function deleteTestCase(testCaseId, interfaceId) {
-    debugger;
     return request(`api/v1/interfacecase/${testCaseId}/${interfaceId}`, {
         method: 'DELETE'
     });
