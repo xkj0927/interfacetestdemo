@@ -33,6 +33,8 @@ public interface Constant {
   
   String DATA_SERVICE = "dss/{projectId}";
   
+  String DATA_SERVICE_TESTCASE = "dss/{projectId}/{moduleName}/{interfaceName}";
+  
   
   
   

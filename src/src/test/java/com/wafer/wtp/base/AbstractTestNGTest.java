@@ -42,7 +42,7 @@ public class AbstractTestNGTest extends AbstractTransactionalTestNGSpringContext
 
   public static final String INIT_FILE_PATH = "filePath";
 
-  public static final String ALREADY_INIT = "alreadyINit";
+  public static final String ALREADY_INIT = "alreadyInit";
 
   @Autowired
   private WebApplicationContext context;

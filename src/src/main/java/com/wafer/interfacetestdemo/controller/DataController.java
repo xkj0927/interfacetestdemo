@@ -16,12 +16,13 @@ import com.wafer.interfacetestdemo.service.DataService;
 @RequestMapping(Constant.CONTROLLER_PATH)
 @Transactional
 public class DataController {
-  
+
   @Autowired
   DataService dataService;
 
   /**
    * 根据ProjectId提供测试数据
+   * 
    * @param projectId
    * @return
    */
@@ -29,5 +30,20 @@ public class DataController {
   @Transactional(readOnly = true)
   public List<Object[]> testCaseDataList(@PathVariable long projectId) {
     return dataService.getTestCaseData(projectId);
+  }
+
+  /**
+   * 根据projectId,moduleName,interfaceName获取测试数据
+   * 
+   * @param projectId
+   * @param moduleName
+   * @param interfaceName
+   * @return
+   */
+  @RequestMapping(value = Constant.DATA_SERVICE_TESTCASE, method = RequestMethod.GET)
+  @Transactional(readOnly = true)
+  public List<Object[]> simpleTestCaseData(@PathVariable long projectId,
+      @PathVariable String moduleName, @PathVariable String interfaceName) {
+    return dataService.getSimpleTestCaseData(projectId, moduleName, interfaceName);
   }
 }
