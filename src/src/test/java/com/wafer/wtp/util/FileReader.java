@@ -2,13 +2,18 @@ package com.wafer.wtp.util;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.core.io.Resource;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 
 public abstract class FileReader {
 
@@ -30,7 +35,7 @@ public abstract class FileReader {
    * @param classes
    * @return
    */
-  protected Object[] convertParam(String[] cellStrings, List<Class<?>> classes) {
+  protected static Object[] convertParam(String[] cellStrings, List<Class<?>> classes) {
     Object[] result = new Object[cellStrings.length];
     ObjectMapper objectMapper = new ObjectMapper();
     for (int i = 0; i < cellStrings.length; i++) {
@@ -122,6 +127,30 @@ public abstract class FileReader {
     Object[][] returnArray = new Object[results.size()][];
     for (int i = 0; i < returnArray.length; i++) {
       returnArray[i] = results.get(i);
+    }
+    return returnArray;
+  }
+  
+  /**
+   * 读取Restful数据
+   * @param restTemplate
+   * @param path
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  public static Object[][] readRestDataObject(Method method, RestTemplate restTemplate, String path) {
+    List<Class<?>> paramTypes = new ArrayList<Class<?>>();
+    for (Parameter parameter : method.getParameters()) {
+      paramTypes.add(parameter.getType());
+    }
+    String result = restTemplate.getForObject(path, String.class);
+    JSONArray jsonArray = JSONArray.fromObject(result);
+    
+    List<String[]> list = JSONArray.toList(jsonArray, new String[paramTypes.size()],new JsonConfig());
+    
+    Object[][] returnArray = new Object[list.size()][];
+    for (int i=0; i< returnArray.length; i++) {
+      returnArray[i] = convertParam(list.get(i), paramTypes);
     }
     return returnArray;
   }
