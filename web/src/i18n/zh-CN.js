@@ -103,8 +103,8 @@ const zhCN = {
   "interface.responseParam":"响应参数:",
   "interface.testCaseList":"用例列表:",
   "interface.interfaceName":"接口名:",
-  "interface.interfaceType":"接口类型:",
-  "interface.interfaceURL":"接口URL:",
+  "interface.interfaceType":"请求类型:",
+  "interface.interfaceURL":"请求URL:",
   "interface.interfaceRun":"是否执行:",
 
   "module.moduleName":"模块名称",

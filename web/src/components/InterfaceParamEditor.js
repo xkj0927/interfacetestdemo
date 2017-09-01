@@ -58,17 +58,19 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
             const requestParam = {"interfaceId": interfaceId, "requestParamName":values.paramName, "requestParamType":values.paramType, "requestParamDescription":values.paramDesc};
             dispatch({type: "interfaces/addRequestParam", requestParam:requestParam});
           }
+          dispatch({type:"interfaces/info", selectModuleKey:interfaceInfo.moduleId, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
         }else{
           // 针对responseParam 的处理，
           if("edit" == operateType){
             // 编辑
-            const requestParam = {"responseParamId":currentRespParam.requestParamId, "interfaceId": interfaceId, "responseParamName":values.paramName, "responseParamType":values.paramType, "responseParamDescription":values.paramDesc};
-            dispatch({type: "interfaces/editResponseParam", requestParam:requestParam});
+            const responseParam = {"responseParamId":currentRespParam.responseParamId, "interfaceId": interfaceId, "responseParamName":values.paramName, "responseParamType":values.paramType, "responseParamDescription":values.paramDesc};
+            dispatch({type: "interfaces/editResponseParam", responseParam:responseParam});
           }else{
             // 创建
-            const requestParam = {"interfaceId": interfaceId, "responseParamName":values.paramName, "responseParamType":values.paramType, "responseParamDescription":values.paramDesc};
-            dispatch({type: "interfaces/addResponseParam", requestParam:requestParam});
+            const responseParam = {"interfaceId": interfaceId, "responseParamName":values.paramName, "responseParamType":values.paramType, "responseParamDescription":values.paramDesc};
+            dispatch({type: "interfaces/addResponseParam", responseParam:responseParam});
           }
+          dispatch({type:"interfaces/info", selectModuleKey:interfaceInfo.moduleId, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
         }
       } else {
         message.warn(JSON.stringify(err));
@@ -118,7 +120,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
           {getFieldDecorator("paramDesc", {
             initialValue: paramDesc?paramDesc:""
           })(
-            <TextArea rows={4} autosize={true}/>
+            <TextArea autosize={{ minRows: 4}} />
           )}
         </FormItem>
         <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 21}}>

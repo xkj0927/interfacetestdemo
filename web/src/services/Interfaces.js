@@ -61,9 +61,29 @@ export function editInterfaceRequestParam(requestParam) {
   });
 }
 
-export function deleteRequestParam(interfaceId, requestParam) {
-  return request(`api/v1/interfacecase`, {
+export function addInterfaceResponseParam(responseParam) {
+  return request(`api/v1/interface/responseParam`, {
     method: 'POST',
-    body: JSON.stringify(testCase)
+    body: JSON.stringify(responseParam)
+  });
+}
+
+export function editInterfaceResponseParam(responseParam) {
+  return request(`api/v1/interface/responseParam`, {
+    method: 'PUT',
+    body: JSON.stringify(responseParam)
+  });
+}
+
+export function deleteRequestParam(interfaceId, requestParam) {
+  debugger;
+  return request(`api/v1/interface/requestParam/${requestParam.requestParamId}/${interfaceId}`, {
+    method: 'DELETE',
+  });
+}
+
+export function deleteResponseParam(interfaceId, responseParam) {
+  return request(`api/v1/interface/responseParam/${responseParam.responseParamId}/${interfaceId}`, {
+    method: 'DELETE',
   });
 }

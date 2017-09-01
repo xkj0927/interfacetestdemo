@@ -135,19 +135,111 @@ public class InterfaceController {
    */
   @RequestMapping(value = "interface/testcase/{interfaceId}", method = RequestMethod.GET)
   public ResponseResult getInterfaceAndTestCasesById(@PathVariable long interfaceId){
-    Interface face= interfaceService.findInterfaceById(interfaceId);
-    InterfaceView faceView = InterfaceView.transformInterfaceToView(face);
-    if(null != face){
-      List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(face.getInterfaceId());
-      List<RequestParam> requestParamList= requestParamService.getRequestParamByInterfaceId(interfaceId);
-      List<ResponseParam> responseParamList= responseParamService.getResponseParamByInterfaceId(interfaceId);
-      List<TestCaseView> testCaseViews = new ArrayList<>();
-      testCases.parallelStream().forEach(testCase -> testCaseViews.add(TestCaseView.transformViewToTestCase(testCase)));
-      faceView.setTestCaseViews(testCaseViews);
-      faceView.setRequestParams(requestParamList);
-      faceView.setResponseParams(responseParamList);
-    }
-    return ResponseResult.success(faceView);
+	InterfaceView faceView = getInterfaceInfo(interfaceId);
+	return ResponseResult.success(faceView);
+  }
+  
+  @RequestMapping(value = "interface/requestParam/{requestParamId}/{interfaceId}", method = RequestMethod.DELETE)
+	public ResponseResult requestParamDelete(@PathVariable long requestParamId, @PathVariable long interfaceId){
+	  requestParamService.deleteRequestParamByRequestParamId(requestParamId);
+	  
+	  InterfaceView faceView = getInterfaceInfo(interfaceId);
+	  return ResponseResult.success(faceView);
+	}
+  
+  @RequestMapping(value = "interface/requestParam", method = RequestMethod.PUT)
+	public ResponseResult requestParamByRequestParamModify(@RequestBody RequestParam requestParam){
+	  RequestParam RP= requestParamService.findRequestParamById(requestParam.getRequestParamId());
+		
+	  RP.setRequestParamName(requestParam.getRequestParamName());
+	  RP.setRequestParamType(requestParam.getRequestParamType());
+	  RP.setRequestParamDescription(requestParam.getRequestParamDescription());
+	  
+	  requestParamService.saveRequestParam(RP);
+	  
+	  InterfaceView faceView = getInterfaceInfo(requestParam.getInterfaceId());
+	  return ResponseResult.success(faceView);
+	}
+  
+	@RequestMapping(value = "interface/requestParam", method = RequestMethod.POST)
+	public ResponseResult requestParamCreate(@RequestBody RequestParam requestParam){
+	  RequestParam RP= new RequestParam();
+		
+	  RP.setRequestParamName(requestParam.getRequestParamName());
+	  RP.setRequestParamType(requestParam.getRequestParamType());
+	  RP.setRequestParamDescription(requestParam.getRequestParamDescription());
+	  RP.setInterfaceId(requestParam.getInterfaceId());
+	  RP.setCreateTime(new Date());
+	  
+	  requestParamService.saveRequestParam(RP);
+	  InterfaceView faceView = getInterfaceInfo(requestParam.getInterfaceId());
+	  return ResponseResult.success(faceView);
+	}
+	
+	@RequestMapping(value = "interface/responseParam/{responseParamId}/{interfaceId}", method = RequestMethod.DELETE)
+	public ResponseResult responseParamDelete(@PathVariable long responseParamId, @PathVariable long interfaceId){
+		responseParamService.deleteResponseParamByResponseParamId(responseParamId);
+		InterfaceView faceView = getInterfaceInfo(interfaceId);
+		return ResponseResult.success(faceView);
+	}
+	
+	@RequestMapping(value = "interface/responseParam", method = RequestMethod.PUT)
+	public ResponseResult responseParamByResponseParamModify(@RequestBody ResponseParam responseParam){
+	  ResponseParam RP= responseParamService.findResponseParamById(responseParam.getResponseParamId());
+		
+	  RP.setResponseParamName(responseParam.getResponseParamName());
+	  RP.setResponseParamType(responseParam.getResponseParamType());
+	  RP.setResponseParamDescription(responseParam.getResponseParamDescription());
+	  
+	  responseParamService.saveResponseParam(RP);
+	  InterfaceView faceView = getInterfaceInfo(responseParam.getInterfaceId());
+	  return ResponseResult.success(faceView);
+	}
+	
+	@RequestMapping(value = "interface/responseParam", method = RequestMethod.POST)
+	public ResponseResult responseParamCreate(@RequestBody ResponseParam responseParam){
+	  ResponseParam RP= new ResponseParam();
+		
+	  RP.setResponseParamName(responseParam.getResponseParamName());
+	  RP.setResponseParamType(responseParam.getResponseParamType());
+	  RP.setResponseParamDescription(responseParam.getResponseParamDescription());
+	  RP.setInterfaceId(responseParam.getInterfaceId());
+	  RP.setCreateTime(new Date());
+	  
+	  responseParamService.saveResponseParam(RP);
+	  InterfaceView faceView = getInterfaceInfo(responseParam.getInterfaceId());
+	  return ResponseResult.success(faceView);
+	}
+	  /**
+	   * 删除指定的test Case
+	   * 
+	   * @param testCaseId
+	   * @return
+	   */
+	  @RequestMapping(value = "interfacecase/{testCaseId}/{interfaceId}", method = RequestMethod.DELETE)
+	  public ResponseResult deleteInterfaceCase(@PathVariable long testCaseId,@PathVariable long interfaceId) {
+	    if (0 == testCaseId) {
+	      return ResponseResult.failure();
+	    }
+	    testCaseService.deleteInterfaceCase(testCaseId);
+	    InterfaceView faceView = getInterfaceInfo(interfaceId);
+		return ResponseResult.success(faceView);
+	  }
+  
+  public InterfaceView getInterfaceInfo(long interfaceId){
+	  Interface face= interfaceService.findInterfaceById(interfaceId);
+	    InterfaceView faceView = InterfaceView.transformInterfaceToView(face);
+	    if(null != face){
+	      List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(face.getInterfaceId());
+	      List<RequestParam> requestParamList= requestParamService.getRequestParamByInterfaceId(interfaceId);
+	      List<ResponseParam> responseParamList= responseParamService.getResponseParamByInterfaceId(interfaceId);
+	      List<TestCaseView> testCaseViews = new ArrayList<>();
+	      testCases.parallelStream().forEach(testCase -> testCaseViews.add(TestCaseView.transformViewToTestCase(testCase)));
+	      faceView.setTestCaseViews(testCaseViews);
+	      faceView.setRequestParams(requestParamList);
+	      faceView.setResponseParams(responseParamList);
+	    }
+	    return faceView;
   }
   
   /**

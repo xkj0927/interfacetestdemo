@@ -14,6 +14,7 @@ export default {
     projectId:'',
     currentModule: {},
     activeKey : '',
+    displayInterfaceCreateDia: false,
   },
   reducers: {
     update(state, {modules,projectId:projectId}) {
@@ -143,7 +144,7 @@ export default {
         }
       });
       return state;
-    }
+    },
   },
   effects: {
     *reload({projectId}, { select, call, put}) {

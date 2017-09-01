@@ -50,14 +50,14 @@ public class InterfaceTestCaseController {
    * @param testCaseId
    * @return
    */
-  @RequestMapping(value = "interfacecase/{testCaseId}", method = RequestMethod.DELETE)
-  public ResponseResult deleteInterfaceCase(@PathVariable long testCaseId) {
-    if (0 == testCaseId) {
-      return ResponseResult.failure();
-    }
-    testCaseService.deleteInterfaceCase(testCaseId);
-    return ResponseResult.success();
-  }
+//  @RequestMapping(value = "interfacecase/{testCaseId}", method = RequestMethod.DELETE)
+//  public ResponseResult deleteInterfaceCase(@PathVariable long testCaseId) {
+//    if (0 == testCaseId) {
+//      return ResponseResult.failure();
+//    }
+//    testCaseService.deleteInterfaceCase(testCaseId);
+//    return ResponseResult.success();
+//  }
 
   /**
    * 修改指定的TestCase

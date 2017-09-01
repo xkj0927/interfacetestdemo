@@ -5,7 +5,7 @@ import React from "react";
 import {Form, Table, Input, Popconfirm, Button } from "antd";
 import {routerRedux} from "dva/router";
 import {FormattedMessage, injectIntl} from 'react-intl';
-import style from "./InterfaceEditor.less"
+import style from "./TestCaseParamForm.less";
 import {format} from '../utils/JSONFormat';
 
 const FormItem = Form.Item;
@@ -19,8 +19,14 @@ const formLayout = {
     }
 };
 export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailInfo, jsonEditModal, testCaseParamFrom}) => {
-    var testCaseParamCase = JSON.parse(testCaseDetailInfo.paramCase);
-    var testCaseExpectResult = JSON.parse(testCaseDetailInfo.expectResult);
+    var testCaseParamCase = [];
+    var testCaseExpectResult = [];
+    if(null != testCaseDetailInfo.paramCase && ""!= testCaseDetailInfo.paramCase){
+        testCaseParamCase = JSON.parse(testCaseDetailInfo.paramCase);
+    }
+    if(null != testCaseDetailInfo.expectResult && ""!= testCaseDetailInfo.expectResult){
+        testCaseExpectResult = JSON.parse(testCaseDetailInfo.expectResult);
+    }
     const {paramCase, expectResult} = testCaseDetailInfo;
     const {getFieldDecorator, validateFields} = form;
     var paramCaseObj = [];
@@ -29,15 +35,18 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
     const columns = [
         {
             title: "paramName",
-            dataIndex: 'paramName'
+            dataIndex: 'paramName',
+            width:'20%'
         },
         {
             title: "paramType",
-            dataIndex: 'paramType'
+            dataIndex: 'paramType',
+            width:'20%'
         },
         {
             title: "paramValue",
             dataIndex: 'paramValue',
+            width:'60%'
         },
     ];
     if("paramCase" == testCaseParamFrom){
@@ -48,13 +57,13 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
             for(var i=0; i< requestParamObject.length;i++){
                 paramNameObj =  requestParamObject[i].requestParamName;
                 paramTypeObj =  requestParamObject[i].requestParamType;
-                var newJson={"paramName": paramNameObj, "paramType": paramTypeObj,  "paramValue": (<FormItem>
+                var newJson={"paramName": paramNameObj, "paramType": paramTypeObj,  "paramValue": (<div className={style.testCaseParamEditText}><FormItem>
                     {getFieldDecorator(paramNameObj, {
                         initialValue: testCaseParamCase[paramNameObj]
                     })(
-                        <textarea rows={2} autosize={true} minRows={2} />
+                        <TextArea autosize={{ minRows: 3}} />
                     )}
-                </FormItem>)};
+                </FormItem></div>)};
                 paramCaseObj.push(newJson);
             }
         }
@@ -66,13 +75,13 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
             for(var i=0; i< responseParamObject.length;i++){
                 paramNameObj =  responseParamObject[i].responseParamName;
                 paramTypeObj =  responseParamObject[i].responseParamType;
-                var newJson={"paramName": paramNameObj, "paramType": paramTypeObj,  "paramValue": (<FormItem>
+                var newJson={"paramName": paramNameObj, "paramType": paramTypeObj,  "paramValue": (<div className={style.testCaseParamEditText}><FormItem>
                     {getFieldDecorator(paramNameObj, {
                         initialValue: testCaseExpectResult[paramNameObj]
                     })(
-                        <textarea rows={2} autosize={true} minRows={2} />
+                        <TextArea autosize={{ minRows: 3}} />
                     )}
-                </FormItem>)};
+                </FormItem></div>)};
                 paramCaseObj.push(newJson);
             }
         }
@@ -117,21 +126,18 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
             {getFieldDecorator("testCaseParam", {
                 initialValue: jsonValue?format(jsonValue, false):""
             })(
-                <TextArea rows={4} autosize={true} minRows={4}/>
+                <TextArea autosize={{ minRows: 4}}/>
             )}
         </FormItem>);
     }else{
-        ParamDiv =  (<Table columns={columns} dataSource={paramCaseObj} pagination={false}/>);
+        ParamDiv =  (<Table columns={columns} dataSource={paramCaseObj} pagination={false} bordered/>);
     }
-
     return (
         <div>
             <Form>
-                <div>
-                    {ParamDiv}
-                </div>
+                {ParamDiv}
                 <FormItem>
-                    <Button  className={style.testCaseParamEditButton} onClick={changeEditDiv.bind(this)}>Change Edit Mode</Button>
+                    <Button className={style.testCaseParamEditButton} onClick={changeEditDiv.bind(this)}>Change Edit Mode</Button>
                     <Button className={style.testCaseParamButton} onClick={handleSubmit.bind(this)}>Save</Button>
                 </FormItem>
             </Form>

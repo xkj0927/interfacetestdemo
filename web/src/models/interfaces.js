@@ -23,7 +23,8 @@ export default {
     currentReqParam:"",
     currentRespParam:"",
     jsonEditModal:false,
-    interfaceFlag: false
+    displayInterfaceInfoDia: false,
+    editInterfaceFrom: "",
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
@@ -32,6 +33,7 @@ export default {
       state.operatorType = operatorType;
       state.moduleKey = moduleKey;
       state.displayInterParamDia = false;
+      state.displayInterfaceInfoDia = false;
       let newState = state;
       return newState;
     },
@@ -49,10 +51,18 @@ export default {
       state.displayTestCaseDia = !state.displayTestCaseDia;
       state.testCaseDetailInfo = testCaseDetailInfo;
       state.testCaseParamFrom = testCaseParamFrom;
+      if("" != testCaseParamFrom && !state.displayTestCaseDia){
+        state.jsonEditModal=false;
+      }
       let newState = state;
       return newState;
     },
-
+    changeInterfaceInfoState(state, {editInterfaceFrom: editInterfaceFrom}){
+      state.displayInterfaceInfoDia = !state.displayInterfaceInfoDia;
+      state.editInterfaceFrom = editInterfaceFrom;
+      let newState = state;
+      return newState;
+    },
     displayEditModal(state,{currentTestCase}){
       state.displayEditTestCaseModal = !state.displayEditTestCaseModal;
       state.currentTestCase = currentTestCase;
@@ -143,19 +153,39 @@ export default {
       }
     },
     *showTestCase({record: testCase, testCaseParamFrom: testCaseParamFrom}, {put}){
-      debugger;
       yield put({
         type: 'changetestcasestate',
         testCaseDetailInfo: testCase,
         testCaseParamFrom: testCaseParamFrom
       });
     },
+    *showInterfaceInfo({from}, {put}){
+    debugger;
+      yield put({
+        type: 'changeInterfaceInfoState',
+        editInterfaceFrom: from,
+      });
+    },
     *deleteTestCase({payload: record}, {call, put}){
-      yield call(testCaseService.deleteTestCase, record.interfaceTestCaseId);
+      const {data} = yield call(testCaseService.deleteTestCase, record.interfaceTestCaseId, record.interfaceId);
+      yield put({
+        type: 'update',
+        payload: data,
+        operatorType: "info",
+        moduleKey: data.moduleId
+      });
     },
     *add({payload}, {call, put}){
-      debugger;
       const {data} = yield call(interfaceService.addinterfaces, payload);
+      yield put({
+        type: 'update',
+        payload: data,
+        operatorType: "info",
+        moduleKey: data.moduleId
+      });
+    },
+    *edit({payload}, {call, put}){
+      const {data} = yield call(interfaceService.editinterfaces, payload);
       yield put({
         type: 'update',
         payload: data,
@@ -167,7 +197,6 @@ export default {
       yield put({type:"displayEditModal",currentTestCase:currentTestCase});
     },
     *editTestCase({testCase:testCase}, {call, put}){
-      debugger
       const result = yield call(interfaceService.editTestCase, testCase);
       yield put({type:"modifyTestCase",operateType:"edit", newTestCase:result.data});
     },
@@ -182,31 +211,66 @@ export default {
     // 新增一个参数
     *addRequestParam({requestParam:requestParam}, {call, put}){
       const {data} = yield call(interfaceService.addInterfaceRequestParam, requestParam);
-      yield put({type:"addParam",requestParam:data});
+      // yield put({type:"addParam",requestParam:data});
+      yield put({
+        type: 'update',
+        payload: data,
+        operatorType: "info",
+        moduleKey:data.moduleId
+      });
     },
 
     *editRequestParam({requestParam:requestParam}, {call, put}){
       const {data} = yield call(interfaceService.editInterfaceRequestParam, requestParam);
-      yield put({type:"addParam",requestParam:data});
+      // yield put({type:"addParam",requestParam:data});
+      yield put({
+        type: 'update',
+        payload: data,
+        operatorType: "info",
+        moduleKey:data.moduleId
+      });
     },
 
     *deleteRequestParam({interfaceId: interfaceId, requestParam:requestParam}, {call, put}){
       const {data} = yield call(interfaceService.deleteRequestParam, interfaceId, requestParam);
-      yield put({type:"addParam",requestParam:data});
+      yield put({
+        type: 'update',
+        payload: data,
+        operatorType: "info",
+        moduleKey:data.moduleId
+      });
     },
 
 
-    *addResponseParam({interfaceView:interfaceView}, {call, put}){
-      const face = {"interfaceId":interfaceView.interfaceId,"interfaceName":interfaceView.interfaceName,"interfaceType":interfaceView.interfaceType,
-        "interfaceUrl":interfaceView.interfaceUrl,"moduleId":interfaceView.moduleId,"requestParam":interfaceView.requestParam,
-        "responseResult":"["+JSON.stringify(interfaceView.responseResult)+"]","run":interfaceView.run};
-      yield call(interfaceService.editinterfaces, face);
-      yield put({type:"updateInterfaceInfo",interfaceView});
+    *addResponseParam({responseParam:responseParam}, {call, put}){
+      const {data} = yield call(interfaceService.addInterfaceResponseParam, responseParam);
+      yield put({
+        type: 'update',
+        payload: data,
+        operatorType: "info",
+        moduleKey:data.moduleId
+      });
+
+    },
+    *editResponseParam({responseParam:responseParam}, {call, put}){
+      const {data} = yield call(interfaceService.editInterfaceResponseParam, responseParam);
+      // yield put({type:"addParam",requestParam:data});
+      yield put({
+        type: 'update',
+        payload: data,
+        operatorType: "info",
+        moduleKey:data.moduleId
+      });
     },
 
     *deleteResponseParam({interfaceId: interfaceId, responseParam:responseParam}, {call, put}){
       const {data} = yield call(interfaceService.deleteResponseParam, interfaceId, responseParam);
-      yield put({type:"addParam",requestParam:data});
+      yield put({
+        type: 'update',
+        payload: data,
+        operatorType: "info",
+        moduleKey:data.moduleId
+      });
     },
 
     *changeEditWay({interfaceInfo: interfaceInfo}, {put}){

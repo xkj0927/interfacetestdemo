@@ -52,21 +52,21 @@ export default injectIntl(({form, intl, dispatch, currentTestCase, interfaceId})
           )}
         </FormItem>
 
-        <FormItem label={intl.formatMessage({id: "testCase.paramCase"}) + ":"} {...formLayout}>
-          {getFieldDecorator("paramCase", {
-            initialValue: paramCase?format(paramCase, false):""
-          })(
-            <TextArea rows={4} autosize={true}/>
-          )}
-        </FormItem>
+        {/*<FormItem label={intl.formatMessage({id: "testCase.paramCase"}) + ":"} {...formLayout}>*/}
+          {/*{getFieldDecorator("paramCase", {*/}
+            {/*initialValue: paramCase?format(paramCase, false):""*/}
+          {/*})(*/}
+            {/*<TextArea rows={4} autosize={true}/>*/}
+          {/*)}*/}
+        {/*</FormItem>*/}
 
-        <FormItem label={intl.formatMessage({id: "testCase.expectResult"}) + ":"} {...formLayout}>
-          {getFieldDecorator("expectResult", {
-            initialValue: expectResult?format(expectResult, false):""
-          })(
-            <TextArea rows={4} autosize={true} minRows={4}/>
-          )}
-        </FormItem>
+        {/*<FormItem label={intl.formatMessage({id: "testCase.expectResult"}) + ":"} {...formLayout}>*/}
+          {/*{getFieldDecorator("expectResult", {*/}
+            {/*initialValue: expectResult?format(expectResult, false):""*/}
+          {/*})(*/}
+            {/*<TextArea rows={4} autosize={true} minRows={4}/>*/}
+          {/*)}*/}
+        {/*</FormItem>*/}
 
         <FormItem label={intl.formatMessage({id: "testCase.expectStatus"}) + ":"} {...formLayout}>
           {getFieldDecorator("expectStatus", {
@@ -133,7 +133,7 @@ export default injectIntl(({form, intl, dispatch, currentTestCase, interfaceId})
         >
           {getFieldDecorator('run', {
             valuePropName: 'checked',
-            initialValue : run
+            initialValue : (undefined != run? run: true)
           })(
             <Switch/>
           )}

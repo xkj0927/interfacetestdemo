@@ -31,35 +31,37 @@ public class RequestParamController {
 	  return ResponseResult.success(requestParamList);
 	}
 	
-	@RequestMapping(value = "interface/requestParam/{requestParamId}", method = RequestMethod.DELETE)
-	public ResponseResult requestParamDelete(@PathVariable long requestParamId){
-	  requestParamService.deleteRequestParamByRequestParamId(requestParamId);
-	  return ResponseResult.success();
-	}
+//	@RequestMapping(value = "interface/requestParam/{requestParamId}/{interfaceId}", method = RequestMethod.DELETE)
+//	public ResponseResult requestParamDelete(@PathVariable long requestParamId, @PathVariable long interfaceId){
+//	  requestParamService.deleteRequestParamByRequestParamId(requestParamId);
+//	  
+//	  List<RequestParam> requestParamList= requestParamService.getRequestParamByInterfaceId(interfaceId);
+//	  return ResponseResult.success(requestParamList);
+//	}
+//	
+//	@RequestMapping(value = "interface/requestParam", method = RequestMethod.PUT)
+//	public ResponseResult requestParamByRequestParamModify(@RequestBody RequestParam requestParam){
+//	  RequestParam RP= requestParamService.findRequestParamById(requestParam.getRequestParamId());
+//		
+//	  RP.setRequestParamName(requestParam.getRequestParamName());
+//	  RP.setRequestParamType(requestParam.getRequestParamType());
+//	  RP.setRequestParamDescription(requestParam.getRequestParamDescription());
+//	  
+//	  RequestParam currentRequestParam = requestParamService.saveRequestParam(RP);
+//	  return ResponseResult.success(currentRequestParam);
+//	}
 	
-	@RequestMapping(value = "interface/requestParam/{requestParamId}", method = RequestMethod.PUT)
-	public ResponseResult requestParamByRequestParamModify(@RequestBody RequestParam requestParam){
-	  RequestParam RP= requestParamService.findRequestParamById(requestParam.getRequestParamId());
-		
-	  RP.setRequestParamName(requestParam.getRequestParamName());
-	  RP.setRequestParamType(requestParam.getRequestParamType());
-	  RP.setRequestParamDescription(requestParam.getRequestParamDescription());
-	  
-	  requestParamService.saveRequestParam(RP);
-	  return ResponseResult.success();
-	}
-	
-	@RequestMapping(value = "interface/requestParam", method = RequestMethod.POST)
-	public ResponseResult requestParamCreate(@RequestBody RequestParam requestParam){
-	  RequestParam RP= new RequestParam();
-		
-	  RP.setRequestParamName(requestParam.getRequestParamName());
-	  RP.setRequestParamType(requestParam.getRequestParamType());
-	  RP.setRequestParamDescription(requestParam.getRequestParamDescription());
-	  RP.setInterfaceId(requestParam.getInterfaceId());
-	  RP.setCreateTime(new Date());
-	  
-	  RequestParam currentRequestParam = requestParamService.saveRequestParam(RP);
-	  return ResponseResult.success(currentRequestParam);
-	}
+//	@RequestMapping(value = "interface/requestParam", method = RequestMethod.POST)
+//	public ResponseResult requestParamCreate(@RequestBody RequestParam requestParam){
+//	  RequestParam RP= new RequestParam();
+//		
+//	  RP.setRequestParamName(requestParam.getRequestParamName());
+//	  RP.setRequestParamType(requestParam.getRequestParamType());
+//	  RP.setRequestParamDescription(requestParam.getRequestParamDescription());
+//	  RP.setInterfaceId(requestParam.getInterfaceId());
+//	  RP.setCreateTime(new Date());
+//	  
+//	  RequestParam currentRequestParam = requestParamService.saveRequestParam(RP);
+//	  return ResponseResult.success(currentRequestParam);
+//	}
 }

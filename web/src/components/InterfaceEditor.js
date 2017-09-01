@@ -7,11 +7,12 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import style from "./InterfaceEditor.less"
 import InterfaceParamEditor from "./InterfaceParamEditor";
 import TestCaseDetailInfo from "./TestCaseDetailInfo";
-import TestCaseEditor from '../components/TestCaseEditor'
+import TestCaseEditor from './TestCaseEditor'
+import InterfaceInfoEdit from './InterfaceInfoEdit'
 
 const FormItem = Form.Item;
 export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia,
-  displayEditTestCaseModal, currentTestCase, currentReqParam, currentRespParam, testCaseDetailInfo, jsonEditModal, testCaseParamFrom, reqOrResp, form, intl}) => {
+  displayEditTestCaseModal, currentTestCase, currentReqParam, currentRespParam, testCaseDetailInfo, jsonEditModal, displayInterfaceInfoDia, testCaseParamFrom, interfaceEditFrom, reqOrResp, form, intl}) => {
     const {getFieldDecorator, validateFields} = form;
     let requestTableData = [];
     let responseTableData = [];
@@ -20,18 +21,22 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     const columns = [
         {
             title: intl.formatMessage({id: "interface.request.paramName"}),
-            dataIndex: 'requestParamName'
+            dataIndex: 'requestParamName',
+            width:"30%"
         },
         {
             title: intl.formatMessage({id: "interface.request.paramType"}),
-            dataIndex: 'requestParamType'
+            dataIndex: 'requestParamType',
+            width:"20%"
         },
         {
             title: intl.formatMessage({id: "interface.request.paramDesc"}),
-            dataIndex: 'requestParamDescription'
+            dataIndex: 'requestParamDescription',
+            width:"42%"
         },
       {
-        title: "",
+        title: intl.formatMessage({id: "testCase.operation"}),
+          width:"8%",
         render: (text, record) => {
           return (
             <Button.Group type="ghost">
@@ -55,18 +60,22 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
   const responseResultColumns = [
     {
       title: intl.formatMessage({id: "interface.request.paramName"}),
-      dataIndex: 'responseParamName'
+      dataIndex: 'responseParamName',
+      width:"30%"
     },
     {
       title: intl.formatMessage({id: "interface.request.paramType"}),
-      dataIndex: 'responseParamType'
+      dataIndex: 'responseParamType',
+      width:"20%"
     },
     {
       title: intl.formatMessage({id: "interface.request.paramDesc"}),
-      dataIndex: 'responseParamDescription'
+      dataIndex: 'responseParamDescription',
+      width:"42%"
     },
     {
-      title: "",
+      title: intl.formatMessage({id: "testCase.operation"}),
+      width:"8%",
       render: (text, record) => {
         return (
           <Button.Group type="ghost">
@@ -119,26 +128,52 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
 
       <TestCaseEditorForm currentTestCase={currentTestCase} interfaceId = {interfaceInfo?interfaceInfo.interfaceId:""}/>
     </Modal>;
-
-    const testCaseOperatorColumns = [
+    const testCaseColumns = [
         {
-            title: "TestCase Name",
-            dataIndex: 'testCaseName'
+            title: intl.formatMessage({id: "testCase.testCaseName"}),
+            dataIndex: 'testCaseName',
+            width: '16%',
         },
         {
-            title: "Expect Status",
-            dataIndex: 'expectStatus'
+            title: intl.formatMessage({id: "testCase.expectStatus"}),
+            dataIndex: 'expectStatus',
+            width: '8%',
+        },
+        {
+            title: "",
+            width: '4%',
+            render: (text, record) => {
+                return (
+                    <Button.Group type="ghost">
+                        <Button title="Edit Param Case"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record,"paramCase")}><Icon type="edit" /></Button>
+                    </Button.Group>
+                );
+            }
         },
         {
             title: "Param Case",
-            dataIndex: 'paramCase'
+            dataIndex: 'paramCase',
+            width: '30%',
+        },
+        {
+            title: "",
+            width: '4%',
+            render: (text, record) => {
+                return (
+                    <Button.Group type="ghost">
+                        <Button title="Edit Expect Result"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record, "expectResult")}><Icon type="edit" /></Button>
+                    </Button.Group>
+                );
+            }
         },
         {
             title: "Expect Result",
-            dataIndex: 'expectResult'
+            dataIndex: 'expectResult',
+            width: '30%',
         },
         {
             title: intl.formatMessage({id: "testCase.operation"}),
+            width: '8%',
             render: (text, record) => {
                 return (
                     <Button.Group type="ghost">
@@ -155,50 +190,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 );
             }
         }
-    ];
-    const testCaseColumns = [
-        {
-            title: intl.formatMessage({id: "testCase.testCaseName"}),
-            dataIndex: 'testCaseName',
-            width: '20%',
-        },
-        {
-            title: intl.formatMessage({id: "testCase.expectStatus"}),
-            dataIndex: 'expectStatus',
-            width: '10%',
-        },
-        {
-            title: "",
-            width: '3%',
-            render: (text, record) => {
-                return (
-                    <Button.Group type="ghost">
-                        <Button title="param Case detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record,"paramCase")}><Icon type="info" /></Button>
-                    </Button.Group>
-                );
-            }
-        },
-        {
-            title: "Param Case",
-            dataIndex: 'paramCase',
-            width: '32%',
-        },
-        {
-            title: "",
-            width: '3%',
-            render: (text, record) => {
-                return (
-                    <Button.Group type="ghost">
-                        <Button title="detail info"  size="small" onClick={showTestCaseDetailInfoDialog.bind(this, record, "expectResult")}><Icon type="info" /></Button>
-                    </Button.Group>
-                );
-            }
-        },
-        {
-            title: "Expect Result",
-            dataIndex: 'expectResult',
-            width: '32%',
-        },
     ];
     const handleSubmit=(e)=> {
         e.preventDefault();
@@ -219,6 +210,12 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
     const showInterfaceParamDialog =(param)=>{
       dispatch({type:"interfaces/showParam", interfaceInfo: interfaceInfo, reqOrResp: param});
     };
+    const showTestCaseDetailInfoDialog =(testCase, testCaseParamFrom)=>{
+        dispatch({type:"interfaces/showTestCase", record: testCase, testCaseParamFrom: testCaseParamFrom});
+    };
+    const showEditInterfaceInfoModal =()=>{
+        dispatch({type:"interfaces/showInterfaceInfo", from:"interfaceEdit"});
+    };
     let ParamEditor = Form.create()(
         (props) => {
             return <InterfaceParamEditor
@@ -230,9 +227,6 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 currentRespParam={currentRespParam}/>
         }
     );
-    const showTestCaseDetailInfoDialog =(testCase, testCaseParamFrom)=>{
-        dispatch({type:"interfaces/showTestCase", record: testCase, testCaseParamFrom: testCaseParamFrom});
-    };
     let title = "";
     if("requestParam" == reqOrResp){
         title=intl.formatMessage({id: "interface.request.title"})
@@ -258,230 +252,68 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         }
     );
     const TestCaseDetailInfoModal = <Modal
-        title="TestCase Detail Info"
+        style={{width: "800px"}}
+        title="Edit Param"
         visible={displayTestCaseDia}
         onCancel={showTestCaseDetailInfoDialog}
         footer={null}>
         <TcDetailInfo />
     </Modal>;
+
+    let InterfaceEditInfo = Form.create()(
+        (props) => {
+            return <InterfaceInfoEdit
+                form={props.form}
+                dispatch={dispatch}
+                interfaceInfo = {interfaceInfo}
+                moduleId ={interfaceInfo.moduleId}
+                from={interfaceEditFrom}/>
+        }
+    );
+    const InterfaceInfoEditModal = <Modal
+        title="Edit Interface Info"
+        visible={displayInterfaceInfoDia}
+        onCancel={showEditInterfaceInfoModal}
+        footer={null}>
+        <InterfaceEditInfo />
+    </Modal>;
     if("info" == operatorType){
-        // if(interfaceInfo.requestParam){
-        //     requestTableData = interfaceInfo.requestParams;
-        // }
-        // if(interfaceInfo.responseResult){
-        //     responseTableData = interfaceInfo.responseParams;
-        // }
         requestTableData = interfaceInfo.requestParams;
         responseTableData = interfaceInfo.responseParams;
 
-        const {interfaceName,interfaceType, interfaceUrl, interfaceId} = interfaceInfo;
+        const {interfaceName,interfaceType, interfaceUrl, interfaceId, run} = interfaceInfo;
         return (
            <div>
-               <Button className={style.editInterfaceBtn} onClick={
-                   () => {
-                       dispatch({type: "interfaces/show", key: interfaceId, operatorType: "edit", interfaceInfo: interfaceInfo, selectModuleKey:interfaceInfo.moduleId});
-                   }
-               }><Icon type="edit"/>{intl.formatMessage({id: "interface.editInterface"})}</Button>
+               <Button onClick={showEditInterfaceInfoModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="edit"/>{intl.formatMessage({id: "interface.editInterface"})}</Button>
                <div className={style.interfaceInfoDiv}><b>{intl.formatMessage({id: "interface.interfaceName"})}</b>{interfaceName}</div>
                <div className={style.interfaceInfoDiv}><b>{intl.formatMessage({id: "interface.interfaceType"})}</b>{interfaceType}</div>
                <div className={style.interfaceInfoDiv}><b>{intl.formatMessage({id: "interface.interfaceURL"})}</b>{interfaceUrl}</div>
-               <div className={style.interfaceInfoDiv}><b>{intl.formatMessage({id: "interface.interfaceRun"})}</b>{interfaceInfo.run?"yes":"no"}</div>
-               <div className={style.interfaceInfoDiv}>
-                   <b>{intl.formatMessage({id: "interface.requestParam"})}</b>
-               </div>
+               <div className={style.interfaceInfoDiv}><b>{intl.formatMessage({id: "interface.interfaceRun"})}</b>{run?"YES":"NO"}</div>
                <div>
+                   <b>{intl.formatMessage({id: "interface.requestParam"})}</b>
+                   <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "requestParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addRequestParam"})}</Button>
+               </div>
+               <div className={style.interfaceInfoDiv}>
                    <Table columns={columns} dataSource={requestTableData} pagination={false} bordered/>
                </div>
-               <div className={style.interfaceInfoDiv}>
-                   <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
-               </div>
                <div>
+                   <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
+                   <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "responseParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addResponseParam"})}</Button>
+               </div>
+               <div className={style.interfaceInfoDiv}>
                    <Table columns={responseResultColumns} dataSource={responseTableData} pagination={false} bordered/>
                </div>
-               <div className={style.interfaceInfoDiv}>
-                   <b>{intl.formatMessage({id: "interface.testCaseList"})}</b>
-               </div>
                <div>
-                   <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} pagination={false}/>
+                   <b>{intl.formatMessage({id: "interface.testCaseList"})}<Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
+               </div>
+               <div className={style.interfaceInfoDiv}>
+                   <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} pagination={false} bordered/>
                </div>
                {TestCaseDetailInfoModal}
-             {addParamEditorModal}
+               {addParamEditorModal}
+               {editTestCaseModal}
+               {InterfaceInfoEditModal}
            </div>
-        );
-    }else if("edit" == operatorType){
-        requestTableData = interfaceInfo.requestParams;
-        responseTableData = interfaceInfo.responseParams;
-        // if(interfaceInfo.requestParam){
-        //     requestTableData = interfaceInfo.requestParams;
-        // }
-        // if(interfaceInfo.responseResult){
-        //     responseTableData = [];
-        //     try{
-        //       responseTableData = interfaceInfo.responseParams;
-        //     }catch (e){
-        //       console.log(e);
-        //     }
-        // }
-        const {interfaceName = [],interfaceType = [], interfaceUrl =[], isRun=[]} = interfaceInfo;
-        return (
-            <div>
-                <FormItem>
-                    <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>{intl.formatMessage({id: "interface.saveInterface"})}</Button>
-                </FormItem>
-                <Form>
-                    <FormItem  label={intl.formatMessage({id: "interface.interfaceName"})}>
-                        {getFieldDecorator("interfaceName", {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceName"})
-                                }
-                            ],
-                            initialValue: interfaceName
-                        })(
-                            <Input type="text"/>
-                        )}
-                    </FormItem>
-                    <FormItem  label={intl.formatMessage({id: "interface.interfaceType"})}>
-                        {getFieldDecorator("interfaceType", {
-                            rules: [
-                                {
-                                    required: true,
-                                },
-                            ],
-                            initialValue: interfaceType
-                        })(
-                            <Select>
-                                <Option value="POST">POST</Option>
-                                <Option value="GET">GET</Option>
-                                <Option value="DELETE">DELETE</Option>
-                                <Option value="PUT">PUT</Option>
-                            </Select>
-                        )}
-                    </FormItem>
-                    <FormItem  label={intl.formatMessage({id: "interface.interfaceURL"})}>
-                        {getFieldDecorator("interfaceUrl", {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceURL"})
-                                },
-
-                            ],
-                            initialValue: interfaceUrl
-                        })(
-                            <Input type="text"/>
-                        )}
-                    </FormItem>
-                    <FormItem  label={intl.formatMessage({id: "interface.interfaceRun"})}>
-                        {getFieldDecorator("run", {
-                            rules: [
-                                {
-                                    required: true,
-                                },
-                            ],
-                            initialValue: String(interfaceInfo.run)
-                        })(
-                            <Select>
-                                <Select.Option value="true">yes</Select.Option>
-                                <Select.Option value="false">no</Select.Option>
-                            </Select>
-                        )}
-                    </FormItem>
-                    <div>
-                    <b>{intl.formatMessage({id: "interface.requestParam"})}</b>
-                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "requestParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addRequestParam"})}</Button>
-                    </div>
-                    <div>
-                        <Table columns={columns} dataSource={requestTableData} pagination={false}/>
-                    </div>
-                    <div>
-                        <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
-                        <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "responseParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addResponseParam"})}</Button>
-                    </div>
-                    <div>
-                        <Table columns={responseResultColumns} dataSource={responseTableData} pagination={false}/>
-                    </div>
-                    <div>
-                        <b>{intl.formatMessage({id: "interface.testCaseList"})}<Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addModalTitle"})}</Button></b>
-                    </div>
-
-                    <div>
-                        <Table columns={testCaseOperatorColumns} dataSource={interfaceInfo.testCaseViews} pagination={false}/>
-                    </div>
-                </Form>
-                {addParamEditorModal}
-              {editTestCaseModal}
-            </div>
-        );
-    }else if("add" == operatorType){
-        const {interfaceName = [],interfaceType = [], interfaceUrl =[], run=[]} = interfaceInfo;
-        return (
-            <div>
-                <FormItem>
-                    <Button className={style.editInterfaceBtn} onClick={handleSubmit.bind(this)}><Icon type="save"/>Save Interface</Button>
-                </FormItem>
-                <Form>
-                    <FormItem  label={"interfaceName:"}>
-                        {getFieldDecorator("interfaceName", {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceName"})
-                                }
-                            ],
-                            initialValue: interfaceName
-                        })(
-                            <Input type="text"/>
-                        )}
-                    </FormItem>
-                    <FormItem  label={"interfaceType:"}>
-                        {getFieldDecorator("interfaceType", {
-                            rules: [
-                                {
-                                    required: true,
-                                },
-                            ],
-                            initialValue: "POST"
-                        })(
-                            <Select>
-                                <Option value="POST">POST</Option>
-                                <Option value="GET">GET</Option>
-                                <Option value="DELETE">DELETE</Option>
-                                <Option value="PUT">PUT</Option>
-                            </Select>
-                        )}
-                    </FormItem>
-                    <FormItem  label={"interfaceUrl:"}>
-                        {getFieldDecorator("interfaceUrl", {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: intl.formatMessage({id: "module.warn.emptyInterfaceURL"})
-                                }
-                            ],
-                            initialValue: interfaceUrl
-                        })(
-                            <Input type="text"/>
-                        )}
-                    </FormItem>
-                    <FormItem  label={"isRun:"}>
-                        {getFieldDecorator("run", {
-                            rules: [
-                                {
-                                    required: true,
-                                },
-                            ],
-                            initialValue: "true"
-                        })(
-                            <Select>
-                                <Select.Option value="true">yes</Select.Option>
-                                <Select.Option value="false">no</Select.Option>
-                            </Select>
-                        )}
-                    </FormItem>
-                </Form>
-            </div>
         );
     }
     else{

@@ -7,6 +7,7 @@ import * as constants from '../utils/constants';
 import style from './ModulePage.less';
 import InterfaceEditor from '../components/InterfaceEditor'
 import ModuleEditor from '../components/ModuleEditor';
+import InterfaceInfoEdit from '../components/InterfaceInfoEdit'
 
 const TreeNode = Tree.TreeNode;
 const RadioGroup = Radio.Group;
@@ -14,6 +15,7 @@ const FormItem = Form.Item;
 
 const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVisible = false, modalKey = '', projectId, currentModule, activeKey, intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
   console.log(modules);
+  console.log(currentModule);
   // 左边module的树结构
   // 异步加载数据
   const onLoadData = (treeNode) => {
@@ -48,7 +50,11 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
               displayEditTestCaseModal= {interfaces.displayEditTestCaseModal}
               currentTestCase = {interfaces.currentTestCase}
               currentReqParam={interfaces.currentReqParam}
-              currentRespParam={interfaces.currentRespParam}/>
+              currentRespParam={interfaces.currentRespParam}
+              jsonEditModal={interfaces.jsonEditModal}
+              testCaseParamFrom={interfaces.testCaseParamFrom}
+              displayInterfaceInfoDia={interfaces.displayInterfaceInfoDia}
+              interfaceEditFrom={interfaces.editInterfaceFrom}/>
       }
   );
   // module
@@ -104,7 +110,9 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     // 添加接口
     const addInterfaceHandle = () => {
       if(activeKey && activeKey.split('-').length == 1){
-        dispatch({type:"interfaces/show", selectModuleKey:activeKey, selectInterfaceKey:0, operatorType: "add", interfaceInfo: {}});
+        debugger;
+        // dispatch({type:"interfaces/show", selectModuleKey:activeKey, selectInterfaceKey:0, operatorType: "add", interfaceInfo: {}});
+        dispatch({type:"interfaces/showInterfaceInfo", from:"interfaceCreate"});
       }
     };
 
@@ -174,7 +182,26 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
 
     <ModuleForm />
   </Modal>;
-
+  const showEditInterfaceInfoModal =()=>{
+    dispatch({type:"interfaces/showInterfaceInfo"});
+  };
+  let InterfaceEditInfo = Form.create()(
+      (props) => {
+        return <InterfaceInfoEdit
+            form={props.form}
+            dispatch={dispatch}
+            interfaceInfo = {(null!=interfaces.interfaceInfo)?interfaces.interfaceInfo:[]}
+            moduleId = {activeKey}
+            from={interfaces.editInterfaceFrom}/>
+      }
+  );
+  const InterfaceInfoEditModal = <Modal
+      title="Create Interface Info"
+      visible={interfaces.displayInterfaceInfoDia}
+      onCancel={showEditInterfaceInfoModal}
+      footer={null}>
+    <InterfaceEditInfo />
+  </Modal>;
   return (
     <div className={style.moduleContainer}>
       <div className={style.ModuleCollapseLeft}>
@@ -185,6 +212,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
         <InterfaceInfoView />
       </div>
       {addModuleModal}
+      {InterfaceInfoEditModal}
     </div>
   );
 };

@@ -30,35 +30,35 @@ public class ResponseParamController {
 	  return ResponseResult.success(responseParamList);
 	}
 	
-	@RequestMapping(value = "interface/responseParam/{responseParamId}", method = RequestMethod.DELETE)
-	public ResponseResult responseParamDelete(@PathVariable long responseParamId){
-		responseParamService.deleteResponseParamByResponseParamId(responseParamId);
-	  return ResponseResult.success();
-	}
-	
-	@RequestMapping(value = "interface/responseParam/{responseParamId}", method = RequestMethod.PUT)
-	public ResponseResult responseParamByResponseParamModify(@RequestBody ResponseParam responseParam){
-	  ResponseParam RP= responseParamService.findResponseParamById(responseParam.getResponseParamId());
-		
-	  RP.setResponseParamName(responseParam.getResponseParamName());
-	  RP.setResponseParamType(responseParam.getResponseParamType());
-	  RP.setResponseParamDescription(responseParam.getResponseParamDescription());
-	  
-	  responseParamService.saveResponseParam(RP);
-	  return ResponseResult.success();
-	}
-	
-	@RequestMapping(value = "interface/responseParam", method = RequestMethod.POST)
-	public ResponseResult responseParamCreate(@RequestBody ResponseParam responseParam){
-	  ResponseParam RP= new ResponseParam();
-		
-	  RP.setResponseParamName(responseParam.getResponseParamName());
-	  RP.setResponseParamType(responseParam.getResponseParamType());
-	  RP.setResponseParamDescription(responseParam.getResponseParamDescription());
-	  RP.setInterfaceId(responseParam.getInterfaceId());
-	  RP.setCreateTime(new Date());
-	  
-	  ResponseParam currentResponseParam = responseParamService.saveResponseParam(RP);
-	  return ResponseResult.success(currentResponseParam);
-	}
+//	@RequestMapping(value = "interface/responseParam/{responseParamId}", method = RequestMethod.DELETE)
+//	public ResponseResult responseParamDelete(@PathVariable long responseParamId){
+//		responseParamService.deleteResponseParamByResponseParamId(responseParamId);
+//	  return ResponseResult.success();
+//	}
+//	
+//	@RequestMapping(value = "interface/responseParam", method = RequestMethod.PUT)
+//	public ResponseResult responseParamByResponseParamModify(@RequestBody ResponseParam responseParam){
+//	  ResponseParam RP= responseParamService.findResponseParamById(responseParam.getResponseParamId());
+//		
+//	  RP.setResponseParamName(responseParam.getResponseParamName());
+//	  RP.setResponseParamType(responseParam.getResponseParamType());
+//	  RP.setResponseParamDescription(responseParam.getResponseParamDescription());
+//	  
+//	  ResponseParam currentResponseParam = responseParamService.saveResponseParam(RP);
+//	  return ResponseResult.success(currentResponseParam);
+//	}
+//	
+//	@RequestMapping(value = "interface/responseParam", method = RequestMethod.POST)
+//	public ResponseResult responseParamCreate(@RequestBody ResponseParam responseParam){
+//	  ResponseParam RP= new ResponseParam();
+//		
+//	  RP.setResponseParamName(responseParam.getResponseParamName());
+//	  RP.setResponseParamType(responseParam.getResponseParamType());
+//	  RP.setResponseParamDescription(responseParam.getResponseParamDescription());
+//	  RP.setInterfaceId(responseParam.getInterfaceId());
+//	  RP.setCreateTime(new Date());
+//	  
+//	  ResponseParam currentResponseParam = responseParamService.saveResponseParam(RP);
+//	  return ResponseResult.success(currentResponseParam);
+//	}
 }
