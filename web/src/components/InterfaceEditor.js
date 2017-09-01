@@ -310,6 +310,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                </div>
                <div>
                    <b>{intl.formatMessage({id: "interface.testCaseList"})}<Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addTestCase"})}</Button></b>
+                   <div className={style.promptMessage}>{"(Click cell of each test case to edit 'Param Case' and 'Expect Result')"}</div>
                </div>
                <div className={style.interfaceInfoDiv}>
                    <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} pagination={false} bordered/>
