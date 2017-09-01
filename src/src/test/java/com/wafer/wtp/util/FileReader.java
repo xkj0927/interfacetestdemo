@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
 
 public abstract class FileReader {
 
@@ -133,23 +132,37 @@ public abstract class FileReader {
   
   /**
    * 读取Restful数据
+   * 
    * @param restTemplate
    * @param path
    * @return
    */
-  @SuppressWarnings("unchecked")
-  public static Object[][] readRestDataObject(Method method, RestTemplate restTemplate, String path) {
+  public static Object[][] readRestDataObject(Method method, RestTemplate restTemplate,
+      String path) {
     List<Class<?>> paramTypes = new ArrayList<Class<?>>();
     for (Parameter parameter : method.getParameters()) {
       paramTypes.add(parameter.getType());
     }
     String result = restTemplate.getForObject(path, String.class);
     JSONArray jsonArray = JSONArray.fromObject(result);
-    
-    List<String[]> list = JSONArray.toList(jsonArray, new String[paramTypes.size()],new JsonConfig());
-    
+
+    List<String[]> list = new ArrayList<String[]>();
+
+    for (int i = 0; i < jsonArray.size(); i++) {
+      JSONArray array = jsonArray.getJSONArray(i);
+      String[] strArray = new String[array.size()];
+      for (int j = 0; j < array.size(); j++) {
+        if (null == array.get(j)) {
+          strArray[j] = "";
+        } else {
+          strArray[j] = array.getString(j);
+        }
+      }
+      list.add(strArray);
+    }
+
     Object[][] returnArray = new Object[list.size()][];
-    for (int i=0; i< returnArray.length; i++) {
+    for (int i = 0; i < returnArray.length; i++) {
       returnArray[i] = convertParam(list.get(i), paramTypes);
     }
     return returnArray;
