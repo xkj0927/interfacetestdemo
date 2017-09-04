@@ -259,8 +259,8 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         }
     );
     const TestCaseDetailInfoModal = <Modal
-        width="750"
-        title="Edit Param"
+        width="950"
+        title={intl.formatMessage({id: "interface.testCase.editParams"})}
         visible={displayTestCaseDia}
         onCancel={showTestCaseDetailInfoDialog}
         footer={null}>
