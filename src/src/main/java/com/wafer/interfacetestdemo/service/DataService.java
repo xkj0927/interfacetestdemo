@@ -31,7 +31,7 @@ public class DataService {
         .append("       ON pit.interface_id = pin.interface_id").append("   LEFT JOIN ps_module pm")
         .append("       ON pin.module_id = pm.module_id").append("   LEFT JOIN ps_project pjt")
         .append("       ON pm.project_id = pjt.project_id")
-        .append("   WHERE pit.is_run = 1 AND pin.is_run = 1 AND pm.is_run = 1 ")
+        .append("   WHERE pit.is_run = 0 AND pin.is_run = 0 AND pm.is_run = 0 ")
         .append("       AND pjt.project_id = ").append(projectId)
         .append("   ORDER BY pm.module_id,pin.interface_id ASC");
     List<Object[]> list = deptRepository.createQuery(sql.toString()).getResultList();
@@ -50,7 +50,7 @@ public class DataService {
         .append("       ON pit.interface_id = pin.interface_id").append("   LEFT JOIN ps_module pm")
         .append("       ON pin.module_id = pm.module_id").append("   LEFT JOIN ps_project pjt")
         .append("       ON pm.project_id = pjt.project_id")
-        .append("   WHERE pit.is_run = 1 AND pin.is_run = 1 AND pm.is_run = 1 ")
+        .append("   WHERE pit.is_run = 0 AND pin.is_run = 0 AND pm.is_run = 0 ")
         .append("       AND pjt.project_id = ").append(projectId)
         .append("       AND pm.module_name = '").append(moduleName).append("' ")
         .append("       AND pin.interface_name = '").append(interfaceName).append("' ")
