@@ -9,6 +9,16 @@ import style from "./InterfaceEditor.less"
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+
+const formLayout = {
+  labelCol: {
+    span: 5
+  },
+  wrapperCol: {
+    span: 16
+  }
+};
+
 export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}) => {
     let {interfaceName = [],interfaceType = [], interfaceUrl =[], run =[]} = interfaceInfo;
     const {getFieldDecorator, validateFields} = form;
@@ -33,10 +43,11 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
             }
         });
     };
+
     return (
         <div>
             <Form>
-                <FormItem  label={intl.formatMessage({id: "interface.interfaceName"})}>
+                <FormItem  label={intl.formatMessage({id: "interface.interfaceName"})} {...formLayout}>
                     {getFieldDecorator("interfaceName", {
                         rules: [
                             {
@@ -49,7 +60,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
                         <Input type="text"/>
                     )}
                 </FormItem>
-                <FormItem  label={intl.formatMessage({id: "interface.interfaceType"})}>
+                <FormItem  label={intl.formatMessage({id: "interface.interfaceType"})} {...formLayout}>
                     {getFieldDecorator("interfaceType", {
                         rules: [
                             {
@@ -66,7 +77,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
                         </Select>
                     )}
                 </FormItem>
-                <FormItem  label={intl.formatMessage({id: "interface.interfaceURL"})}>
+                <FormItem  label={intl.formatMessage({id: "interface.interfaceURL"})} {...formLayout}>
                     {getFieldDecorator("interfaceUrl", {
                         rules: [
                             {
@@ -81,7 +92,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
                     )}
                 </FormItem>
                 <FormItem
-                    label={intl.formatMessage({id: "module.running"}) + ":"}
+                    label={intl.formatMessage({id: "module.running"}) + ":"} {...formLayout}
                 >
                     {getFieldDecorator('run', {
                         valuePropName: 'checked',
@@ -91,7 +102,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
                     )}
                 </FormItem>
                 </Form>
-            <FormItem>
+            <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 19}}>
                 <Button className={style.testCaseParamButton} onClick={handleSubmit.bind(this)}><Icon type="save"/>save</Button>
             </FormItem>
         </div>

@@ -11,7 +11,7 @@ const {TextArea} = Input;
 
 const formLayout = {
   labelCol: {
-    span: 7
+    span: 5
   },
   wrapperCol: {
     span: 16
@@ -78,7 +78,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
   };
 
   return (
-    <div style={{width: "450px"}}>
+    <div style={{width: "100%"}}>
       <Form onSubmit={paramSubmit}>
         {/* 参数名称 */}
         <FormItem label={intl.formatMessage({id: `interface.${InterfaceType}.paramName`}) + ":"} {...formLayout}>
@@ -122,7 +122,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
             <TextArea autosize={{ minRows: 4}} />
           )}
         </FormItem>
-        <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 21}}>
+        <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 19}}>
           <Button type="primary" htmlType="submit"><Icon type="save"/><FormattedMessage id="module.save"/></Button>
         </FormItem>
       </Form>

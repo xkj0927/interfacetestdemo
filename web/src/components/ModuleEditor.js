@@ -6,7 +6,7 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 const FormItem = Form.Item;
 const formLayout = {
   labelCol: {
-    span: 7
+    span: 5
   },
   wrapperCol: {
     span: 16
@@ -34,7 +34,7 @@ export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
   };
 
   return (
-    <div style={{width: "450px"}}>
+    <div style={{width: "100%"}}>
       <Form onSubmit={submitHandle}>
         <FormItem label={intl.formatMessage({id: "module.moduleName"}) + ":"} {...formLayout}>
           {getFieldDecorator("moduleName", {
@@ -63,7 +63,7 @@ export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
         </FormItem>
 
         <br/>
-        <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 21}}>
+        <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 19}}>
           <Button type="primary" htmlType="submit"><FormattedMessage id="module.save"/></Button>
         </FormItem>
       </Form>
