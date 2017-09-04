@@ -146,6 +146,9 @@ const zhCN = {
   "interface.response.paramType":"返回值类型",
   "interface.response.paramType.empty":"返回值类型不能为空",
   "interface.response.paramDesc":"描述",
+  "interface.testCase.editParams":"编辑参数",
+  "testCase.params.formatWrong":"参数不是JSON格式",
+  "testCase.changeMode.btn":"切换编辑模式",
 
 };
 
