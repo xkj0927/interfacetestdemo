@@ -173,6 +173,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
   );
   const moduleTitle = currentModule.moduleId ? intl.formatMessage({id: "module.editModule.modal"}) : intl.formatMessage({id: "module.addModule.modal"});
   const addModuleModal = <Modal
+    width="750"
     title={moduleTitle}
     visible={addModuleModalVisible}
     onCancel={addModuleShow}
@@ -195,6 +196,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       }
   );
   const InterfaceInfoEditModal = <Modal
+      width="750"
       title="Create Interface Info"
       visible={interfaces.displayInterfaceInfoDia}
       onCancel={showEditInterfaceInfoModal}

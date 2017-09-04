@@ -120,6 +120,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
 
     const moduleTitle = currentTestCase? intl.formatMessage({id: "testCase.editModalTitle"}):intl.formatMessage({id: "testCase.addModalTitle"});
     const editTestCaseModal = <Modal
+          width="750"
           title={moduleTitle}
           visible={displayEditTestCaseModal}
           onCancel={editTestCaseModalShow}
@@ -239,6 +240,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         title=intl.formatMessage({id: "interface.response.title"})
     }
     const addParamEditorModal = <Modal
+        width="750"
         title={title}
         visible={displayInterParamDia}
         onCancel={showInterfaceParamDialog}
@@ -257,7 +259,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         }
     );
     const TestCaseDetailInfoModal = <Modal
-        style={{width: "800px"}}
+        width="750"
         title="Edit Param"
         visible={displayTestCaseDia}
         onCancel={showTestCaseDetailInfoDialog}
@@ -276,6 +278,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         }
     );
     const InterfaceInfoEditModal = <Modal
+        width="750"
         title="Edit Interface Info"
         visible={displayInterfaceInfoDia}
         onCancel={showEditInterfaceInfoModal}
