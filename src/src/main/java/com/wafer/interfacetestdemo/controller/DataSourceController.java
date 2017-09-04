@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,12 +26,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.wafer.interfacetestdemo.config.Constant;
 import com.wafer.interfacetestdemo.domain.Interface;
 import com.wafer.interfacetestdemo.domain.InterfaceTestCase;
+import com.wafer.interfacetestdemo.domain.Module;
+import com.wafer.interfacetestdemo.domain.Project;
 import com.wafer.interfacetestdemo.service.InterfaceService;
 import com.wafer.interfacetestdemo.service.InterfaceTestCaseService;
+import com.wafer.interfacetestdemo.service.ModuleService;
+import com.wafer.interfacetestdemo.service.ProjectService;
 import com.wafer.interfacetestdemo.utils.ExcelUtils;
 import com.wafer.interfacetestdemo.utils.IOUtils;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
-import com.wafer.interfacetestdemo.vo.TestCaseView;
 
 @RestController
 @Transactional
@@ -44,6 +48,12 @@ public class DataSourceController {
 
   @Autowired
   InterfaceTestCaseService testCaseService;
+  
+  @Autowired
+  ProjectService projectService;
+  
+  @Autowired
+  ModuleService moduleService;
 
   @PostMapping("/dataimport/excel")
   public ResponseResult importDataFromExcel(@RequestParam("excelFile") MultipartFile excelFile,
@@ -72,25 +82,93 @@ public class DataSourceController {
     return null;
   }
 
-  
-  @GetMapping("/dataexport/excel/{faceId}")
-  public ResponseResult exportDataToExcel(@PathVariable long faceId, HttpServletResponse response) {
+
+  /**
+   * 导出一个interface下的所有test Case
+   * @param faceId
+   * @param response
+   * @return
+   */
+  @GetMapping("/dataexport/excel/face/{faceId}")
+  public ResponseResult exportDataToExcelFromFace(@PathVariable long faceId, HttpServletResponse response) {
     // 1.查询获取需要导出的数据
+    Interface face = interfaceService.findInterfaceById(faceId);
+
     List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(faceId);
-    List<TestCaseView> testCaseViews = new ArrayList<>();
-    testCases.forEach(testCase -> testCaseViews.add(TestCaseView.transformViewToTestCase(testCase)));
-    // 2.将数据生成excel文件保存在服务器上
-    String filePath = ExcelUtils.createExcel(testCaseViews);
-    // 3.将服务器文件下载到本地
-    if(null != filePath){
-      IOUtils.downloadFile(response, filePath);
+    List<HashMap<String, String>> data = new ArrayList<>();
+    packageCaseData(data, face, testCases);
+
+    download(response, data);
+    // 4.定时任务删除文件以及
+    return ResponseResult.success();
+  }
+  
+  /**
+   * 到处一个项目下的所有test case
+   * @param projectId
+   * @param response
+   * @return
+   */
+  @GetMapping("/dataexport/excel/project/{projectId}")
+  public ResponseResult exportDataToExcelFromProject(@PathVariable long projectId, HttpServletResponse response) {
+    // 1.查询获取需要导出的数据
+    
+    Project project = projectService.getProjectByProjectId(projectId);
+    
+    List<HashMap<String, String>> data = new ArrayList<>();
+    
+    if(null != project){
+      List<Module> modules = moduleService.findModuleByProjectId(project.getProjectId());
+      modules.forEach(module -> {
+        List<Interface> faces = interfaceService.findInterfaceByModule(module.getModuleId());
+        
+        faces.forEach(face -> {
+          List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(face.getInterfaceId());
+          
+          testCases.forEach(testCase -> {
+            packageCaseData(data, face, testCases);
+          });
+        });
+        
+      });
     }
+    
+    download(response, data);
     // 4.定时任务删除文件以及
     return ResponseResult.success();
   }
 
-  
-  
+
+  public List<HashMap<String, String>> packageCaseData(List<HashMap<String, String>> data,
+      Interface face, List<InterfaceTestCase> testCases) {
+    
+    testCases.forEach(testCase -> {
+      HashMap<String, String> entry = new HashMap<String, String>();
+      entry.put(ExcelUtils.COLUMN_NAME_01, testCase.getTestCaseName());
+      entry.put(ExcelUtils.COLUMN_NAME_02, face.getInterfaceUrl());
+      entry.put(ExcelUtils.COLUMN_NAME_03, face.getInterfaceType());
+      entry.put(ExcelUtils.COLUMN_NAME_04, testCase.getParamCase());
+      entry.put(ExcelUtils.COLUMN_NAME_05, testCase.getExpectResult());
+      entry.put(ExcelUtils.COLUMN_NAME_06, String.valueOf(testCase.getExpectStatus()));
+      entry.put(ExcelUtils.COLUMN_NAME_07, Constant.RUNNING == testCase.getIsRun() ? "Y" : "N");
+
+      data.add(entry);
+    });
+    return data;
+  }
+
+
+  public void download(HttpServletResponse response, List<HashMap<String, String>> data) {
+    // 2.将数据生成excel文件保存在服务器上
+    String filePath = ExcelUtils.createExcel(data);
+    // 3.将服务器文件下载到本地
+    if (null != filePath) {
+      IOUtils.downloadFile(response, filePath);
+    }
+  }
+
+
+
   public void dealRowData(Map<String, String> row) {
 
     Interface face = faceDataToSave(row);

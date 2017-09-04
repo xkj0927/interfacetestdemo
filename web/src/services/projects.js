@@ -38,3 +38,10 @@ export function deleteProject({userId, projectId}) {
   });
 }
 
+export function downloadProjectTestCase({projectId}) {
+  return request(`api/v1/dataexport/excel/project/${projectId}`, {
+    method: 'GET'
+  });
+}
+
+

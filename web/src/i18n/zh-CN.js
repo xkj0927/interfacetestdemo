@@ -149,6 +149,9 @@ const zhCN = {
   "interface.testCase.editParams":"编辑参数",
   "testCase.params.formatWrong":"参数不是JSON格式",
   "testCase.changeMode.btn":"切换编辑模式",
+  "project.export.confirm":"请选择导出文件格式",
+  "project.export.file.json":"JSON",
+  "project.export.file.excel":"Excel",
 
 };
 
