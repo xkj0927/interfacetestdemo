@@ -23,7 +23,10 @@ const zhCN = {
 
   "msgKey.100001": "用户名或密码不能为空",
   "msgKey.100002": "用户不存在",
-  "msgKey.100003": "密码不正确",
+  "msgKey.100003": "用户名或密码不正确",
+  "msgKey.100004": "重复的邮箱地址",
+  "msgKey.200001": "该部门存在用户，无法删除。",
+  "msgKey.200002": "该部门存在项目，无法删除。",
 
   "user.addUser": "新建",
   "user.editUser": "编辑",
@@ -81,13 +84,6 @@ const zhCN = {
   "project.success.addProject": "添加项目成功",
   "project.success.editProject": "编辑项目成功",
   "project.success.deleteProject": "删除项目成功",
-
-  "msgKey.100001": "用户名或密码不能为空",
-  "msgKey.100002": "用户不存在",
-  "msgKey.100003": "密码不正确",
-  "msgKey.100004": "重复的邮箱地址",
-  "msgKey.200001": "该部门存在用户，无法删除。",
-  "msgKey.200002": "该部门存在项目，无法删除。",
 
   "loading": "加载中",
 
