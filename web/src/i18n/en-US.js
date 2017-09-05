@@ -125,6 +125,7 @@ const enUS = {
   "testCase.editModalTitle":"Edit Test Case",
   "testCase.addModalTitle":"Add Test Case",
   "interface.testCase.editParams":"Edit Param",
+  "testCase.changeMode.btn":"Change Edit Mode",
 
   "module.moduleName":"Module Name",
   "module.moduleName.emptyUserName":"Please ...",
