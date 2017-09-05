@@ -132,6 +132,18 @@ const enUS = {
   "module.save":"Save",
   "module.addModule.modal":"Add Module",
   "add.module":"Add Module",
+  "module.delete":"Delete Module",
+  "module.delete.confirmTitle":"Are you sure you want to delete the module？",
+  "interface.delete.confirmTitle":"Are you sure you want to delete the interface？",
+  "module.delete.confirm":"Ok",
+  "module.delete.cancel":"Cancel",
+  "module.add.interface":"Add Interface",
+  "module.edit" : "Edit Module",
+  "module.running":"Is Run",
+  "module.editModule.modal":"Edit Module",
+  "module.addModule.modal":"Add Module",
+  "interface.delete":"Delete Interface",
+  "interface.duplicate":"Duplicate Interface",
 };
 
 export default enUS;
