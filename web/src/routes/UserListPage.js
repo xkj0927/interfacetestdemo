@@ -9,10 +9,6 @@ import UserEditor from "../components/UserEditor";
 const UserListPage = ({ dispatch, userList, deptList, userInfo, intl, loading, visible, modalKey, handleType}) => {
   const columns = [
     {
-      title: intl.formatMessage({id: "user.userID"}),
-      dataIndex: 'userId'
-    },
-    {
       title: intl.formatMessage({id: "user.userName"}),
       dataIndex: 'userName'
     },

@@ -23,6 +23,8 @@ public class JsonUtils {
   
   private static final String EXPORT_FILE_NAME_JSON = "TestAPI.json";
   
+  public static final String DOWNLOAD_FILE_PATH = "/download/";
+  
   /**
    * 创建JSON格式的文件
    * @param data
@@ -70,7 +72,7 @@ public class JsonUtils {
     }
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
     String dateTime = dateFormat.format(new Date());
-    String path = "/download/" + dateTime + "/" + UUID.randomUUID().toString().replaceAll("-", "") + "/";
+    String path = DOWNLOAD_FILE_PATH + dateTime + "/" + UUID.randomUUID().toString().replaceAll("-", "") + "/";
     File file = new File(path);
     if (!file.exists()) {
       file.mkdirs();
