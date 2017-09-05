@@ -9,10 +9,6 @@ import DeptEditor from "../components/DeptEditor";
 const DeptListPage = ({dispatch, depts, intl, loading, deptInfo, handleType, modalKey, visible}) => {
   const columns = [
     {
-      title: intl.formatMessage({id: "dept.deptId"}),
-      dataIndex: 'deptId'
-    },
-    {
       title: intl.formatMessage({id: "dept.deptName"}),
       dataIndex: 'deptName'
     },
