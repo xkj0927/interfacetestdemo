@@ -2,6 +2,7 @@
  * Created by admin on 2017/7/26.
  */
 import request from '../utils/request';
+import downloadRequest from '../utils/downloadRequest';
 import * as constants from '../utils/constants';
 
 const JSON = window.JSON;
@@ -38,8 +39,8 @@ export function deleteProject({userId, projectId}) {
   });
 }
 
-export function downloadProjectTestCase({projectId}) {
-  return request(`api/v1/dataexport/excel/project/${projectId}`, {
+export function downloadProjectTestCase({projectId, fileType}) {
+  downloadRequest(`api/v1/dataexport/${fileType}/project/${projectId}`, {
     method: 'GET'
   });
 }
