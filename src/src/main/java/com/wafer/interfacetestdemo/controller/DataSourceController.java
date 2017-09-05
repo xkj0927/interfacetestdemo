@@ -120,18 +120,13 @@ public class DataSourceController {
     
     if(null != project){
       List<Module> modules = moduleService.findModuleByProjectId(project.getProjectId());
-      modules.forEach(module -> {
+      for(Module module : modules){
         List<Interface> faces = interfaceService.findInterfaceByModule(module.getModuleId());
-        
-        faces.forEach(face -> {
+        for(Interface face : faces){
           List<InterfaceTestCase> testCases = testCaseService.findInterfaceTestCaseByFace(face.getInterfaceId());
-          
-          testCases.forEach(testCase -> {
-            packageCaseData(data, face, testCases);
-          });
-        });
-        
-      });
+          packageCaseData(data, face, testCases);
+        }
+      }
     }
     
     download(fileType, response, data);
@@ -143,7 +138,7 @@ public class DataSourceController {
   public List<HashMap<String, String>> packageCaseData(List<HashMap<String, String>> data,
       Interface face, List<InterfaceTestCase> testCases) {
     
-    testCases.forEach(testCase -> {
+    for(InterfaceTestCase testCase : testCases){
       HashMap<String, String> entry = new HashMap<String, String>();
       entry.put(ExcelUtils.COLUMN_NAME_01, testCase.getTestCaseName());
       entry.put(ExcelUtils.COLUMN_NAME_02, face.getInterfaceUrl());
@@ -154,7 +149,7 @@ public class DataSourceController {
       entry.put(ExcelUtils.COLUMN_NAME_07, Constant.RUNNING == testCase.getIsRun() ? "Y" : "N");
 
       data.add(entry);
-    });
+    }
     return data;
   }
 
