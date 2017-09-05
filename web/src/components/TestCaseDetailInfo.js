@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/8/25 0025.
  */
 import React from "react";
-import {Form, Table, Input, Popconfirm, Button } from "antd";
+import {Form, Table, Input, Popconfirm, Button, message } from "antd";
 import {routerRedux} from "dva/router";
 import {FormattedMessage, injectIntl} from 'react-intl';
 import style from "./TestCaseParamForm.less";
@@ -22,10 +22,22 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
     var testCaseParamCase = [];
     var testCaseExpectResult = [];
     if(null != testCaseDetailInfo.paramCase && ""!= testCaseDetailInfo.paramCase){
-        testCaseParamCase = JSON.parse(testCaseDetailInfo.paramCase);
+        testCaseParamCase = "";
+          try{
+            testCaseParamCase = JSON.parse(testCaseDetailInfo.paramCase);
+          }catch (e){
+            console.log(e);
+            message.warn(intl.formatMessage({id: "testCase.params.formatWrong"}));
+          }
     }
     if(null != testCaseDetailInfo.expectResult && ""!= testCaseDetailInfo.expectResult){
-        testCaseExpectResult = JSON.parse(testCaseDetailInfo.expectResult);
+        testCaseExpectResult = "";
+      try{
+          testCaseExpectResult = JSON.parse(testCaseDetailInfo.expectResult);
+      }catch (e){
+        console.log(e);
+        message.warn(intl.formatMessage({id: "testCase.params.formatWrong"}));
+      }
     }
     const {paramCase, expectResult} = testCaseDetailInfo;
     const {getFieldDecorator, validateFields} = form;
@@ -93,19 +105,35 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
             console.log("values:", values);
             if(null != values){
                 if(jsonEditModal){
-                    if("paramCase" == testCaseParamFrom){
-                        testCaseDetailInfo.paramCase = values.testCaseParam;
-                    }else if("expectResult" == testCaseParamFrom){
-                        testCaseDetailInfo.expectResult = values.testCaseParam;
+                    var testCaseParamStr = values.testCaseParam;
+                    testCaseParamStr= testCaseParamStr.trim();
+                    testCaseParamStr = testCaseParamStr.replace(/[\r\n]/g, "");
+                    if((testCaseParamStr.indexOf("{") == 0 || testCaseParamStr.indexOf("[{") ==0) && testCaseParamStr.length!=0) {
+                        try {
+                            JSON.parse(testCaseParamStr);
+                            if ("paramCase" == testCaseParamFrom) {
+                                testCaseDetailInfo.paramCase = testCaseParamStr;
+                            } else if ("expectResult" == testCaseParamFrom) {
+                                testCaseDetailInfo.expectResult = testCaseParamStr;
+                            }
+                            dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
+                        } catch (e) {
+                            console.log(e);
+                            message.warn(intl.formatMessage({id: "testCase.params.formatWrong"}));
+                            return;
+                        }
+                    }else{
+                        message.warn(intl.formatMessage({id: "testCase.params.formatWrong"}));
+                        return;
                     }
                 }else{
                     if("paramCase" == testCaseParamFrom){
                         testCaseDetailInfo.paramCase = JSON.stringify(values);
                     }else if("expectResult" == testCaseParamFrom){
-                        testCaseDetailInfo.expectResult = JSON. stringify(values);
+                        testCaseDetailInfo.expectResult = JSON.stringify(values);
                     }
+                    dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
                 }
-                dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
             }
         });
     };
@@ -133,12 +161,12 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
         ParamDiv =  (<Table columns={columns} dataSource={paramCaseObj} pagination={false} bordered/>);
     }
     return (
-        <div>
+        <div className={style.showParamsContent}>
             <Form>
                 {ParamDiv}
                 <FormItem>
-                    <Button className={style.testCaseParamEditButton} onClick={changeEditDiv.bind(this)}>Change Edit Mode</Button>
-                    <Button className={style.testCaseParamButton} onClick={handleSubmit.bind(this)}>Save</Button>
+                    <Button className={style.testCaseParamEditButton} onClick={changeEditDiv.bind(this)}>{intl.formatMessage({id: "testCase.changeMode.btn"})}</Button>
+                    <Button className={style.testCaseParamButton} onClick={handleSubmit.bind(this)}>{intl.formatMessage({id: "module.save"})}</Button>
                 </FormItem>
             </Form>
         </div>

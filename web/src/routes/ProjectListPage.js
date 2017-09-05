@@ -23,6 +23,21 @@ const ProjectComponent = injectIntl(({dispatch, intl, projectInfo}) => {
                   }>
         <Button className={style.marginLeft5}><Icon type="delete" /></Button>
       </Popconfirm>
+
+      <Popconfirm placement="rightTop" title={intl.formatMessage({id: "project.export.confirm"})}
+                  onConfirm={
+                    () => {
+                      dispatch({type: "projects/download", projectId: projectInfo.projectId});
+                    }
+                  }
+                  okText="Excel"
+                  onCacel={
+                    ()=>{
+
+                    }}
+                  cancelText="JSON">
+        <Button className={style.marginLeft5}><Icon type="download" /></Button>
+      </Popconfirm>
     </div>
   );
   return (
