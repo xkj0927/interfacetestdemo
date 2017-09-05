@@ -28,7 +28,7 @@ export default injectIntl(({form, intl, dispatch, moduleInfo, projectId}) => {
           dispatch({type: "modules/add", payload: {...values, ...{projectId:projectId}}});
         }
       } else {
-        message.warn(JSON.stringify(err));
+        // message.warn(JSON.stringify(err));
       }
     });
   };

@@ -32,15 +32,16 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
     const handleSubmit=(e)=> {
         e.preventDefault();
         validateFields((err, values) => {
-            console.log("values:", values);
-            if("interfaceEdit" == from && undefined != interfaceInfo.interfaceId){
-                values.moduleId = interfaceInfo.moduleId;
-                values.interfaceId = interfaceInfo.interfaceId;
-                dispatch({type:"interfaces/edit", payload:values});
-                dispatch({type:"interfaces/cancelDialog"});
-            }else{
-                values.moduleId = moduleId;
-                dispatch({type:"interfaces/add", payload:values});
+            if (!err){
+                console.log("values:", values);
+                if("interfaceEdit" == from && undefined != interfaceInfo.interfaceId){
+                    values.moduleId = interfaceInfo.moduleId;
+                    values.interfaceId = interfaceInfo.interfaceId;
+                    dispatch({type:"interfaces/edit", payload:values});
+                }else{
+                    values.moduleId = moduleId;
+                    dispatch({type:"interfaces/add", payload:values});
+                }
                 dispatch({type:"interfaces/cancelDialog"});
             }
         });

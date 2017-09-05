@@ -124,10 +124,13 @@ const enUS = {
   "testCase.running":"IS Run",
   "testCase.editModalTitle":"Edit Test Case",
   "testCase.addModalTitle":"Add Test Case",
+  "interface.testCase.editParams":"Edit Param",
 
   "module.moduleName":"Module Name",
   "module.moduleName.emptyUserName":"Please ...",
-  "module.save":"Save"
+  "module.save":"Save",
+  "module.addModule.modal":"Add Module",
+  "add.module":"Add Module",
 };
 
 export default enUS;

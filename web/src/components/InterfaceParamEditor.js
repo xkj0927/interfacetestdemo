@@ -74,7 +74,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
           // dispatch({type:"interfaces/info", selectModuleKey:interfaceInfo.moduleId, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
         }
       } else {
-        message.warn(JSON.stringify(err));
+        // message.warn(JSON.stringify(err));
       }
     });
   };

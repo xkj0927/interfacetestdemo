@@ -26,13 +26,12 @@ export default injectIntl(({form, intl, dispatch, currentTestCase, interfaceId})
       if (!err) {
         if("update" == type){
           dispatch({type: "interfaces/editTestCase", testCase: {...currentTestCase, ...values}});
-          dispatch({type:"interfaces/cancelDialog"});
         }else{
           dispatch({type: "interfaces/addTestCase", testCase: {...values, ...{interfaceId:interfaceId}}});
-          dispatch({type:"interfaces/cancelDialog"});
         }
+        dispatch({type:"interfaces/cancelDialog"});
       } else {
-        message.warn(JSON.stringify(err));
+        // message.warn(JSON.stringify(err));
       }
     });
   };
