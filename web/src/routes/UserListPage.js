@@ -23,7 +23,7 @@ const UserListPage = ({ dispatch, userList, deptList, userInfo, intl, loading, v
     {
       title: intl.formatMessage({id: "user.lastAccess"}),
       dataIndex: 'latestLoginTime',
-      render: (text, record) => (moment(record.latestLoginTime).format("YYYY-MM-DD HH:mm:ss"))
+      render: (text, record) => record.latestLoginTime ? (moment(record.latestLoginTime).format("YYYY-MM-DD HH:mm:ss")) : ""
     },
     {
       title: intl.formatMessage({id: "user.operation"}),
