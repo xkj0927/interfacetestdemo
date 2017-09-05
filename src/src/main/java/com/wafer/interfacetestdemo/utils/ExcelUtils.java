@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,6 +31,8 @@ public class ExcelUtils {
   private static final String DEFAULT_EXPORT_SHEET_NAME = "InterfaceTestCase.xls";
 
   private static final String DEFAULT_EXPORT_FILE_NAME = "TestAPI.xls";
+  
+  public static final String DOWNLOAD_FILE_PATH = "/download/";
   
   public static String COLUMN_NAME_01 = "caseName";
   public static String COLUMN_NAME_02 = "url";
@@ -245,9 +246,8 @@ public class ExcelUtils {
     if (null != name && name.length > 0) {
       fileName = name[0];
     }
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-    String dateTime = dateFormat.format(new Date());
-    String path = "/download/" + dateTime + "/" + UUID.randomUUID().toString().replaceAll("-", "") + "/";
+    String dateTime = DateUtils.formatDateTime(new Date(), "yyyyMMdd");
+    String path = DOWNLOAD_FILE_PATH + dateTime + "/" + UUID.randomUUID().toString().replaceAll("-", "") + "/";
     File file = new File(path);
     if (!file.exists()) {
       file.mkdirs();
