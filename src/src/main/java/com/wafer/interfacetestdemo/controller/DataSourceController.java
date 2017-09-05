@@ -34,6 +34,7 @@ import com.wafer.interfacetestdemo.service.ModuleService;
 import com.wafer.interfacetestdemo.service.ProjectService;
 import com.wafer.interfacetestdemo.utils.ExcelUtils;
 import com.wafer.interfacetestdemo.utils.IOUtils;
+import com.wafer.interfacetestdemo.utils.JsonUtils;
 import com.wafer.interfacetestdemo.vo.ResponseResult;
 
 @RestController
@@ -98,7 +99,7 @@ public class DataSourceController {
     List<HashMap<String, String>> data = new ArrayList<>();
     packageCaseData(data, face, testCases);
 
-    download(response, data);
+    download(Constant.DOWNLOAD_FILE_TYPE_EXCEL, response, data);
     // 4.定时任务删除文件以及
     return ResponseResult.success();
   }
@@ -109,8 +110,8 @@ public class DataSourceController {
    * @param response
    * @return
    */
-  @GetMapping("/dataexport/excel/project/{projectId}")
-  public ResponseResult exportDataToExcelFromProject(@PathVariable long projectId, HttpServletResponse response) {
+  @GetMapping("/dataexport/{fileType}/project/{projectId}")
+  public void exportDataToExcelFromProject(@PathVariable String fileType, @PathVariable long projectId, HttpServletResponse response) {
     // 1.查询获取需要导出的数据
     
     Project project = projectService.getProjectByProjectId(projectId);
@@ -133,9 +134,9 @@ public class DataSourceController {
       });
     }
     
-    download(response, data);
+    download(fileType, response, data);
     // 4.定时任务删除文件以及
-    return ResponseResult.success();
+//    return ResponseResult.success();
   }
 
 
@@ -158,9 +159,14 @@ public class DataSourceController {
   }
 
 
-  public void download(HttpServletResponse response, List<HashMap<String, String>> data) {
+  public void download(String fileType, HttpServletResponse response, List<HashMap<String, String>> data) {
     // 2.将数据生成excel文件保存在服务器上
-    String filePath = ExcelUtils.createExcel(data);
+    String filePath = null;
+    if(Constant.DOWNLOAD_FILE_TYPE_EXCEL.equals(fileType)){
+      filePath = ExcelUtils.createExcel(data);
+    }else if(Constant.DOWNLOAD_FILE_TYPE_JSON.equals(fileType)){
+      filePath = JsonUtils.createJson(data);
+    }
     // 3.将服务器文件下载到本地
     if (null != filePath) {
       IOUtils.downloadFile(response, filePath);

@@ -27,13 +27,13 @@ const ProjectComponent = injectIntl(({dispatch, intl, projectInfo}) => {
       <Popconfirm placement="rightTop" title={intl.formatMessage({id: "project.export.confirm"})}
                   onConfirm={
                     () => {
-                      dispatch({type: "projects/download", projectId: projectInfo.projectId});
+                      dispatch({type: "projects/download", projectId: projectInfo.projectId, fileType:"excel"});
                     }
                   }
                   okText="Excel"
-                  onCacel={
+                  onCancel={
                     ()=>{
-
+                      dispatch({type: "projects/download", projectId: projectInfo.projectId, fileType:"json"});
                     }}
                   cancelText="JSON">
         <Button className={style.marginLeft5}><Icon type="download" /></Button>
