@@ -29,15 +29,22 @@ function checkStatus(response) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default async function request(url, options) {
+export default async function downloadRequest(url, options) {
     options.headers = {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + (sessionStorage.getItem("access_token") || "")
     };
 
-    const response = await fetch(contextPath + url, options);
-    checkStatus(response);
+    fetch(contextPath + url,  options).then(res => {
+      if (res.url) {
+        var a = document.createElement('a');
+        var url = res.url;
+        a.href = url;
+        a.click();
+      } else {
+        alert('You have no permission to download the file!');
+      }
+    });
 
-    return await response.json();
 }
 
