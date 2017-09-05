@@ -102,11 +102,11 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
                     if("paramCase" == testCaseParamFrom){
                         testCaseDetailInfo.paramCase = JSON.stringify(values);
                     }else if("expectResult" == testCaseParamFrom){
-                        testCaseDetailInfo.expectResult = JSON.stringify(values);
+                        testCaseDetailInfo.expectResult = JSON. stringify(values);
                     }
                 }
+                dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
             }
-            dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
         });
     };
 
