@@ -117,6 +117,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
                                 testCaseDetailInfo.expectResult = testCaseParamStr;
                             }
                             dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
+                            dispatch({type:"interfaces/cancelDialog"});
                         } catch (e) {
                             console.log(e);
                             message.warn(intl.formatMessage({id: "testCase.params.formatWrong"}));
@@ -133,6 +134,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
                         testCaseDetailInfo.expectResult = JSON.stringify(values);
                     }
                     dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
+                    dispatch({type:"interfaces/cancelDialog"});
                 }
             }
         });

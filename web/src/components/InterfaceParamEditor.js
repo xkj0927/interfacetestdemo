@@ -57,7 +57,8 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
             const requestParam = {"interfaceId": interfaceId, "requestParamName":values.paramName, "requestParamType":values.paramType, "requestParamDescription":values.paramDesc};
             dispatch({type: "interfaces/addRequestParam", requestParam:requestParam});
           }
-          dispatch({type:"interfaces/info", selectModuleKey:interfaceInfo.moduleId, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
+          dispatch({type:"interfaces/cancelDialog"});
+          // dispatch({type:"interfaces/info", selectModuleKey:interfaceInfo.moduleId, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
         }else{
           // 针对responseParam 的处理，
           if("edit" == operateType){
@@ -69,7 +70,8 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, currentReqParam
             const responseParam = {"interfaceId": interfaceId, "responseParamName":values.paramName, "responseParamType":values.paramType, "responseParamDescription":values.paramDesc};
             dispatch({type: "interfaces/addResponseParam", responseParam:responseParam});
           }
-          dispatch({type:"interfaces/info", selectModuleKey:interfaceInfo.moduleId, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
+          dispatch({type:"interfaces/cancelDialog"});
+          // dispatch({type:"interfaces/info", selectModuleKey:interfaceInfo.moduleId, selectInterfaceKey:interfaceInfo.interfaceId, operatorType: "info"});
         }
       } else {
         message.warn(JSON.stringify(err));
