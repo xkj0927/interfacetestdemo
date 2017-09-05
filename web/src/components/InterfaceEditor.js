@@ -41,7 +41,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
           return (
             <Button.Group type="ghost">
               <Button title="edit"  size="small" onClick={showEditRequestParamModal.bind(this, record)}><Icon type="edit"/></Button>
-              <Popconfirm title={intl.formatMessage({id: "interface.request.deleteConfirm"})}
+              <Popconfirm title={intl.formatMessage({id: "interface.request.deleteParamConfirm"})}
                           onConfirm={
                             () => {
                               const {interfaceId} = interfaceInfo;
@@ -80,7 +80,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         return (
           <Button.Group type="ghost">
             <Button title="edit"  size="small" onClick={showEditResponseParamModal.bind(this, record)}><Icon type="edit"/></Button>
-            <Popconfirm title={intl.formatMessage({id: "interface.request.deleteConfirm"})}
+            <Popconfirm title={intl.formatMessage({id: "interface.request.deleteResponseConfirm"})}
                         onConfirm={
                           () => {
                             const {interfaceId} = interfaceInfo;
@@ -152,7 +152,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         //     }
         // },
         {
-            title: "Param Case",
+            title: intl.formatMessage({id: "testCase.paramCase"}),
             dataIndex: 'paramCase',
             width: '32%',
             onCellClick: (record)=>{
@@ -171,7 +171,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         //     }
         // },
         {
-            title: "Expect Result",
+            title: intl.formatMessage({id: "testCase.expectResult"}),
             dataIndex: 'expectResult',
             width: '32%',
             onCellClick: (record)=>{
@@ -185,7 +185,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 return (
                     <Button.Group type="ghost">
                         <Button title="edit"  size="small" onClick={showEditTestCaseModal.bind(this, record)}><Icon type="edit"/></Button>
-                        <Popconfirm title="delete"
+                        <Popconfirm title={intl.formatMessage({id: "interface.request.deleteTestCaseConfirm"})}
                                     onConfirm={
                                         () => {
                                             dispatch({type: "interfaces/deleteTestCase", payload: record});

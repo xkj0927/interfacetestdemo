@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,15 +30,17 @@ public class ExcelUtils {
 
   private static final String DEFAULT_EXPORT_SHEET_NAME = "InterfaceTestCase.xls";
 
-  private static final String DEFAULT_EXPORT_FILE_NAME = "ExportTestCase.xls";
+  private static final String DEFAULT_EXPORT_FILE_NAME = "TestAPI.xls";
   
-  public static String COLUMN_NAME_01 = "CaseName";
-  public static String COLUMN_NAME_02 = "URL";
-  public static String COLUMN_NAME_03 = "Type";
-  public static String COLUMN_NAME_04 = "Paramters";
-  public static String COLUMN_NAME_05 = "ExpectResult";
-  public static String COLUMN_NAME_06 = "ExpectStatus";
-  public static String COLUMN_NAME_07 = "IsSkip";
+  public static final String DOWNLOAD_FILE_PATH = "/download/";
+  
+  public static String COLUMN_NAME_01 = "caseName";
+  public static String COLUMN_NAME_02 = "url";
+  public static String COLUMN_NAME_03 = "type";
+  public static String COLUMN_NAME_04 = "paramters";
+  public static String COLUMN_NAME_05 = "expectResult";
+  public static String COLUMN_NAME_06 = "expectStatus";
+  public static String COLUMN_NAME_07 = "isSkip";
 
   public static List<List<Map<String, String>>> parseExcel(InputStream is, String fileName)
       throws IOException {
@@ -92,7 +93,7 @@ public class ExcelUtils {
 
     Workbook work = new HSSFWorkbook();
     Sheet sheet = work.createSheet(DEFAULT_EXPORT_SHEET_NAME);
-    sheet.setDefaultColumnWidth(20 * 256);
+    sheet.setDefaultColumnWidth(16);
     // 创建表头信息
     createTitle(work, sheet);
     // 创建excel的内容信息
@@ -106,7 +107,7 @@ public class ExcelUtils {
     }
     return filePath;
   }
-
+  
   private static String getCellValue(Cell cell) {
     String cellValue = "";
     if (null == cell) {
@@ -239,16 +240,14 @@ public class ExcelUtils {
     }
     return true;
   }
-
-
+  
   public static String getFilePath(String... name) {
     String fileName = DEFAULT_EXPORT_FILE_NAME;
     if (null != name && name.length > 0) {
       fileName = name[0];
     }
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-    String dateTime = dateFormat.format(new Date());
-    String path = "/download/" + dateTime + "/" + UUID.randomUUID().toString().replaceAll("-", "") + "/";
+    String dateTime = DateUtils.formatDateTime(new Date(), "yyyyMMdd");
+    String path = DOWNLOAD_FILE_PATH + dateTime + "/" + UUID.randomUUID().toString().replaceAll("-", "") + "/";
     File file = new File(path);
     if (!file.exists()) {
       file.mkdirs();

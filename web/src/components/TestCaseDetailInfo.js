@@ -33,7 +33,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
     if(null != testCaseDetailInfo.expectResult && ""!= testCaseDetailInfo.expectResult){
         testCaseExpectResult = "";
       try{
-        JSON.parse(testCaseDetailInfo.expectResult);
+          testCaseExpectResult = JSON.parse(testCaseDetailInfo.expectResult);
       }catch (e){
         console.log(e);
         message.warn(intl.formatMessage({id: "testCase.params.formatWrong"}));
@@ -105,17 +105,26 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
             console.log("values:", values);
             if(null != values){
                 if(jsonEditModal){
-                    if("paramCase" == testCaseParamFrom){
-                      try{
-                        JSON.parse(values.testCaseParam);
-                      }catch (e){
-                        console.log(e);
+                    var testCaseParamStr = values.testCaseParam;
+                    testCaseParamStr= testCaseParamStr.trim();
+                    testCaseParamStr = testCaseParamStr.replace(/[\r\n]/g, "");
+                    if((testCaseParamStr.indexOf("{") == 0 || testCaseParamStr.indexOf("[{") ==0) && testCaseParamStr.length!=0) {
+                        try {
+                            JSON.parse(testCaseParamStr);
+                            if ("paramCase" == testCaseParamFrom) {
+                                testCaseDetailInfo.paramCase = testCaseParamStr;
+                            } else if ("expectResult" == testCaseParamFrom) {
+                                testCaseDetailInfo.expectResult = testCaseParamStr;
+                            }
+                            dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
+                        } catch (e) {
+                            console.log(e);
+                            message.warn(intl.formatMessage({id: "testCase.params.formatWrong"}));
+                            return;
+                        }
+                    }else{
                         message.warn(intl.formatMessage({id: "testCase.params.formatWrong"}));
                         return;
-                      }
-                        testCaseDetailInfo.paramCase = values.testCaseParam;
-                    }else if("expectResult" == testCaseParamFrom){
-                        testCaseDetailInfo.expectResult = values.testCaseParam;
                     }
                 }else{
                     if("paramCase" == testCaseParamFrom){
@@ -123,9 +132,9 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
                     }else if("expectResult" == testCaseParamFrom){
                         testCaseDetailInfo.expectResult = JSON.stringify(values);
                     }
+                    dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
                 }
             }
-            dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
         });
     };
 

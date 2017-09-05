@@ -139,6 +139,9 @@ const zhCN = {
   "interface.request.paramType.empty":"参数类型不能为空",
   "interface.request.paramDesc":"描述",
   "interface.request.deleteConfirm":"确定要删除吗？",
+  "interface.request.deleteParamConfirm":"确定要删除请求参数吗？",
+  "interface.request.deleteResponseConfirm":"确定要删除响应参数吗？",
+  "interface.request.deleteTestCaseConfirm":"确定要删除接口用例吗？",
 
   "interface.response.title":"编辑接口返回值",
   "interface.response.paramName":"返回值名称",
