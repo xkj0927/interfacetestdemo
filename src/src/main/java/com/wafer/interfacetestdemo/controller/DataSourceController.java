@@ -146,7 +146,7 @@ public class DataSourceController {
       entry.put(ExcelUtils.COLUMN_NAME_04, testCase.getParamCase());
       entry.put(ExcelUtils.COLUMN_NAME_05, testCase.getExpectResult());
       entry.put(ExcelUtils.COLUMN_NAME_06, String.valueOf(testCase.getExpectStatus()));
-      entry.put(ExcelUtils.COLUMN_NAME_07, Constant.RUNNING == testCase.getIsRun() ? "Y" : "N");
+      entry.put(ExcelUtils.COLUMN_NAME_07, Constant.RUNNING == testCase.getIsRun() ? "N" : "Y");
 
       data.add(entry);
     }
