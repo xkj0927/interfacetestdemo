@@ -29,8 +29,9 @@ export default injectIntl(({form, intl, dispatch, currentTestCase, interfaceId})
         }else{
           dispatch({type: "interfaces/addTestCase", testCase: {...values, ...{interfaceId:interfaceId}}});
         }
+        dispatch({type:"interfaces/cancelDialog"});
       } else {
-        message.warn(JSON.stringify(err));
+        // message.warn(JSON.stringify(err));
       }
     });
   };

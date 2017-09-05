@@ -28,6 +28,7 @@ export default {
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
+      debugger;
       state.interfaceInfo = interfaceInfo;
       state.operatorType = operatorType;
       state.moduleKey = moduleKey;
@@ -36,8 +37,17 @@ export default {
       let newState = state;
       return newState;
     },
+    changeState(state,{}){
+      state.displayInterParamDia = false;
+      state.displayInterfaceInfoDia = false;
+      state.displayEditTestCaseModal = false;
+      state.displayTestCaseDia = false;
+      let newState = state;
+      return newState;
+    },
     // 是否展示requestPram ResponseParam
     changeParamModalState(state, { interfaceId: interfaceId, currentReqParam: currentReqParam, currentRespParam: currentRespParam, reqOrResp: reqOrResp}) {
+     debugger;
       state.currentReqParam = currentReqParam;
       state.currentRespParam = currentRespParam;
       state.displayInterParamDia = !state.displayInterParamDia;
@@ -206,6 +216,7 @@ export default {
     },
     // 新增一个参数
     *addRequestParam({requestParam:requestParam}, {call, put}){
+      debugger;
       const {data} = yield call(interfaceService.addInterfaceRequestParam, requestParam);
       // yield put({type:"addParam",requestParam:data});
       yield put({
@@ -268,7 +279,9 @@ export default {
         moduleKey:data.moduleId
       });
     },
-
+    *cancelDialog({}, {put}){
+      yield put({type:"changeState"});
+    },
     *changeEditWay({interfaceInfo: interfaceInfo}, {put}){
       yield put({type:"jsonChangeEdit", interfaceInfo});
     },

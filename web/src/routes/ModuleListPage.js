@@ -85,7 +85,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
             dispatch({type: "modules/duplicate", moduleId : activeKey.split('-')[0], interfaceId: activeKey.split('-')[1]});
           }
         }}><FormattedMessage id="interface.duplicate"/></Button>
-        <Popconfirm title={<FormattedMessage id="module.delete.confirmTitle"/>}
+        <Popconfirm title={<FormattedMessage id="interface.delete.confirmTitle"/>}
                     onConfirm={deleteHandle}
                     okText={<FormattedMessage id="module.delete.confirm"/>}
                     cancelText={<FormattedMessage id="module.delete.cancel"/>}>
