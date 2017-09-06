@@ -22,19 +22,16 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         {
             title: intl.formatMessage({id: "interface.request.paramName"}),
             dataIndex: 'requestParamName',
-            className: 'columnStyle',
             width:"30%"
         },
         {
             title: intl.formatMessage({id: "interface.request.paramType"}),
             dataIndex: 'requestParamType',
-            className: 'columnStyle',
             width:"20%"
         },
         {
             title: intl.formatMessage({id: "interface.request.paramDesc"}),
             dataIndex: 'requestParamDescription',
-            className: 'columnStyle',
             width:"42%"
         },
       {
