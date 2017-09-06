@@ -24,10 +24,12 @@ public class DataService {
   public List<Object[]> getTestCaseData(long projectId) {
     StringBuffer sql = new StringBuffer();
     sql.append(
-        "SELECT IFNULL(pit.test_case_name,'') caseName, IFNULL(pin.interface_url,'') url, ")
-        .append("           IFNULL(pin.interface_type,'') type,")
-        .append("           IFNULL(pit.param_case,'') paramters, IFNULL(pit.expect_result,'') expectResult, ")
-        .append("       IFNULL(pit.expect_status,'') expectStatus")
+        "SELECT IFNULL(pit.test_case_name,'') caseName, ")
+        .append("       IFNULL(pin.interface_url,'') url, ")
+        .append("       IFNULL(pin.interface_type,'') type, ")
+        .append("       IFNULL(pit.param_case,'') paramters, ")
+        .append("       IFNULL(pit.expect_result,'') expectResult, ")
+        .append("       IFNULL(pit.expect_status,'') expectStatus ")
         .append("   FROM ps_interface_testcase pit ").append("   LEFT JOIN ps_interface pin ")
         .append("       ON pit.interface_id = pin.interface_id").append("   LEFT JOIN ps_module pm")
         .append("       ON pin.module_id = pm.module_id").append("   LEFT JOIN ps_project pjt")
@@ -44,10 +46,12 @@ public class DataService {
       String interfaceName) {
     StringBuffer sql = new StringBuffer();
     sql.append(
-        "SELECT IFNULL(pit.test_case_name,'') caseName, IFNULL(pin.interface_url,'') url, ")
-        .append("           IFNULL(pin.interface_type,'') type,")
-        .append("           IFNULL(pit.param_case,'') paramters, IFNULL(pit.expect_result,'') expectResult, ")
-        .append("       IFNULL(pit.expect_status,'') expectStatus")
+        "SELECT IFNULL(pit.test_case_name,'') caseName, ")
+        .append("       IFNULL(pin.interface_url,'') url, ")
+        .append("       IFNULL(pin.interface_type,'') type, ")
+        .append("       IFNULL(pit.param_case,'') paramters, ")
+        .append("       IFNULL(pit.expect_result,'') expectResult, ")
+        .append("       IFNULL(pit.expect_status,'') expectStatus ")
         .append("   FROM ps_interface_testcase pit ").append("   LEFT JOIN ps_interface pin ")
         .append("       ON pit.interface_id = pin.interface_id").append("   LEFT JOIN ps_module pm")
         .append("       ON pin.module_id = pm.module_id").append("   LEFT JOIN ps_project pjt")
