@@ -137,7 +137,8 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
                     }
                 }else{
                     for(var obj in values){
-                        if(values[obj].indexOf("{")>=0 || values[obj].indexOf("[{")>=0){
+                        debugger;
+                        if(undefined != values[obj] && (values[obj].indexOf("{")>=0 || values[obj].indexOf("[{")>=0)){
                             try{
                                 values[obj] = JSON.parse(values[obj]);
                             }catch (e){

@@ -122,6 +122,9 @@ const enUS = {
   "interface.response.paramType":"Param Type",
   "interface.response.paramType.empty":"param type should not be null",
   "interface.response.paramDesc":"Param Description",
+  "interface.deleteParamInfo":"Can Not Delete Param",
+  "interface.editParamInfo":"Can Not Edit Param",
+  "interface.ParamInUseInfo":"Param is inUsed in testCase",
 
   "testCase.testCaseName":"Test Case Name",
   "testCase.testCaseName.emptyTestCase":"test case name should not be null",
@@ -151,6 +154,7 @@ const enUS = {
   "module.addModule.modal":"Add Module",
   "interface.delete":"Delete Interface",
   "interface.duplicate":"Duplicate Interface",
+  "testCase.params.formatWrong":" param is not JSON format",
 };
 
 export default enUS;

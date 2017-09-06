@@ -11,6 +11,7 @@ import TestCaseEditor from './TestCaseEditor'
 import InterfaceInfoEdit from './InterfaceInfoEdit'
 
 const FormItem = Form.Item;
+const confirm = Modal.confirm;
 export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia,
   displayEditTestCaseModal, currentTestCase, currentReqParam, currentRespParam, testCaseDetailInfo, jsonEditModal, displayInterfaceInfoDia, testCaseParamFrom, interfaceEditFrom, reqOrResp, form, intl}) => {
     const {getFieldDecorator, validateFields} = form;
@@ -44,8 +45,33 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
               <Popconfirm title={intl.formatMessage({id: "interface.request.deleteParamConfirm"})}
                           onConfirm={
                             () => {
-                              const {interfaceId} = interfaceInfo;
-                              dispatch({type: "interfaces/deleteRequestParam", interfaceId: interfaceId, requestParam: record});
+                                const {interfaceId} = interfaceInfo;
+                                var flag = false;
+                                if(null != interfaceInfo.testCaseViews){
+                                    for(var i=0; i<interfaceInfo.testCaseViews.length; i++){
+                                        if(flag){
+                                            break;
+                                        }
+                                        var requestParam = interfaceInfo.testCaseViews[i].paramCase;
+                                        if(""!= requestParam && null != requestParam){
+                                            for(var obj in JSON.parse(requestParam)){
+                                                if(obj == record.requestParamName){
+                                                    flag = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if(!flag){
+                                    dispatch({type: "interfaces/deleteRequestParam", interfaceId: interfaceId, requestParam: record});
+                                }else{
+                                    Modal.info({
+                                        title: intl.formatMessage({id: "interface.deleteParamInfo"}),
+                                        content: intl.formatMessage({id: "interface.ParamInUseInfo"}),
+                                        onOk() {},
+                                    });
+                                }
                             }
                           }>
                 <Button title="delete" size="small"><Icon type="delete" /></Button>
@@ -83,8 +109,33 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
             <Popconfirm title={intl.formatMessage({id: "interface.request.deleteResponseConfirm"})}
                         onConfirm={
                           () => {
-                            const {interfaceId} = interfaceInfo;
-                            dispatch({type: "interfaces/deleteResponseParam", interfaceId: interfaceId, responseParam: record});
+                              const {interfaceId} = interfaceInfo;
+                              var flag = false;
+                              if(null != interfaceInfo.testCaseViews){
+                                 for(var i=0; i<interfaceInfo.testCaseViews.length; i++){
+                                     if(flag){
+                                        break;
+                                     }
+                                     var responseParam = interfaceInfo.testCaseViews[i].expectResult;
+                                     if(""!= responseParam && null != responseParam){
+                                           for(var obj in JSON.parse(responseParam)){
+                                               if(obj == record.responseParamName){
+                                                   flag = true;
+                                                   break;
+                                               }
+                                           }
+                                     }
+                                 }
+                              }
+                              if(!flag){
+                                  dispatch({type: "interfaces/deleteResponseParam", interfaceId: interfaceId, responseParam: record});
+                              }else{
+                                  Modal.info({
+                                      title: intl.formatMessage({id: "interface.deleteParamInfo"}),
+                                      content: intl.formatMessage({id: "interface.ParamInUseInfo"}),
+                                      onOk() {},
+                                  });
+                              }
                           }
                         }>
               <Button title="delete" size="small"><Icon type="delete" /></Button>
@@ -97,12 +148,62 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
 
     const showEditRequestParamModal = (record) =>{
       const {interfaceId} = interfaceInfo;
-      dispatch({type:"interfaces/showParam", interfaceId: interfaceId, currentParam: record, reqOrResp: "requestParam"});
+        var flag = false;
+        if(null != interfaceInfo.testCaseViews){
+            for(var i=0; i<interfaceInfo.testCaseViews.length; i++){
+                if(flag){
+                    break;
+                }
+                var requestParam = interfaceInfo.testCaseViews[i].paramCase;
+                if(""!= requestParam && null != requestParam){
+                    for(var obj in JSON.parse(requestParam)){
+                        if(obj == record.requestParamName){
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        if(!flag){
+            dispatch({type:"interfaces/showParam", interfaceId: interfaceId, currentParam: record, reqOrResp: "requestParam"});
+        }else{
+            Modal.info({
+                title: intl.formatMessage({id: "interface.editParamInfo"}),
+                content: intl.formatMessage({id: "interface.ParamInUseInfo"}),
+                onOk() {},
+            });
+        }
     };
 
   const showEditResponseParamModal = (record) =>{
     const {interfaceId} = interfaceInfo;
-    dispatch({type:"interfaces/showParam", interfaceId: interfaceId, currentParam: record, reqOrResp: "responseParam"});
+      var flag = false;
+      if(null != interfaceInfo.testCaseViews){
+          for(var i=0; i<interfaceInfo.testCaseViews.length; i++){
+              if(flag){
+                  break;
+              }
+              var responseParam = interfaceInfo.testCaseViews[i].expectResult;
+              if(""!= responseParam && null != responseParam){
+                  for(var obj in JSON.parse(responseParam)){
+                      if(obj == record.responseParamName){
+                          flag = true;
+                          break;
+                      }
+                  }
+              }
+          }
+      }
+      if(!flag){
+          dispatch({type:"interfaces/showParam", interfaceId: interfaceId, currentParam: record, reqOrResp: "responseParam"});
+      }else{
+          Modal.info({
+              title: intl.formatMessage({id: "interface.editParamInfo"}),
+              content: intl.formatMessage({id: "interface.ParamInUseInfo"}),
+              onOk() {},
+          });
+      }
   };
 
     const editTestCaseModalShow = () => {
