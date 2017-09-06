@@ -62,6 +62,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
         },
     ];
     if("paramCase" == testCaseParamFrom){
+        debugger;
         if(null != interfaceInfo.requestParams && ""!= interfaceInfo.requestParams){
             var requestParamObject = interfaceInfo.requestParams;
             var paramNameObj;
@@ -69,9 +70,12 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
             for(var i=0; i< requestParamObject.length;i++){
                 paramNameObj =  requestParamObject[i].requestParamName;
                 paramTypeObj =  requestParamObject[i].requestParamType;
+                if("object" ==  typeof testCaseParamCase[paramNameObj]){
+                    testCaseParamCase[paramNameObj] = format(JSON.stringify(testCaseParamCase[paramNameObj]), false);
+                }
                 var newJson={"paramName": paramNameObj, "paramType": paramTypeObj,  "paramValue": (<div className={style.testCaseParamEditText}><FormItem>
                     {getFieldDecorator(paramNameObj, {
-                        initialValue: testCaseParamCase[paramNameObj]
+                        initialValue: (0 == testCaseParamCase[paramNameObj] && ""!= testCaseParamCase[paramNameObj])?"0":testCaseParamCase[paramNameObj]
                     })(
                         <TextArea autosize={{ minRows: 3}} />
                     )}
@@ -87,9 +91,12 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
             for(var i=0; i< responseParamObject.length;i++){
                 paramNameObj =  responseParamObject[i].responseParamName;
                 paramTypeObj =  responseParamObject[i].responseParamType;
+                if("object" ==  typeof testCaseExpectResult[paramNameObj]){
+                    testCaseExpectResult[paramNameObj] = format(JSON.stringify(testCaseExpectResult[paramNameObj]), false);
+                }
                 var newJson={"paramName": paramNameObj, "paramType": paramTypeObj,  "paramValue": (<div className={style.testCaseParamEditText}><FormItem>
                     {getFieldDecorator(paramNameObj, {
-                        initialValue: testCaseExpectResult[paramNameObj]
+                        initialValue: (0 == testCaseExpectResult[paramNameObj] && ""!= testCaseExpectResult[paramNameObj])?"0":testCaseExpectResult[paramNameObj]
                     })(
                         <TextArea autosize={{ minRows: 3}} />
                     )}
@@ -105,6 +112,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
             console.log("values:", values);
             if(null != values){
                 if(jsonEditModal){
+                    debugger;
                     var testCaseParamStr = values.testCaseParam;
                     testCaseParamStr= testCaseParamStr.trim();
                     testCaseParamStr = testCaseParamStr.replace(/[\r\n]/g, "");
@@ -128,6 +136,17 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
                         return;
                     }
                 }else{
+                    for(var obj in values){
+                        if(values[obj].indexOf("{")>=0 || values[obj].indexOf("[{")>=0){
+                            try{
+                                values[obj] = JSON.parse(values[obj]);
+                            }catch (e){
+                                console.log(e);
+                                message.warn(obj+intl.formatMessage({id: "testCase.params.formatWrong"}));
+                                return;
+                            }
+                        }
+                    }
                     if("paramCase" == testCaseParamFrom){
                         testCaseDetailInfo.paramCase = JSON.stringify(values);
                     }else if("expectResult" == testCaseParamFrom){

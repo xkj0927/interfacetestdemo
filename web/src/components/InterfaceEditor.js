@@ -22,16 +22,19 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         {
             title: intl.formatMessage({id: "interface.request.paramName"}),
             dataIndex: 'requestParamName',
+            className: 'columnStyle',
             width:"30%"
         },
         {
             title: intl.formatMessage({id: "interface.request.paramType"}),
             dataIndex: 'requestParamType',
+            className: 'columnStyle',
             width:"20%"
         },
         {
             title: intl.formatMessage({id: "interface.request.paramDesc"}),
             dataIndex: 'requestParamDescription',
+            className: 'columnStyle',
             width:"42%"
         },
       {
@@ -302,21 +305,21 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                    <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "requestParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addRequestParam"})}</Button>
                </div>
                <div className={style.interfaceInfoDiv}>
-                   <Table columns={columns} dataSource={requestTableData} pagination={false} bordered/>
+                   <Table columns={columns} dataSource={requestTableData} rowKey={record => record.requestParamId} pagination={false} bordered/>
                </div>
                <div>
                    <b>{intl.formatMessage({id: "interface.responseParam"})}</b>
                    <Button className={style.editInterfaceBtn} onClick={showInterfaceParamDialog.bind(this, "responseParam")}><Icon type="save"/>{intl.formatMessage({id: "interface.addResponseParam"})}</Button>
                </div>
                <div className={style.interfaceInfoDiv}>
-                   <Table columns={responseResultColumns} dataSource={responseTableData} pagination={false} bordered/>
+                   <Table columns={responseResultColumns} dataSource={responseTableData} rowKey={record => record.responseParamId} pagination={false} bordered/>
                </div>
                <div>
                    <b>{intl.formatMessage({id: "interface.testCaseList"})}<Button onClick={showEditTestCaseModal.bind(this,"")} className={style.editInterfaceBtn}><Icon type="save"/>{intl.formatMessage({id: "testCase.addTestCase"})}</Button></b>
                    <div className={style.promptMessage}>{"(Click cell of each test case to edit 'Param Case' and 'Expect Result')"}</div>
                </div>
                <div className={style.interfaceInfoDiv}>
-                   <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} pagination={false} bordered/>
+                   <Table columns={testCaseColumns} dataSource={interfaceInfo.testCaseViews} rowKey={record => record.interfaceTestCaseId} pagination={false} bordered/>
                </div>
                {TestCaseDetailInfoModal}
                {addParamEditorModal}
