@@ -96,6 +96,7 @@ const enUS = {
   "testCase.detailInfo" :"Detail Info",
   "testCase.addTestCase":"Add Test Case",
   "interface.editInterface":"Edit Interface",
+  "interface.createInterface":"Add Interface",
   "interface.saveInterface":"Save Interface",
   "interface.addRequestParam":"Edit Request Param",
   "interface.addResponseParam":"Edit Response Param",

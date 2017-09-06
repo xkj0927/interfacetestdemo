@@ -33,7 +33,6 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
         e.preventDefault();
         validateFields((err, values) => {
             if (!err){
-                console.log("values:", values);
                 if("interfaceEdit" == from && undefined != interfaceInfo.interfaceId){
                     values.moduleId = interfaceInfo.moduleId;
                     values.interfaceId = interfaceInfo.interfaceId;
@@ -106,7 +105,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
                 </FormItem>
                 </Form>
             <FormItem wrapperCol={{...formLayout.wrapperCol, offset: 19}}>
-                <Button className={style.testCaseParamButton} onClick={handleSubmit.bind(this)}><Icon type="save"/>save</Button>
+                <Button className={style.testCaseParamButton} onClick={handleSubmit.bind(this)}><Icon type="save"/>{intl.formatMessage({id: "module.save"})}</Button>
             </FormItem>
         </div>
     );

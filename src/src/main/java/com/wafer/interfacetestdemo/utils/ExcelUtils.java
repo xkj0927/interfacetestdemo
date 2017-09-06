@@ -32,7 +32,7 @@ public class ExcelUtils {
 
   private static final String DEFAULT_EXPORT_FILE_NAME = "TestAPI.xls";
   
-  public static final String DOWNLOAD_FILE_PATH = "/download/";
+  public static final String DOWNLOAD_FILE_PATH = "../download/";
   
   public static String COLUMN_NAME_01 = "caseName";
   public static String COLUMN_NAME_02 = "url";

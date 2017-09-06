@@ -96,6 +96,7 @@ const zhCN = {
   "testCase.detailInfo" :"详细信息",
   "testCase.addTestCase":"新增测试用例",
   "interface.editInterface":"编辑接口",
+  "interface.createInterface":"添加接口",
   "interface.saveInterface":"保存接口",
   "interface.addRequestParam":"新增请求参数",
   "interface.addResponseParam":"新增响应参数",
