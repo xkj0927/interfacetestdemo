@@ -27,6 +27,8 @@ const enUS = {
   "msgKey.100004": "Duplicate email address.",
   "msgKey.200001": "This department exitst users.",
   "msgKey.200002": "This department exitst projects.",
+  "msgKey.300001": "The name of the department already exists.",
+  "msgKey.300002": "The code of the department already exists.",
 
   "user.addUser": "Add",
   "user.editUser": "Edit",

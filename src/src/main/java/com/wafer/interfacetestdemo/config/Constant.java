@@ -60,6 +60,9 @@ public interface Constant {
   
   String PROJECT_EXIST = "200002";
   
+  String DEPT_NAME_EXIST = "300001";
+  String DEPT_CODE_EXIST = "300002";
+  
   /**
    * 下载的文件类型
    */

@@ -55,14 +55,21 @@ public class DeptController {
    */
   @RequestMapping(value = Constant.DEPT, method = RequestMethod.POST)
   public ResponseResult deptCreate(@RequestBody Dept dept) {
+    List<Dept> nameDepts = deptService.getDeptByDeptName(dept.getDeptName());
+    List<Dept> codeDepts = deptService.getDeptByDeptCode(dept.getDeptCode());
+    if (nameDepts.size() > 0) {
+      return ResponseResult.failure(Constant.DEPT_NAME_EXIST);
+    } else if (codeDepts.size() > 0) {
+      return ResponseResult.failure(Constant.DEPT_CODE_EXIST);
+    } else {
+      dept.setDeptType(0);
+      dept.setCreateTime(new Date());
 
-    dept.setDeptType(0);
-    dept.setCreateTime(new Date());
+      deptService.deptSave(dept);
 
-    deptService.deptSave(dept);
-
-    List<DeptVo> deptList = deptService.getDeptVoList();
-    return ResponseResult.success(deptList);
+      List<DeptVo> deptList = deptService.getDeptVoList();
+      return ResponseResult.success(deptList);
+    }
   }
 
   /**
@@ -106,9 +113,19 @@ public class DeptController {
     }
 
     deptOriginal.setUpdateTime(new Date());
-    deptService.deptSave(deptOriginal);
 
-    List<DeptVo> deptList = deptService.getDeptVoList();
-    return ResponseResult.success(deptList);
+    List<Dept> nameDepts = deptService.getDeptByDeptNameExceptOne(deptOriginal.getDeptName(),
+        deptOriginal.getDeptId());
+    List<Dept> codeDepts = deptService.getDeptByDeptCodeExceptOne(deptOriginal.getDeptCode(),
+        deptOriginal.getDeptId());
+    if (nameDepts.size() > 0) {
+      return ResponseResult.failure(Constant.DEPT_NAME_EXIST);
+    } else if (codeDepts.size() > 0) {
+      return ResponseResult.failure(Constant.DEPT_CODE_EXIST);
+    } else {
+      deptService.deptSave(deptOriginal);
+      List<DeptVo> deptList = deptService.getDeptVoList();
+      return ResponseResult.success(deptList);
+    }
   }
 }
