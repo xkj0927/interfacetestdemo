@@ -56,6 +56,8 @@ public interface Constant {
   
   String EMAIL_DUPLICATE = "100004";
   
+  String USER_NAME_DUPLICATE = "100005";
+  
   String USER_EXIST = "200001";
   
   String PROJECT_EXIST = "200002";
