@@ -277,9 +277,15 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 from={interfaceEditFrom}/>
         }
     );
+    let interfaceTitle = "";
+    if("interfaceCreate" == interfaceEditFrom){
+        interfaceTitle = intl.formatMessage({id: "interface.createInterface"});
+    }else if("interfaceEdit" == interfaceEditFrom){
+        interfaceTitle = intl.formatMessage({id: "interface.editInterface"});
+    }
     const InterfaceInfoEditModal = <Modal
         width="750"
-        title="Edit Interface Info"
+        title={interfaceTitle}
         visible={displayInterfaceInfoDia}
         onCancel={showEditInterfaceInfoModal}
         footer={null}>

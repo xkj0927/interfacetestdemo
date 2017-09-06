@@ -195,9 +195,15 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
             from={interfaces.editInterfaceFrom}/>
       }
   );
+  let interfaceTitle = "";
+  if("interfaceCreate" == interfaces.editInterfaceFrom){
+    interfaceTitle = intl.formatMessage({id: "interface.createInterface"});
+  }else if("interfaceEdit" == interfaces.editInterfaceFrom){
+    interfaceTitle = intl.formatMessage({id: "interface.editInterface"});
+  }
   const InterfaceInfoEditModal = <Modal
       width="750"
-      title="Create Interface Info"
+      title={interfaceTitle}
       visible={interfaces.displayInterfaceInfoDia}
       onCancel={showEditInterfaceInfoModal}
       footer={null}>
