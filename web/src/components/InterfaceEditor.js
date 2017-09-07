@@ -13,7 +13,7 @@ import InterfaceInfoEdit from './InterfaceInfoEdit'
 const FormItem = Form.Item;
 const confirm = Modal.confirm;
 export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, displayInterParamDia, displayTestCaseDia,
-  displayEditTestCaseModal, currentTestCase, currentReqParam, currentRespParam, testCaseDetailInfo, jsonEditModal, displayInterfaceInfoDia, testCaseParamFrom, interfaceEditFrom, reqOrResp, form, intl}) => {
+  displayEditTestCaseModal, currentTestCase, currentReqParam, currentRespParam, testCaseDetailInfo, jsonEditModal, displayInterfaceInfoDia, testCaseParamFrom, interfaceEditFrom, reqOrResp, form, moduleId, intl}) => {
     const {getFieldDecorator, validateFields} = form;
     let requestTableData = [];
     let responseTableData = [];
@@ -374,7 +374,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
                 form={props.form}
                 dispatch={dispatch}
                 interfaceInfo = {interfaceInfo}
-                moduleId ={interfaceInfo.moduleId}
+                moduleId ={moduleId}
                 from={interfaceEditFrom}/>
         }
     );

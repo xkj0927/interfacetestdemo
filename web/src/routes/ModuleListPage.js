@@ -54,7 +54,8 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
               jsonEditModal={interfaces.jsonEditModal}
               testCaseParamFrom={interfaces.testCaseParamFrom}
               displayInterfaceInfoDia={interfaces.displayInterfaceInfoDia}
-              interfaceEditFrom={interfaces.editInterfaceFrom}/>
+              interfaceEditFrom={interfaces.editInterfaceFrom}
+              moduleId = {activeKey}/>
       }
   );
   // module
@@ -113,7 +114,6 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     // 添加接口
     const addInterfaceHandle = () => {
       if(activeKey && activeKey.split('-').length == 1){
-        debugger;
         // dispatch({type:"interfaces/show", selectModuleKey:activeKey, selectInterfaceKey:0, operatorType: "add", interfaceInfo: {}});
         dispatch({type:"interfaces/showInterfaceInfo", from:"interfaceCreate"});
       }
