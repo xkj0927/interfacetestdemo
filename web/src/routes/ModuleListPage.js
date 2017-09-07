@@ -67,7 +67,6 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
           dispatch({type: "modules/deleteMo", payload: activeKey.split('-')[0]});
         }else if(activeKey.split('-').length == 2){
           // 删除接口
-          debugger;
           dispatch({type: "modules/deleteIn", moduleId : activeKey.split('-')[0], interfaceId: activeKey.split('-')[1]});
           if(interfaces.interfaceInfo.interfaceId == activeKey.split('-')[1]){
             dispatch({type: "interfaces/clearInterfaceInfo"});
@@ -114,6 +113,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     // 添加接口
     const addInterfaceHandle = () => {
       if(activeKey && activeKey.split('-').length == 1){
+        debugger;
         // dispatch({type:"interfaces/show", selectModuleKey:activeKey, selectInterfaceKey:0, operatorType: "add", interfaceInfo: {}});
         dispatch({type:"interfaces/showInterfaceInfo", from:"interfaceCreate"});
       }
