@@ -48,7 +48,7 @@ export default {
       const messages  = yield select(state => state.i18n.messages);
       if(result){
         yield put({type: "reload"});
-        message.info(messages["msgKey.success.addDept"]);
+        message.info(messages["dept.success.addDept"]);
       } else{
         message.error(messages[`msgKey.${msgkey}`]);
       }

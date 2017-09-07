@@ -31,7 +31,7 @@ const DeptListPage = ({dispatch, depts, intl, loading, deptInfo, handleType, mod
             }
           }><Icon type="edit"/></Button>
           <Popconfirm
-            title="Are you sure you want to delete this dept？"
+            title={intl.formatMessage({id: "dept.confirm.deleteDept"})}
             onConfirm={
               () => {
                 dispatch({type: "depts/delete", payload: record.deptId});
