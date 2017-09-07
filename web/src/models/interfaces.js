@@ -102,19 +102,19 @@ export default {
     },
 
     // 增加一条新的参数列
-    addParam(state, {paramValue:paramValue}){
-      if(state.interfaceInfo.requestParam){
-        // state.interfaceInfo.requestParam.add(paramValue);
-        console.log(state.interfaceInfo.requestParam)
-      }else {
-        // state.interfaceInfo.requestParam = [];
-        // state.interfaceInfo.requestParam.add(paramValue);
-      }
-      // state.moduleKey = Math.random();
-      state.displayInterParamDia = false;
-      let newState = state;
-      return newState;
-    },
+    // addParam(state, {paramValue:paramValue}){
+    //   if(state.interfaceInfo.requestParam){
+    //     // state.interfaceInfo.requestParam.add(paramValue);
+    //     console.log(state.interfaceInfo.requestParam)
+    //   }else {
+    //     // state.interfaceInfo.requestParam = [];
+    //     // state.interfaceInfo.requestParam.add(paramValue);
+    //   }
+    //   // state.moduleKey = Math.random();
+    //   state.displayInterParamDia = false;
+    //   let newState = state;
+    //   return newState;
+    // },
 
     updateInterfaceInfo(state,{interfaceInfo}){
       state.interfaceInfo = interfaceInfo;
@@ -125,6 +125,11 @@ export default {
     jsonChangeEdit(state,{interfaceInfo}){
       state.interfaceInfo = interfaceInfo;
       state.jsonEditModal = !state.jsonEditModal;
+      return state;
+    },
+    clearInfo(state,{}){
+      state.interfaceInfo = null;
+      state.operatorType = "";
       return state;
     }
   },
@@ -211,9 +216,9 @@ export default {
       const result = yield call(interfaceService.addTestCase, testCase);
       yield put({type:"modifyTestCase",operateType:"add", newTestCase:result.data});
     },
-    *addInterfaceParam({paramValue:paramValue}, {put}){
-      yield put({type:"addParam",paramValue:paramValue});
-    },
+    // *addInterfaceParam({paramValue:paramValue}, {put}){
+    //   yield put({type:"addParam",paramValue:paramValue});
+    // },
     // 新增一个参数
     *addRequestParam({requestParam:requestParam}, {call, put}){
       debugger;
@@ -285,5 +290,8 @@ export default {
     *changeEditWay({interfaceInfo: interfaceInfo}, {put}){
       yield put({type:"jsonChangeEdit", interfaceInfo});
     },
+    *clearInterfaceInfo({},{put}){
+      yield put({type:"clearInfo"});
+   }
   },
 };

@@ -67,7 +67,11 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
           dispatch({type: "modules/deleteMo", payload: activeKey.split('-')[0]});
         }else if(activeKey.split('-').length == 2){
           // 删除接口
+          debugger;
           dispatch({type: "modules/deleteIn", moduleId : activeKey.split('-')[0], interfaceId: activeKey.split('-')[1]});
+          if(interfaces.interfaceInfo.interfaceId == activeKey.split('-')[1]){
+            dispatch({type: "interfaces/clearInterfaceInfo"});
+          }
         }
       }
     };
