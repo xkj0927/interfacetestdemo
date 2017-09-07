@@ -1,5 +1,5 @@
 {
-  "name": "kaijun",
+  "name": "InterfaceTest",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "copy:static": "copyfiles -f ./dist/static/* ../src/src/main/webapp/static",
     "copy": "copyfiles -f ./dist/* ../src/src/main/webapp && npm run copy:static"
   },
-  "author": "kaijun",
+  "author": "wafer",
   "license": "ISC",
   "dependencies": {
     "antd": "^2.12.6",

@@ -116,9 +116,11 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
                     var testCaseParamStr = values.testCaseParam;
                     testCaseParamStr= testCaseParamStr.trim();
                     testCaseParamStr = testCaseParamStr.replace(/[\r\n]/g, "");
-                    if((testCaseParamStr.indexOf("{") == 0 || testCaseParamStr.indexOf("[{") ==0) && testCaseParamStr.length!=0) {
+                    if(testCaseParamStr.length==0 || ((testCaseParamStr.indexOf("{") == 0 || testCaseParamStr.indexOf("[{") ==0) && testCaseParamStr.length!=0)) {
                         try {
-                            JSON.parse(testCaseParamStr);
+                            if(testCaseParamStr.length!=0){
+                                JSON.parse(testCaseParamStr);
+                            }
                             if ("paramCase" == testCaseParamFrom) {
                                 testCaseDetailInfo.paramCase = testCaseParamStr;
                             } else if ("expectResult" == testCaseParamFrom) {
@@ -136,22 +138,36 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, testCaseDetailI
                         return;
                     }
                 }else{
+                    var resultValues = {};
                     for(var obj in values){
                         debugger;
-                        if(undefined != values[obj] && (values[obj].indexOf("{")>=0 || values[obj].indexOf("[{")>=0)){
-                            try{
-                                values[obj] = JSON.parse(values[obj]);
-                            }catch (e){
-                                console.log(e);
-                                message.warn(obj+intl.formatMessage({id: "testCase.params.formatWrong"}));
-                                return;
+                        if(undefined != values[obj] ){
+                            if(values[obj].indexOf("{")>=0 || values[obj].indexOf("[{")>=0){
+                                try{
+                                    resultValues[obj] = JSON.parse(values[obj]);
+                                }catch (e){
+                                    console.log(e);
+                                    message.warn(obj+intl.formatMessage({id: "testCase.params.formatWrong"}));
+                                    return;
+                                }
+                            }else{
+                                values[obj]= (values[obj]).trim();
+                                values[obj] = (values[obj]).replace(/[\r\n]/g, "");
+                                if(values[obj].length!=0){
+                                    resultValues[obj] = values[obj];
+                                }
                             }
                         }
                     }
+                    if(JSON.stringify(resultValues).length == 2){
+                        resultValues = "";
+                    }else{
+                        resultValues = JSON.stringify(resultValues);
+                    }
                     if("paramCase" == testCaseParamFrom){
-                        testCaseDetailInfo.paramCase = JSON.stringify(values);
+                        testCaseDetailInfo.paramCase = resultValues;
                     }else if("expectResult" == testCaseParamFrom){
-                        testCaseDetailInfo.expectResult = JSON.stringify(values);
+                        testCaseDetailInfo.expectResult = resultValues;
                     }
                     dispatch({type: "interfaces/editTestCase", testCase: testCaseDetailInfo});
                     dispatch({type:"interfaces/cancelDialog"});
