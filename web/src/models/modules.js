@@ -15,6 +15,7 @@ export default {
     currentModule: {},
     activeKey : '',
     displayInterfaceCreateDia: false,
+    refreshModule:false,
   },
   reducers: {
     update(state, {modules,projectId:projectId}) {
@@ -145,6 +146,10 @@ export default {
       });
       return state;
     },
+    changeModuleState(state, {}){
+      state.refreshModule = !state.refreshModule;
+      return state;
+    }
   },
   effects: {
     *reload({projectId}, { select, call, put}) {
@@ -305,6 +310,9 @@ export default {
       const result = yield call(moduleService.duplicateInterface, interfaceId);
       yield put({ type: 'duplicateInterface', moduleId:moduleId, newInterface: result.data});
     },
+    *updateModuleState({}, {put}){
+      yield put({ type: 'changeModuleState'});
+    }
   },
   subscriptions: {
     setup({ dispatch, history }) {

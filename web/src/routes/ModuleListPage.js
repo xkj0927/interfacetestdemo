@@ -13,7 +13,7 @@ const TreeNode = Tree.TreeNode;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 
-const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVisible = false, modalKey = '', projectId, currentModule, activeKey, intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
+const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVisible = false, modalKey = '', projectId, currentModule, activeKey, refreshModule, intl, userRole, userAuthority, loading, flag, currentInterfaceId}) => {
   console.log(modules);
   console.log(currentModule);
   // 左边module的树结构
@@ -35,6 +35,11 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       },500)
     });
   };
+  if(refreshModule){
+    debugger;
+    dispatch({type: "modules/list", payload: activeKey});
+    dispatch({type: "modules/updateModuleState"});
+  }
   let InterfaceInfoView = Form.create()(
       (props) => {
           return <InterfaceEditor
@@ -233,7 +238,7 @@ const mapStateToProps = (state, ownProps) => {
   const {userAuthority = constants.USER_AUTHORITY_NORMAL} = state.common;
   const loading = state.loading.effects['modules/reload'];
   const interfaces = state.interfaces;
-  const {modules, flag, currentInterfaceId, addModuleModalVisible, modalKey, projectId, currentModule, activeKey} = state.modules;
+  const {modules, flag, currentInterfaceId, addModuleModalVisible, modalKey, projectId, currentModule, activeKey, refreshModule} = state.modules;
   return {
     currentInterfaceId,
     flag,
@@ -243,6 +248,7 @@ const mapStateToProps = (state, ownProps) => {
     modalKey:modalKey,
     projectId: projectId,
     activeKey,
+    refreshModule,
     currentModule : currentModule,
     userRole: parseInt(userRole),
     userAuthority: parseInt(userAuthority),

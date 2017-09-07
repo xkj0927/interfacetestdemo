@@ -40,7 +40,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
                 }else{
                     values.moduleId = moduleId;
                     dispatch({type:"interfaces/add", payload:values});
-                    // dispatch({type: "modules/list", payload: moduleId});
+                    dispatch({type: "modules/updateModuleState"});
                 }
                 dispatch({type:"interfaces/cancelDialog"});
             }
