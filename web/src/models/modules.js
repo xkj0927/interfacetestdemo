@@ -46,7 +46,6 @@ export default {
       });
       state.flag = !state.flag;
       state.modules = modules;
-      state.refreshModule = false;
       return state;
     },
 

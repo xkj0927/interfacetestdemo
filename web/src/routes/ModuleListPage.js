@@ -35,14 +35,14 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       },500)
     });
   };
+  console.log("refreshModule", refreshModule);
   if(refreshModule){
-    debugger;
-    dispatch({type: "modules/updateModuleState", payload: false});
     if(activeKey.split('-').length == 1){
       dispatch({type: "modules/list", payload: activeKey});
     }else if(activeKey.split('-').length == 2){
       dispatch({type: "modules/list", payload: activeKey.split('-')[0]});
     }
+    dispatch({type: "modules/updateModuleState", payload: false});
   }
   let InterfaceInfoView = Form.create()(
       (props) => {

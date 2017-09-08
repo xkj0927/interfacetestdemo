@@ -33,6 +33,7 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
         e.preventDefault();
         validateFields((err, values) => {
             if (!err){
+                console.log("values",values);
                 if("interfaceEdit" == from && undefined != interfaceInfo.interfaceId){
                     values.moduleId = interfaceInfo.moduleId;
                     values.interfaceId = interfaceInfo.interfaceId;
@@ -41,8 +42,8 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
                     values.moduleId = moduleId;
                     dispatch({type:"interfaces/add", payload:values});
                 }
-                dispatch({type:"interfaces/cancelDialog"});
                 dispatch({type: "modules/updateModuleState", payload: true});
+                dispatch({type:"interfaces/cancelDialog"});
             }
         });
     };
