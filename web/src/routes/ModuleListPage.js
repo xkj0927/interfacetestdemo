@@ -37,8 +37,12 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
   };
   if(refreshModule){
     debugger;
-    dispatch({type: "modules/list", payload: activeKey});
-    dispatch({type: "modules/updateModuleState"});
+    dispatch({type: "modules/updateModuleState", payload: false});
+    if(activeKey.split('-').length == 1){
+      dispatch({type: "modules/list", payload: activeKey});
+    }else if(activeKey.split('-').length == 2){
+      dispatch({type: "modules/list", payload: activeKey.split('-')[0]});
+    }
   }
   let InterfaceInfoView = Form.create()(
       (props) => {
@@ -182,7 +186,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
   );
   const moduleTitle = currentModule.moduleId ? intl.formatMessage({id: "module.editModule.modal"}) : intl.formatMessage({id: "module.addModule.modal"});
   const addModuleModal = <Modal
-    width="750"
+    width="750px"
     title={moduleTitle}
     visible={addModuleModalVisible}
     onCancel={addModuleShow}
@@ -211,7 +215,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     interfaceTitle = intl.formatMessage({id: "interface.editInterface"});
   }
   const InterfaceInfoEditModal = <Modal
-      width="750"
+      width="750px"
       title={interfaceTitle}
       visible={interfaces.displayInterfaceInfoDia}
       onCancel={showEditInterfaceInfoModal}

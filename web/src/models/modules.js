@@ -46,6 +46,7 @@ export default {
       });
       state.flag = !state.flag;
       state.modules = modules;
+      state.refreshModule = false;
       return state;
     },
 
@@ -146,8 +147,9 @@ export default {
       });
       return state;
     },
-    changeModuleState(state, {}){
-      state.refreshModule = !state.refreshModule;
+    changeModuleState(state, {payload: isRefresh}){
+      debugger;
+      state.refreshModule = isRefresh;
       return state;
     }
   },
@@ -310,8 +312,9 @@ export default {
       const result = yield call(moduleService.duplicateInterface, interfaceId);
       yield put({ type: 'duplicateInterface', moduleId:moduleId, newInterface: result.data});
     },
-    *updateModuleState({}, {put}){
-      yield put({ type: 'changeModuleState'});
+    *updateModuleState({payload: isRefresh}, {put}){
+      debugger;
+      yield put({ type: 'changeModuleState', payload: isRefresh});
     }
   },
   subscriptions: {
