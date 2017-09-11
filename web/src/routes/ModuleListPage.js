@@ -35,14 +35,14 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       },500)
     });
   };
-  console.log("refreshModule", refreshModule);
-  if(refreshModule){
+  console.log("refreshModule", interfaces.refreshModule);
+  if(interfaces.refreshModule){
     if(activeKey.split('-').length == 1){
       dispatch({type: "modules/list", payload: activeKey});
     }else if(activeKey.split('-').length == 2){
       dispatch({type: "modules/list", payload: activeKey.split('-')[0]});
     }
-    dispatch({type: "modules/updateModuleState", payload: false});
+    dispatch({type: "interfaces/updateModuleState", payload: false});
   }
   let InterfaceInfoView = Form.create()(
       (props) => {
@@ -105,7 +105,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
           <Button><FormattedMessage id="interface.delete"/></Button>
         </Popconfirm>
       </div>;
-      const interfaceName = <Popover content={interfacePopContent} trigger="click" placement="rightTop">
+      const interfaceName = <Popover content={interfacePopContent} trigger="hover" placement="rightTop">
         {item.interfaceName}
       </Popover>;
       return <TreeNode title={interfaceName} key={item.moduleId +"-"+ item.interfaceId} isLeaf={false}>
@@ -123,7 +123,6 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     // 添加接口
     const addInterfaceHandle = () => {
       if(activeKey && activeKey.split('-').length == 1){
-        // dispatch({type:"interfaces/show", selectModuleKey:activeKey, selectInterfaceKey:0, operatorType: "add", interfaceInfo: {}});
         dispatch({type:"interfaces/showInterfaceInfo", from:"interfaceCreate"});
       }
     };
@@ -138,7 +137,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
         </Popconfirm>
         <Button onClick={addInterfaceHandle}><FormattedMessage id="module.add.interface"/></Button>
     </div>;
-    const moduleHandle = <Popover content={editDeleteBtn} trigger="click" placement="rightTop">
+    const moduleHandle = <Popover content={editDeleteBtn} trigger="hover" placement="rightTop">
       {item.moduleName}
     </Popover>;
     return <TreeNode title={moduleHandle} key={item.moduleId} isLeaf={false}>

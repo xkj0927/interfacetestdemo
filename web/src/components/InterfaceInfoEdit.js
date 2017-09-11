@@ -39,11 +39,12 @@ export default injectIntl(({form, intl, dispatch, interfaceInfo, moduleId, from}
                     values.interfaceId = interfaceInfo.interfaceId;
                     dispatch({type:"interfaces/edit", payload:values});
                 }else{
+                    debugger;
                     values.moduleId = moduleId;
                     dispatch({type:"interfaces/add", payload:values});
                 }
-                dispatch({type: "modules/updateModuleState", payload: true});
                 dispatch({type:"interfaces/cancelDialog"});
+                // dispatch({type: "modules/list", payload: moduleId});
             }
         });
     };

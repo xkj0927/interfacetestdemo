@@ -25,15 +25,25 @@ export default {
     jsonEditModal:false,
     displayInterfaceInfoDia: false,
     editInterfaceFrom: "",
+    refreshModule:false
   },
   reducers: {
     update(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
-      debugger;
       state.interfaceInfo = interfaceInfo;
       state.operatorType = operatorType;
       state.moduleKey = moduleKey;
       state.displayInterParamDia = false;
       state.displayInterfaceInfoDia = false;
+      let newState = state;
+      return newState;
+    },
+    updateInterface(state, { payload: interfaceInfo, operatorType: operatorType, moduleKey: moduleKey}) {
+      state.interfaceInfo = interfaceInfo;
+      state.operatorType = operatorType;
+      state.moduleKey = moduleKey;
+      state.displayInterParamDia = false;
+      state.displayInterfaceInfoDia = false;
+      state.refreshModule = true;
       let newState = state;
       return newState;
     },
@@ -131,6 +141,10 @@ export default {
       state.interfaceInfo = null;
       state.operatorType = "";
       return state;
+    },
+    changeModuleState(state, {payload: isRefresh}){
+      state.refreshModule = isRefresh;
+      return state;
     }
   },
   effects: {
@@ -189,7 +203,7 @@ export default {
     *add({payload}, {call, put}){
       const {data} = yield call(interfaceService.addinterfaces, payload);
       yield put({
-        type: 'update',
+        type: 'updateInterface',
         payload: data,
         operatorType: "info",
         moduleKey: data.moduleId
@@ -198,7 +212,7 @@ export default {
     *edit({payload}, {call, put}){
       const {data} = yield call(interfaceService.editinterfaces, payload);
       yield put({
-        type: 'update',
+        type: 'updateInterface',
         payload: data,
         operatorType: "info",
         moduleKey: data.moduleId
@@ -292,6 +306,9 @@ export default {
     },
     *clearInterfaceInfo({},{put}){
       yield put({type:"clearInfo"});
-   }
+   },
+    *updateModuleState({payload: isRefresh}, {put}){
+      yield put({ type: 'changeModuleState', payload: isRefresh});
+    }
   },
 };

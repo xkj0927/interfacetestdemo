@@ -145,11 +145,6 @@ export default {
         }
       });
       return state;
-    },
-    changeModuleState(state, {payload: isRefresh}){
-      debugger;
-      state.refreshModule = isRefresh;
-      return state;
     }
   },
   effects: {
@@ -310,10 +305,6 @@ export default {
     *duplicate({moduleId : moduleId, interfaceId: interfaceId}, {call, put}){
       const result = yield call(moduleService.duplicateInterface, interfaceId);
       yield put({ type: 'duplicateInterface', moduleId:moduleId, newInterface: result.data});
-    },
-    *updateModuleState({payload: isRefresh}, {put}){
-      debugger;
-      yield put({ type: 'changeModuleState', payload: isRefresh});
     }
   },
   subscriptions: {
