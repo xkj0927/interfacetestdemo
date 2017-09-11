@@ -225,6 +225,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
           title={moduleTitle}
           visible={displayEditTestCaseModal}
           onCancel={editTestCaseModalShow}
+          maskClosable = {false}
           footer={null}
           key={moduleKey}>
 
@@ -345,6 +346,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         title={title}
         visible={displayInterParamDia}
         onCancel={showInterfaceParamDialog}
+        maskClosable = {false}
         footer={null}>
         <ParamEditor />
     </Modal>;
@@ -364,6 +366,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         title={intl.formatMessage({id: "interface.testCase.editParams"})}
         visible={displayTestCaseDia}
         onCancel={showTestCaseDetailInfoDialog}
+        maskClosable = {false}
         footer={null}>
         <TcDetailInfo />
     </Modal>;
@@ -389,6 +392,7 @@ export default injectIntl(({dispatch, operatorType, interfaceInfo, moduleKey, di
         title={interfaceTitle}
         visible={displayInterfaceInfoDia}
         onCancel={showEditInterfaceInfoModal}
+        maskClosable = {false}
         footer={null}>
         <InterfaceEditInfo />
     </Modal>;

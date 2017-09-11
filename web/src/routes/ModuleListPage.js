@@ -189,6 +189,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
     title={moduleTitle}
     visible={addModuleModalVisible}
     onCancel={addModuleShow}
+    maskClosable = {false}
     footer={null}
     key={modalKey}>
 
@@ -218,7 +219,8 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       title={interfaceTitle}
       visible={interfaces.displayInterfaceInfoDia}
       onCancel={showEditInterfaceInfoModal}
-      footer={null}>
+      footer={null}
+      maskClosable = {false}>
     <InterfaceEditInfo />
   </Modal>;
   return (

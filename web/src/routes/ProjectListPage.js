@@ -103,7 +103,8 @@ const ProjectListPage = ({dispatch, projects, projectInfo, intl, loading, handle
              visible={visible}
              footer={null}
              key={modalKey}
-             onCancel={closeHandle}>
+             onCancel={closeHandle}
+             maskClosable = {false}>
         <ProjectForm />
       </Modal>
     </div>

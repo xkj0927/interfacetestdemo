@@ -82,7 +82,8 @@ const DeptListPage = ({dispatch, depts, intl, loading, deptInfo, handleType, mod
              visible={visible}
              footer={null}
              key={modalKey}
-             onCancel={closeHandle}>
+             onCancel={closeHandle}
+             maskClosable = {false}>
         <DeptForm/>
       </Modal>
     </div>

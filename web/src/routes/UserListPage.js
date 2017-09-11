@@ -83,7 +83,8 @@ const UserListPage = ({ dispatch, userList, deptList, userInfo, intl, loading, v
              visible={visible}
              footer={null}
              key={modalKey}
-             onCancel={closeHandle}>
+             onCancel={closeHandle}
+             maskClosable = {false}>
         <UserForm/>
       </Modal>
     </div>
