@@ -93,11 +93,11 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
       const testCaseNodes = (item.testCaseViews && item.testCaseViews.length > 0)? testCaseNode(item.testCaseViews, item) :[];
 
       const interfacePopContent = <div className={style.popBtnSpan}>
-        <Button onClick={() => {
-          if(activeKey && activeKey.split('-').length == 2){
-            dispatch({type: "modules/duplicate", moduleId : activeKey.split('-')[0], interfaceId: activeKey.split('-')[1]});
-          }
-        }}><FormattedMessage id="interface.duplicate"/></Button>
+        {/*<Button onClick={() => {*/}
+          {/*if(activeKey && activeKey.split('-').length == 2){*/}
+            {/*dispatch({type: "modules/duplicate", moduleId : activeKey.split('-')[0], interfaceId: activeKey.split('-')[1]});*/}
+          {/*}*/}
+        {/*}}><FormattedMessage id="interface.duplicate"/></Button>*/}
         <Popconfirm title={<FormattedMessage id="interface.delete.confirmTitle"/>}
                     onConfirm={deleteHandle}
                     okText={<FormattedMessage id="module.delete.confirm"/>}
