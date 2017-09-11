@@ -105,7 +105,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
           <Button><FormattedMessage id="interface.delete"/></Button>
         </Popconfirm>
       </div>;
-      const interfaceName = <Popover content={interfacePopContent} trigger="hover" placement="rightTop">
+      const interfaceName = <Popover content={interfacePopContent} trigger="click" placement="rightTop">
         {item.interfaceName}
       </Popover>;
       return <TreeNode title={interfaceName} key={item.moduleId +"-"+ item.interfaceId} isLeaf={false}>
@@ -137,7 +137,7 @@ const ModuleListPage = ({dispatch, modules = [],interfaces =[], addModuleModalVi
         </Popconfirm>
         <Button onClick={addInterfaceHandle}><FormattedMessage id="module.add.interface"/></Button>
     </div>;
-    const moduleHandle = <Popover content={editDeleteBtn} trigger="hover" placement="rightTop">
+    const moduleHandle = <Popover content={editDeleteBtn} trigger="click" placement="rightTop">
       {item.moduleName}
     </Popover>;
     return <TreeNode title={moduleHandle} key={item.moduleId} isLeaf={false}>
